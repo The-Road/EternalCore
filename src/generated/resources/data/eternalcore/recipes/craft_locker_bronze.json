@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:toolcrafting_shaped",
+  "group": "machine_locker",
+  "pattern": [
+    "XXX",
+    "XCX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:plates/bronze"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:locker",
+    "nbt": "{BlockEntityTag:{material:\"bronze\"}}"
+  }
+}

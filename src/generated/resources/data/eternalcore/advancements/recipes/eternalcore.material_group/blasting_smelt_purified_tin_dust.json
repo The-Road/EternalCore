@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "eternalcore:blasting_smelt_purified_tin_dust"
+    ]
+  },
+  "criteria": {
+    "has_purified_tin_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:purified_dusts/tin"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "eternalcore:blasting_smelt_purified_tin_dust"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_purified_tin_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

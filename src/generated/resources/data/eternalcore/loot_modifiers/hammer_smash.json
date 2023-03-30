@@ -1,0 +1,11 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "item": "eternalcore:hammer"
+      }
+    }
+  ],
+  "type": "eternalcore:hammer_smash"
+}

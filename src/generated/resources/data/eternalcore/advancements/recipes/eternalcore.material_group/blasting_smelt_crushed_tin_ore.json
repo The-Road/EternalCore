@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "eternalcore:blasting_smelt_crushed_tin_ore"
+    ]
+  },
+  "criteria": {
+    "has_crushed_tin_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:crushed_ores/tin"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "eternalcore:blasting_smelt_crushed_tin_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crushed_tin_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

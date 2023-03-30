@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "soft_hammer_by_hand",
+  "pattern": [
+    "XX ",
+    "XX#",
+    "XX "
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:planks"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "eternalcore:soft_hammer",
+    "nbt": "{material:\"wood\"}"
+  }
+}

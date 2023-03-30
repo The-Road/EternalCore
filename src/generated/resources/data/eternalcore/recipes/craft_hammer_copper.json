@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:toolcrafting_shaped",
+  "group": "hammer",
+  "pattern": [
+    "XX ",
+    "XX#",
+    "XX "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/copper"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:hammer",
+    "nbt": "{material:\"copper\"}"
+  }
+}

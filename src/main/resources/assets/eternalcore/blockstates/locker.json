@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "eternalcore:block/locker"
+    },
+    "facing=east": {
+      "model": "eternalcore:block/locker",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "eternalcore:block/locker",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "eternalcore:block/locker",
+      "y": 270
+    }
+  }
+}

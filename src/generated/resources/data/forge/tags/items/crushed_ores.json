@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:crushed_ores/copper",
+    "#forge:crushed_ores/tin"
+  ]
+}

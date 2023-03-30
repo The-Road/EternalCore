@@ -1,0 +1,6 @@
+{
+  "parent": "eternalcore:item/handheld_vertical",
+  "textures": {
+    "layer0": "eternalcore:item/wrench"
+  }
+}

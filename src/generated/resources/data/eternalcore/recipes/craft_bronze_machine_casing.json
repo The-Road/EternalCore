@@ -1,0 +1,23 @@
+{
+  "type": "eternalcore:toolcrafting_shaped",
+  "group": "machine_casing",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:plates/bronze"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:bronze_machine_casing"
+  }
+}

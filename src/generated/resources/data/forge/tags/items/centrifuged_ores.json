@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:centrifuged_ores/copper",
+    "#forge:centrifuged_ores/tin"
+  ]
+}

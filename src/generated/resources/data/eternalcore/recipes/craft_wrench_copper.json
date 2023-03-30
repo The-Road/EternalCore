@@ -1,0 +1,24 @@
+{
+  "type": "eternalcore:toolcrafting_shaped",
+  "group": "wrench",
+  "pattern": [
+    "X X",
+    "XXX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:wrench",
+    "nbt": "{material:\"copper\"}"
+  }
+}

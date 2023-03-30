@@ -1,0 +1,8 @@
+{
+  "package": "com.road.eternalcore.mixin",
+  "mixins": [
+    "ItemStackMixin",
+    "PlayerEntityMixin",
+    "RecipeBookContainerMixin"
+  ]
+}

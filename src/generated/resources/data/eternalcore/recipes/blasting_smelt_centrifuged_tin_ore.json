@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:centrifuged_ores/tin"
+  },
+  "result": "eternalcore:tin_ingot",
+  "experience": 0.5,
+  "cookingtime": 100
+}

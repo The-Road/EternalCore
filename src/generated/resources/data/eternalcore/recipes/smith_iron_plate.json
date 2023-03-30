@@ -1,0 +1,17 @@
+{
+  "type": "eternalcore:smithing",
+  "group": "iron_plate",
+  "level": 0,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "toolUse": {
+    "tool": "hammer",
+    "use": 20
+  },
+  "result": {
+    "item": "eternalcore:iron_plate"
+  }
+}

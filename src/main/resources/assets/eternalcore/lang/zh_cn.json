@@ -1,0 +1,69 @@
+{
+  "itemGroup.eternalcore.block_group": "永恒核心 方块",
+  "block.eternalcore.copper_ore": "铜矿石",
+  "block.eternalcore.tin_ore": "锡矿石",
+
+  "itemGroup.eternalcore.functional_block_group": "永恒核心 功能性方块",
+  "block.eternalcore.handcraft_assembly_table": "手工装配台",
+  "block.eternalcore.smithing_table": "锻造台",
+  "block.eternalcore.machine_casing": "%s机器外壳",
+  "block.eternalcore.locker": "储物柜",
+
+  "itemGroup.eternalcore.material_group":"永恒核心 材料",
+
+  "itemGroup.eternalcore.tool_group":"永恒核心 工具",
+  "item.eternalcore.pickaxe": "%s镐",
+  "item.eternalcore.hammer": "%s锤",
+
+  "eternalcore.materials.null": "",
+  "eternalcore.materials.iron": "铁",
+  "eternalcore.materials.copper": "铜",
+  "eternalcore.materials.tin": "锡",
+  "eternalcore.materials.gold": "金",
+  "eternalcore.materials.bronze": "青铜",
+  "eternalcore.materials.netherite": "下界合金",
+  "eternalcore.materials.wood": "木",
+  "eternalcore.materials.stone": "石",
+
+  "eternalcore.materialShape.ingot": "%s锭",
+  "eternalcore.materialShape.hot_ingot": "热%s锭",
+  "eternalcore.materialShape.gem": "%s",
+  "eternalcore.materialShape.chipped_gem": "破碎%s",
+  "eternalcore.materialShape.flawed_gem": "有瑕%s",
+  "eternalcore.materialShape.flawless_gem": "无暇%s",
+  "eternalcore.materialShape.exquisite_gem": "精致%s",
+  "eternalcore.materialShape.dust": "%s粉",
+  "eternalcore.materialShape.tiny_dust": "小撮%s粉",
+  "eternalcore.materialShape.small_dust": "小堆%s粉",
+  "eternalcore.materialShape.nugget": "%s粒",
+  "eternalcore.materialShape.plate": "%s板",
+  "eternalcore.materialShape.double_plate": "双层%s板",
+  "eternalcore.materialShape.dense_plate": "致密%s板",
+  "eternalcore.materialShape.rod": "%s杆",
+  "eternalcore.materialShape.long_rod": "长%s杆",
+
+  "eternalcore.oreShape.ore": "%s矿石",
+  "eternalcore.oreShape.crushed_ore": "粉碎%s矿石",
+  "eternalcore.oreShape.purified_ore": "洗净%s矿石",
+  "eternalcore.oreShape.centrifuged_ore": "离心%s矿石",
+  "eternalcore.oreShape.impure_dust": "含杂%s粉",
+  "eternalcore.oreShape.purified_dust": "洗净%s粉",
+
+  "eternalcore.toolTip.tool.tierLevel": "挖掘等级: %s",
+  "eternalcore.toolTip.tool.mineSpeed": "挖掘速度: %s",
+  "eternalcore.toolTip.tool.basicDamage": "基础伤害: %s",
+  "eternalcore.toolTip.tool.attackSpeed": "攻击速度: %s",
+  "eternalcore.toolTip.block.material": "材质: %s",
+
+  "eternalcore.debugTool.blockTitle": "-----<方块信息>-----",
+  "eternalcore.debugTool.blockName": "方块: %s",
+  "eternalcore.debugTool.blockMaterial": "材质: %s",
+  "eternalcore.debugTool.blockDestroyTime": "硬度: %s",
+  "eternalcore.debugTool.blockExplosionResistance": "爆炸抗性: %s",
+
+  "container.eternalcore.handcraft_assembly_table": "手工装配台",
+  "container.eternalcore.smithing_table": "锻造台",
+  "container.eternalcore.locker": "储物柜",
+
+  "占位符": "这样我就不会忘记加逗号了"
+}
