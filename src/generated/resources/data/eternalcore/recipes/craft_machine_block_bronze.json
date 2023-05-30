@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:toolcrafting_shaped",
+  "group": "machine_machine_block",
+  "pattern": [
+    "X"
+  ],
+  "key": {
+    "X": {
+      "item": "eternalcore:bronze_machine_casing"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:machine_block",
+    "nbt": "{BlockEntityTag:{material:\"bronze\"}}"
+  }
+}

@@ -20,6 +20,8 @@ public class RGB {
     }
 
     public RGB transit(RGB other, double rate){
+        if (rate < 0) rate = 0;
+        if (rate > 1) rate = 1;
         return new RGB(
                 (int)(this.red * (1-rate) + other.red * rate),
                 (int)(this.green * (1-rate) + other.green * rate),

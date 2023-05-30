@@ -15,17 +15,17 @@ public class SmithingTableScreen extends ContainerScreen<SmithingTableContainer>
         super(container, inventory, title);
     }
 
-    public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        this.renderBackground(p_230430_1_);
-        super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-        this.renderTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    protected void renderBg(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(SMITHING_TABLE_LOCATION);
         int i = this.leftPos;
-        int j = (this.height - this.imageHeight) / 2;
-        this.blit(p_230450_1_, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        int j = this.topPos;
+        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

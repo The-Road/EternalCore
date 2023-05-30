@@ -1,6 +1,5 @@
 package com.road.eternalcore.registries;
 
-import com.road.eternalcore.client.gui.ModScreenManager;
 import com.road.eternalcore.common.block.ModBlockRegistries;
 import com.road.eternalcore.common.inventory.container.ModContainerRegistries;
 import com.road.eternalcore.common.item.ModItemRegistries;
@@ -19,6 +18,7 @@ public class ModRegistries {
     // 用于模组的各种注册内容
     public static void register(){
         final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        // bus.addListener(ClientSetupEventHandler::onSetupEvent);
         // 注册方块
         ModBlockRegistries.register(bus);
         // 注册方块实体
@@ -32,10 +32,8 @@ public class ModRegistries {
         GLMRegistry.GLM.register(bus);
         // 注册容器
         ModContainerRegistries.register(bus);
-        bus.addListener(ModScreenManager::init);
         // 注册世界生成
         MinecraftForge.EVENT_BUS.register(new ModRegistries());
-
     }
 
     @SubscribeEvent

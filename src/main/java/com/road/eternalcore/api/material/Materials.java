@@ -1,5 +1,6 @@
 package com.road.eternalcore.api.material;
 
+import com.road.eternalcore.Utils;
 import com.road.eternalcore.data.tags.ModTags;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import static com.road.eternalcore.api.material.MaterialShape.*;
 
 public class Materials {
-    protected static Map<String, Materials> materials = new HashMap<>();
+    protected static final Map<String, Materials> materials = new HashMap<>();
     // 无材质，用于设置一些默认值
     public static final Materials NULL = new Materials("", Type.OTHER){
         public String getDescriptionId(){
@@ -102,6 +103,7 @@ public class Materials {
         MaterialShape.init();
     }
 
+    // ----实例变量----
     protected final String name;
     protected final Type type;
     protected Set<MaterialShape> shapes = new HashSet<>();
@@ -113,6 +115,7 @@ public class Materials {
         }
         this.name = name;
         this.type = type;
+        // null不记录在用于查询和批量注册的材料中
         if (!name.isEmpty()) {
             materials.put(name, this);
         }
@@ -124,10 +127,7 @@ public class Materials {
     // 读取材料
     // ========
     public static Materials get(String name){
-        if (materials.containsKey(name)){
-            return materials.get(name);
-        }
-        return Materials.NULL;
+        return materials.getOrDefault(name, NULL);
     }
     public static Collection<Materials> getAllMaterials(){
         return materials.values();
@@ -167,7 +167,7 @@ public class Materials {
         this.isFireResistant = true;
         return this;
     }
-
+    // 获取属性
     public String getName(){
         return name;
     }
@@ -176,6 +176,16 @@ public class Materials {
     }
     public Type getType(){
         return type;
+    }
+    public Set<MaterialShape> getShapes(){
+        return shapes;
+    }
+    public Item.Properties getProperties(){
+        if (this.isFireResistant){
+            return new Item.Properties().fireResistant();
+        }else{
+            return new Item.Properties();
+        }
     }
     // 添加材料对应的种类
     protected Materials addShape(MaterialShape shape){
@@ -190,16 +200,6 @@ public class Materials {
             addShape(shape);
         }
         return this;
-    }
-    public Set<MaterialShape> getShapes(){
-        return shapes;
-    }
-    public Item.Properties getProperties(){
-        if (this.isFireResistant){
-            return new Item.Properties().fireResistant();
-        }else{
-            return new Item.Properties();
-        }
     }
 
     protected Materials setIngredientTag(Supplier<ITag<Item>> tag){
@@ -217,7 +217,7 @@ public class Materials {
     }
 
     public String getDescriptionId(){
-        return "eternalcore.materials." + this.getName();
+        return Utils.MOD_ID + ".materials." + this.getName();
     }
     public TranslationTextComponent getText(){
         return new TranslationTextComponent(getDescriptionId());

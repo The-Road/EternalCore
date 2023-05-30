@@ -1,6 +1,7 @@
 package com.road.eternalcore.common.item.block;
 
 import com.road.eternalcore.api.material.MaterialBlockData;
+import com.road.eternalcore.api.material.Materials;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public class MachineBlockItem extends ModBlockItem{
     public static MaterialBlockData getMaterialBlockData(ItemStack itemStack){
         CompoundNBT tileEntityTag = itemStack.getTagElement("BlockEntityTag");
         if (tileEntityTag != null && tileEntityTag.contains("material", 8)){
-            return MaterialBlockData.get(tileEntityTag.getString("material"));
+            return MaterialBlockData.get(Materials.get(tileEntityTag.getString("material")));
         }
         return MaterialBlockData.NULL;
     }

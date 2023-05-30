@@ -43,7 +43,6 @@ public class LockerTileEntity extends MachineTileEntity{
         if (!tryLoadLootTable(nbt)) {
             ItemStackHelper.loadAllItems(nbt, this.items);
         }
-
     }
     // IInventory接口
     public int getContainerSize(){
@@ -61,6 +60,7 @@ public class LockerTileEntity extends MachineTileEntity{
     protected Container createMenu(int containerId, PlayerInventory playerInventory) {
         return ChestContainer.sixRows(containerId, playerInventory, this);
     }
+    // 剩下的代码都是检测开箱状态用的
     public void startOpen(PlayerEntity player) {
         if (!player.isSpectator()){
             // 开箱人数+1
@@ -79,6 +79,7 @@ public class LockerTileEntity extends MachineTileEntity{
     }
     public void stopOpen(PlayerEntity player) {
         if (!player.isSpectator()) {
+            // 开箱人数-1
             this.openCount--;
         }
     }

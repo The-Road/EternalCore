@@ -14,7 +14,8 @@ public class ModContainerRegistries {
             "handcraft_assembly", HandcraftAssemblyContainer::new);
     public static final RegistryObject<ContainerType<SmithingTableContainer>> smithingTable = register(
             "smithing_table", SmithingTableContainer::new);
-
+    public static final RegistryObject<ContainerType<MachineBlockContainer>> machineBlock = register(
+            "machine_block", MachineBlockContainer::new);
     private static <T extends Container> RegistryObject<ContainerType<T>> register(String name, ContainerType.IFactory<T> factory){
         return CONTAINERS.register(name, () -> new ContainerType<>(factory));
     }

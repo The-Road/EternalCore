@@ -38,13 +38,13 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
     private static void addMachineRecipes(Consumer<IFinishedRecipe> consumer){
         addMachineCasingRecipes(consumer); // 机器外壳的合成配方
         addLockerRecipes(consumer);
+        addMachineBlockRecipes(consumer);
     }
     private static void addMachineCasingRecipes(Consumer<IFinishedRecipe> consumer){
         MachineBlocks.machine_casing.forEach((material, blockRegistry) -> {
             Block casing = blockRegistry.get();
             Item casingItem = BlockItems.get(casing);
             if (casingItem != null) {
-                System.out.println("craft_" + casingItem);
                 Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
                 ToolShapedRecipeBuilder.toolShaped(casingItem)
                         .toolUse(CraftToolType.WRENCH)
@@ -76,6 +76,26 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                     .group("machine_locker")
                     .unlockedBy("has_material", has(plateTag))
                     .save(consumer, "craft_locker_" + material);
+        });
+    }
+    private static void addMachineBlockRecipes(Consumer<IFinishedRecipe> consumer){
+        MachineBlocks.machine_casing.forEach((material, blockRegistry) -> {
+            Block casing = blockRegistry.get();
+            Item casingItem = BlockItems.get(casing);
+            if (casingItem != null) {
+                ToolShapedRecipeBuilder.toolShaped(MachineBlocks.machineBlock.get())
+                        .nbt((tag) -> {
+                            CompoundNBT blockTag = new CompoundNBT();
+                            blockTag.putString("material", material.getName());
+                            tag.put("BlockEntityTag", blockTag);
+                        })
+                        .toolUse(CraftToolType.WRENCH)
+                        .pattern("X")
+                        .define('X', casingItem)
+                        .group("machine_machine_block")
+                        .unlockedBy("has_machine_casing", has(casingItem))
+                        .save(consumer, "craft_machine_block_" + material);
+            }
         });
     }
     private static void addToolRecipes(Consumer<IFinishedRecipe> consumer){

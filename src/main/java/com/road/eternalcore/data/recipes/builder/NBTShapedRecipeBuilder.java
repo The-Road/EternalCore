@@ -78,7 +78,7 @@ public class NBTShapedRecipeBuilder extends RecipeBuilder {
             if (!set.isEmpty()) {
                 throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + id);
             } else if (this.rows.size() == 1 && this.rows.get(0).length() == 1) {
-                throw new IllegalStateException("Shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
+                //throw new IllegalStateException("Shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
             } else if (this.advancement.getCriteria().isEmpty()) {
                 throw new IllegalStateException("No way of obtaining recipe " + id);
             }

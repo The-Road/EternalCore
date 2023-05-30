@@ -1,11 +1,12 @@
 package com.road.eternalcore.api.energy.eu;
 
+import com.road.eternalcore.api.energy.CapEnergy;
+import com.road.eternalcore.api.energy.FEtoEUStorage;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.util.NonNullSupplier;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,8 +21,10 @@ public class ItemEUProvider implements ICapabilityProvider {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (Objects.equals(cap, CapabilityEnergy.ENERGY)){
+        if (Objects.equals(cap, CapEnergy.EU)) {
             return storage.cast();
+        }else if (Objects.equals(cap, CapEnergy.FE)) {
+            return storage.lazyMap(FEtoEUStorage::new).cast();
         }else {
             return LazyOptional.empty();
         }

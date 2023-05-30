@@ -6,7 +6,9 @@ import com.road.eternalcore.registries.BlockRegister;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ public class MachineBlocks {
     public static final Map<String, RegistryObject<Block>> machines = new HashMap<>();
 
     public static final RegistryObject<Block> locker = register("locker", LockerBlock::new);
+    public static final RegistryObject<Block> machineBlock = register("machine_block", MachineBlockBlock::new);
 
     private static void init(){
         registerMachineCasing();

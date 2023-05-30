@@ -37,7 +37,6 @@ public class HandcraftAssemblyScreen extends ContainerScreen<HandcraftAssemblyCo
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.widthTooNarrow, this.width, this.imageWidth);
             ((ImageButton)p_214076_1_).setPosition(this.leftPos + 5, this.height / 2 - 49);
         }));
-        this.titleLabelX = 29;
     }
 
     public void tick() {
@@ -45,31 +44,31 @@ public class HandcraftAssemblyScreen extends ContainerScreen<HandcraftAssemblyCo
         this.recipeBookComponent.tick();
     }
 
-    public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        this.renderBackground(p_230430_1_);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.renderBg(p_230430_1_, p_230430_4_, p_230430_2_, p_230430_3_);
-            this.recipeBookComponent.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
+            this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
+            this.recipeBookComponent.render(matrixStack, mouseX, mouseY, partialTicks);
         } else {
-            this.recipeBookComponent.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-            super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-            this.recipeBookComponent.renderGhostRecipe(p_230430_1_, this.leftPos, this.topPos, true, p_230430_4_);
+            this.recipeBookComponent.render(matrixStack, mouseX, mouseY, partialTicks);
+            super.render(matrixStack, mouseX, mouseY, partialTicks);
+            this.recipeBookComponent.renderGhostRecipe(matrixStack, this.leftPos, this.topPos, true, partialTicks);
         }
 
-        this.renderTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
-        this.recipeBookComponent.renderTooltip(p_230430_1_, this.leftPos, this.topPos, p_230430_2_, p_230430_3_);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.recipeBookComponent.renderTooltip(matrixStack, this.leftPos, this.topPos, mouseX, mouseY);
     }
 
-    protected void renderBg(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(CRAFTING_TABLE_LOCATION);
         int i = this.leftPos;
-        int j = (this.height - this.imageHeight) / 2;
-        this.blit(p_230450_1_, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        int j = this.topPos;
+        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
     }
 
-    protected boolean isHovering(int p_195359_1_, int p_195359_2_, int p_195359_3_, int p_195359_4_, double p_195359_5_, double p_195359_7_) {
-        return (!this.widthTooNarrow || !this.recipeBookComponent.isVisible()) && super.isHovering(p_195359_1_, p_195359_2_, p_195359_3_, p_195359_4_, p_195359_5_, p_195359_7_);
+    protected boolean isHovering(int slotX, int slotY, int slotWidth, int slotHeight, double mouseX, double mouseY) {
+        return (!this.widthTooNarrow || !this.recipeBookComponent.isVisible()) && super.isHovering(slotX, slotY, slotWidth, slotHeight, mouseX, mouseY);
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int mouseKey) {

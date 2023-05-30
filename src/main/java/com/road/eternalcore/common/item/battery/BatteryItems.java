@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.item.battery;
 
+import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.registries.ItemRegister;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -16,11 +17,11 @@ public class BatteryItems {
 
     private static void init(){
         registerDebugBattery("debug_battery");
-        registerBattery("test_battery", 10000, 32);
+        registerBattery("test_battery", 10000, EUTier.LV);
     }
-    private static void registerBattery(String name, int capacity, int voltage){
+    private static void registerBattery(String name, int capacity, EUTier euTier){
         RegistryObject<Item> item = ITEMS.register(
-                name, () -> new BatteryItem(capacity, voltage, new Item.Properties())
+                name, () -> new BatteryItem(capacity, euTier, new Item.Properties())
         );
         map.put(name, item);
     }

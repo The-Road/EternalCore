@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.BarrelTileEntity;
+import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -72,7 +72,7 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         if (itemStack.hasCustomHoverName()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
             if (TileEntityMatch(tileEntity)) {
-                ((BarrelTileEntity)tileEntity).setCustomName(itemStack.getHoverName());
+                ((LockableTileEntity)tileEntity).setCustomName(itemStack.getHoverName());
             }
         }
 
@@ -82,6 +82,7 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         return BlockRenderType.MODEL;
     }
 
+    // 四面朝向的机器正面不可接入覆盖板和电线（视为拥有覆盖板），六面朝向的机器正面是输出口
     protected abstract DirectionProperty facingType();
     public BlockState getStateForPlacement(BlockItemUseContext useContext) {
         if (facingType() == BlockStateProperties.FACING){

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class MaterialBlockData {
     // 管理方块属性，包括硬度和爆炸抗性之类的
-    protected static Map<Materials, MaterialBlockData> materialBlockData = new HashMap<>();
+    protected static final Map<Materials, MaterialBlockData> materialBlockData = new HashMap<>();
     public static final MaterialBlockData NULL = new MaterialBlockData(Materials.NULL)
             .block(5.0F, 6.0F)
             .hull(3.0F, 4.8F);
@@ -35,13 +35,10 @@ public class MaterialBlockData {
         return materialBlockData;
     }
     public static MaterialBlockData get(String name){
-        return materialBlockData.get(Materials.get(name));
+        return materialBlockData.getOrDefault(Materials.get(name), NULL);
     }
     public static MaterialBlockData get(Materials material){
-        if (materialBlockData.containsKey(material)) {
-            return materialBlockData.get(material);
-        }
-        return MaterialBlockData.NULL;
+        return materialBlockData.getOrDefault(material, NULL);
     }
     public Materials getMaterial() {
         return material;

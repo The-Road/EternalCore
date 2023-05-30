@@ -8,12 +8,29 @@
   "block.eternalcore.smithing_table": "锻造台",
   "block.eternalcore.machine_casing": "%s机器外壳",
   "block.eternalcore.locker": "储物柜",
+  "block.eternalcore.machine_block": "机器方块",
 
   "itemGroup.eternalcore.material_group":"永恒核心 材料",
 
   "itemGroup.eternalcore.tool_group":"永恒核心 工具",
   "item.eternalcore.pickaxe": "%s镐",
   "item.eternalcore.hammer": "%s锤",
+
+  "eternalcore.eu.tier.ulv": "超低压",
+  "eternalcore.eu.tier.lv": "低压",
+  "eternalcore.eu.tier.mv": "中压",
+  "eternalcore.eu.tier.hv": "高压",
+  "eternalcore.eu.tier.ev": "超高压",
+  "eternalcore.eu.tier.iv": "特高压",
+  "eternalcore.eu.tier.luv": "剧差压",
+  "eternalcore.eu.tier.zpm": "零点压",
+  "eternalcore.eu.tier.uv": "极限压",
+  "eternalcore.eu.tier.elv": "永恒低压",
+  "eternalcore.eu.tier.emv": "永恒中压",
+  "eternalcore.eu.tier.ehv": "永恒高压",
+  "eternalcore.eu.tier.eev": "永恒超高压",
+  "eternalcore.eu.tier.eiv": "永恒特高压",
+  "eternalcore.eu.tier.max": "上限压",
 
   "eternalcore.materials.null": "",
   "eternalcore.materials.iron": "铁",
@@ -55,15 +72,28 @@
   "eternalcore.toolTip.tool.attackSpeed": "攻击速度: %s",
   "eternalcore.toolTip.block.material": "材质: %s",
 
-  "eternalcore.debugTool.blockTitle": "-----<方块信息>-----",
-  "eternalcore.debugTool.blockName": "方块: %s",
-  "eternalcore.debugTool.blockMaterial": "材质: %s",
-  "eternalcore.debugTool.blockDestroyTime": "硬度: %s",
-  "eternalcore.debugTool.blockExplosionResistance": "爆炸抗性: %s",
+  "eternalcore.debugTool.block.title": "-----<方块信息>-----",
+  "eternalcore.debugTool.block.name": "方块: %s",
+  "eternalcore.debugTool.block.material": "材质: %s",
+  "eternalcore.debugTool.block.destroyTime": "硬度: %s",
+  "eternalcore.debugTool.block.explosionResistance": "爆炸抗性: %s",
+  "eternalcore.debugTool.tileEntity.title": "-----<方块实体信息>-----",
+  "eternalcore.debugTool.tileEntity.euTier": "电压等级: %s",
+  "eternalcore.debugTool.tileEntity.euStorage": "当前储电量: %s",
+  "eternalcore.debugTool.tileEntity.euMaxStorage": "最大储电量: %s",
+  "eternalcore.debugTool.livingEntity.title": "-----<生物实体信息>-----",
+  "eternalcore.debugTool.livingEntity.attributes": "属性：",
+  "eternalcore.debugTool.livingEntity.attribute": "%s: %s",
+  "eternalcore.debugTool.livingEntity.attribute.modifier": "  %s: %s %s",
+
+  "attribute.modifier.operation.0": "增减",
+  "attribute.modifier.operation.1": "百分比",
+  "attribute.modifier.operation.2": "倍率",
 
   "container.eternalcore.handcraft_assembly_table": "手工装配台",
   "container.eternalcore.smithing_table": "锻造台",
   "container.eternalcore.locker": "储物柜",
+  "container.eternalcore.machine_block": "机器方块",
 
   "占位符": "这样我就不会忘记加逗号了"
 }

@@ -38,8 +38,9 @@ public class ModBlockModelProvider extends BlockModelProvider{
     protected ResourceLocation modBlock(String name){
         return modLoc(BLOCK_FOLDER + "/" + name);
     }
+    // 机器的侧面材质（统一的）
     protected ResourceLocation machineSide(){
-        return modLoc(BLOCK_FOLDER + "/machine/block_machine");
+        return modLoc(BLOCK_FOLDER + "/machine/machine_block");
     }
 
     @Override
@@ -101,6 +102,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
     private void addMachines(){
         addMachineCasing();
         addOrientableMachine(MachineBlocks.locker.get(), mcBlock("carved_pumpkin"));
+        addOrientableMachine(MachineBlocks.machineBlock.get(), modBlock("machine/machine_block_face"));
     }
     private void addMachineCasing(){
         MachineBlocks.machine_casing.forEach((material, blockRegistryObject) -> {
@@ -139,6 +141,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
     protected void addCubeAll(Block block, ResourceLocation texture){
         generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
     }
+    // 有朝向的机器，提供正面材质，剩下的材质是机器方块默认材质
     protected void addOrientableMachine(Block block, ResourceLocation face){
         generatedModels.put(block.getRegistryName(), orientable(
                 ModBlocks.getBlockName(block),

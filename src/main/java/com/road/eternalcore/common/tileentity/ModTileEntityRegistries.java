@@ -19,6 +19,11 @@ public class ModTileEntityRegistries {
             LockerTileEntity::new,
             MachineBlocks.locker
     );
+    public static final RegistryObject<TileEntityType<MachineBlockTileEntity>> machineBlock = register(
+            "machine_block",
+            MachineBlockTileEntity::new,
+            MachineBlocks.machineBlock
+    );
 
     public static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String name, Supplier<T> supplier, RegistryObject<Block> block){
         return TILE_ENTITY.register(name, () -> TileEntityType.Builder.of(supplier, block.get()).build(null));

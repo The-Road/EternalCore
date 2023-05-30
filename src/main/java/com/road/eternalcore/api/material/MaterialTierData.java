@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class MaterialTierData {
-    protected static Map<Materials, MaterialTierData> materialTierData = new HashMap<>();
-    // 此处和Materials中的材料一一对应
+    // 记录材料的工具和锻造等级
+    protected static final Map<Materials, MaterialTierData> materialTierData = new HashMap<>();
     public static final MaterialTierData NULL = new MaterialTierData(Materials.NULL).tier(
             2, 256, 6.0F, 2.0F, 14
     );
@@ -60,13 +60,10 @@ public class MaterialTierData {
         return materialTierData;
     }
     public static MaterialTierData get(String name){
-        return materialTierData.get(Materials.get(name));
+        return materialTierData.getOrDefault(Materials.get(name), NULL);
     }
     public static MaterialTierData get(Materials material){
-        if (materialTierData.containsKey(material)) {
-            return materialTierData.get(material);
-        }
-        return MaterialTierData.NULL;
+       return materialTierData.getOrDefault(material, NULL);
     }
     public Materials getMaterial(){
         return material;

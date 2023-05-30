@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class MaterialShape {
-    protected static Map<String, MaterialShape> shapes = new HashMap<>();
+    protected static final Map<String, MaterialShape> shapes = new HashMap<>();
     public static MaterialShape INGOT = new MaterialShape("ingot"); //锭
     public static MaterialShape HOT_INGOT = new MaterialShape("hot_ingot", "hot_%s_ingot"); //热锭
     public static MaterialShape GEM = new MaterialShape("gem", "%s"); //宝石
