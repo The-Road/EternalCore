@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:impure_dusts/copper",
-    "#forge:impure_dusts/tin"
+    "#forge:impure_dusts/tin",
+    "#forge:impure_dusts/copper"
   ]
 }

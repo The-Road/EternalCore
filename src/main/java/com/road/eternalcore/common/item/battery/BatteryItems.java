@@ -18,6 +18,7 @@ public class BatteryItems {
     private static void init(){
         registerDebugBattery("debug_battery");
         registerBattery("test_battery", 10000, EUTier.LV);
+        registerBattery("test_mv_battery", 100000, EUTier.MV);
     }
     private static void registerBattery(String name, int capacity, EUTier euTier){
         RegistryObject<Item> item = ITEMS.register(

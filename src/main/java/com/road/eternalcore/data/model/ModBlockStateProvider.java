@@ -52,6 +52,8 @@ public class ModBlockStateProvider extends BlockStateProvider{
     }
     private void addMachines(){
         addMachineCasing();
+        // 其他机器的方法，待添加
+
     }
     private void addMachineCasing(){
         MachineBlocks.machine_casing.forEach((material, blockRegistryObject) -> {

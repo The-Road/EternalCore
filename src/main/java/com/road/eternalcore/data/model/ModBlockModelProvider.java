@@ -12,11 +12,13 @@ import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.ore.OreBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
+import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 
@@ -28,6 +30,7 @@ import java.util.function.Supplier;
 
 public class ModBlockModelProvider extends BlockModelProvider{
     private final JsonObject missingTexture = new JsonObject();
+    protected BlockModelBuilder machineCasingLayer;
 
     public ModBlockModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Utils.MOD_ID, existingFileHelper);
@@ -38,9 +41,12 @@ public class ModBlockModelProvider extends BlockModelProvider{
     protected ResourceLocation modBlock(String name){
         return modLoc(BLOCK_FOLDER + "/" + name);
     }
-    // 机器的侧面材质（统一的）
-    protected ResourceLocation machineSide(){
-        return modLoc(BLOCK_FOLDER + "/machine/machine_block");
+    // 机器的材质（统一的）
+    protected ResourceLocation machineSide(String name){
+        return modLoc(BLOCK_FOLDER + "/machine/side/" + name);
+    }
+    protected ResourceLocation machineFace(String name){
+        return modLoc(BLOCK_FOLDER + "/machine/face/" + name);
     }
 
     @Override
@@ -101,8 +107,8 @@ public class ModBlockModelProvider extends BlockModelProvider{
     }
     private void addMachines(){
         addMachineCasing();
-        addOrientableMachine(MachineBlocks.locker.get(), mcBlock("carved_pumpkin"));
-        addOrientableMachine(MachineBlocks.machineBlock.get(), modBlock("machine/machine_block_face"));
+        addOrientableMachine2(MachineBlocks.locker.get(), "locker");
+        addOrientableMachine(MachineBlocks.machineBlock.get(), "machine_block");
     }
     private void addMachineCasing(){
         MachineBlocks.machine_casing.forEach((material, blockRegistryObject) -> {
@@ -121,6 +127,8 @@ public class ModBlockModelProvider extends BlockModelProvider{
                 missingMachine.getAsJsonArray("casing").add(material.getName());
             }
         });
+        // 添加铁外壳作为默认的机器外壳材质
+        this.machineCasingLayer = withExistingParent("machine_casing_layer", modLoc("iron_machine_casing"));
     }
 
     protected void add(Block block, Supplier<BlockModelBuilder> sup){
@@ -141,11 +149,48 @@ public class ModBlockModelProvider extends BlockModelProvider{
     protected void addCubeAll(Block block, ResourceLocation texture){
         generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
     }
-    // 有朝向的机器，提供正面材质，剩下的材质是机器方块默认材质
-    protected void addOrientableMachine(Block block, ResourceLocation face){
-        generatedModels.put(block.getRegistryName(), orientable(
-                ModBlocks.getBlockName(block),
-                machineSide(), face, machineSide()
-        ).texture("particle", machineSide()));
+    // 有朝向的机器，提供正面材质和侧面材质（注意该材质是贴在机器外壳材质上面一层的）
+    protected void addOrientableMachine(Block block, String faceName) {
+        addOrientableMachine(block, faceName, "empty");
+    }
+    protected void addOrientableMachine(Block block, String faceName, String sideName){
+        ResourceLocation side = machineSide(sideName);
+        generatedModels.put(block.getRegistryName(), withExistingParent(
+                ModBlocks.getBlockName(block), BLOCK_FOLDER + "/block")
+                .texture("particle", side)
+                .customLoader(MultiLayerModelBuilder::begin)
+                .submodel(RenderType.solid(), machineCasingLayer)
+                .submodel(RenderType.cutoutMipped(), orientable(
+                                ModBlocks.getBlockName(block) + "_layer1",
+                                side, machineFace(faceName), side
+                        )
+                ).end()
+        );
+    }
+    protected void addOrientableMachine2(Block block, String faceName) {
+        addOrientableMachine2(block, faceName, "empty");
+    }
+    protected void addOrientableMachine2(Block block, String faceName, String sideName){
+        ResourceLocation side = machineSide(sideName);
+        generatedModels.put(block.getRegistryName(), withExistingParent(
+                ModBlocks.getBlockName(block), BLOCK_FOLDER + "/block")
+                .texture("particle", side)
+                .customLoader(MultiLayerModelBuilder::begin)
+                .submodel(RenderType.solid(), machineCasingLayer)
+                .submodel(RenderType.cutoutMipped(), orientable(
+                        ModBlocks.getBlockName(block) + "_layer1",
+                        side, machineFace(faceName), side
+                        )
+                ).end()
+        );
+    }
+    protected void addTest(Block block){
+        generatedModels.put(block.getRegistryName(), withExistingParent(
+                ModBlocks.getBlockName(block), BLOCK_FOLDER + "/block")
+                .customLoader(MultiLayerModelBuilder::begin)
+                .submodel(RenderType.solid(), machineCasingLayer)
+                .submodel(RenderType.cutoutMipped(), withExistingParent("machine_block_layer1", modLoc("machine_block")))
+                .end()
+        );
     }
 }

@@ -7,6 +7,7 @@ import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.common.tileentity.EnergyMachineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -76,6 +77,7 @@ public class DebugToolItem extends Item {
                 teMsgHelper.msg("euMaxStorage", energyMachineTileEntity.getMaxEnergyStored());
             }
         }
+        msgHelper.msgT(String.valueOf(Minecraft.getInstance().getBlockRenderer().getBlockModel(blockstate)));
         return ActionResultType.SUCCESS;
     }
 

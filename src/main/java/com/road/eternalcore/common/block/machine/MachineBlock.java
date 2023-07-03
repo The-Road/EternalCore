@@ -1,6 +1,9 @@
 package com.road.eternalcore.common.block.machine;
 
+import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
+import com.road.eternalcore.api.material.Materials;
+import com.road.eternalcore.common.item.block.MachineBlockItem;
 import com.road.eternalcore.common.stats.ModStats;
 import com.road.eternalcore.common.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
@@ -85,15 +88,18 @@ public abstract class MachineBlock extends AbstractMachineBlock{
     // 四面朝向的机器正面不可接入覆盖板和电线（视为拥有覆盖板），六面朝向的机器正面是输出口
     protected abstract DirectionProperty facingType();
     public BlockState getStateForPlacement(BlockItemUseContext useContext) {
+        BlockState blockState = this.defaultBlockState();
+        Materials material = MachineBlockItem.getMaterialBlockData(useContext.getItemInHand()).getMaterial();
+        blockState = ModBlockStateProperties.MachineMaterial.setBlockStateProperty(blockState, material);
         if (facingType() == BlockStateProperties.FACING){
-            return this.defaultBlockState().setValue(facingType(), useContext.getNearestLookingDirection().getOpposite());
+            blockState = blockState.setValue(facingType(), useContext.getNearestLookingDirection().getOpposite());
+        } else if (facingType() == BlockStateProperties.HORIZONTAL_FACING){
+            blockState = blockState.setValue(facingType(), useContext.getHorizontalDirection().getOpposite());
         }
-        if (facingType() == BlockStateProperties.HORIZONTAL_FACING){
-            return this.defaultBlockState().setValue(facingType(), useContext.getHorizontalDirection().getOpposite());
-        }
-        return super.getStateForPlacement(useContext);
+        return blockState;
     }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(ModBlockStateProperties.MachineMaterial);
         builder.add(facingType());
     }
     public BlockState rotate(BlockState blockState, Rotation rotation) {

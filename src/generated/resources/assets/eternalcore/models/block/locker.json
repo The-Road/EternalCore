@@ -1,9 +1,20 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/block",
   "textures": {
-    "side": "eternalcore:block/machine/block_machine",
-    "front": "minecraft:block/carved_pumpkin",
-    "top": "eternalcore:block/machine/block_machine",
-    "particle": "eternalcore:block/machine/block_machine"
+    "particle": "eternalcore:block/machine/side/empty"
+  },
+  "loader": "forge:multi-layer",
+  "layers": {
+    "solid": {
+      "parent": "eternalcore:block/iron_machine_casing"
+    },
+    "cutout_mipped": {
+      "parent": "minecraft:block/orientable",
+      "textures": {
+        "side": "eternalcore:block/machine/side/empty",
+        "front": "eternalcore:block/machine/face/locker",
+        "top": "eternalcore:block/machine/side/empty"
+      }
+    }
   }
 }

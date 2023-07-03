@@ -13,6 +13,7 @@ public class CraftingToolSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack itemStack) {
+        // 判断是否为工具物品，这里没有用CraftToolType的match（因为太麻烦）
         Item item = itemStack.getItem();
         if (item instanceof CustomTierItem){
            return ((CustomTierItem) item).forCrafting();

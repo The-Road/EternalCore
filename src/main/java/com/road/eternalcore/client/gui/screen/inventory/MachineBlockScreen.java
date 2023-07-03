@@ -3,6 +3,7 @@ package com.road.eternalcore.client.gui.screen.inventory;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.road.eternalcore.api.energy.EnergyUtils;
+import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.common.inventory.container.MachineBlockContainer;
 import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -28,9 +29,9 @@ public class MachineBlockScreen extends ContainerScreen<MachineBlockContainer> {
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
+        renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
         renderEnergyRateTooltip(matrixStack, mouseX, mouseY);
     }
 
@@ -45,7 +46,7 @@ public class MachineBlockScreen extends ContainerScreen<MachineBlockContainer> {
     protected void renderEnergyRateTooltip(MatrixStack matrixStack, int mouseX, int mouseY){
         // 移到电量槽上时显示当前机器储电量
         if (this.minecraft.player.inventory.getCarried().isEmpty() && energyBarRect.contains(mouseX - this.leftPos, mouseY - this.topPos)){
-            renderTooltip(matrixStack, EnergyUtils.energyStorageText(this.menu.getEnergy(), this.menu.getMaxEnergy()), mouseX, mouseY);
+            renderTooltip(matrixStack, EnergyUtils.energyStorageText(EUTier.tier(this.menu.getTierLevel()), this.menu.getEnergy(), this.menu.getMaxEnergy()), mouseX, mouseY);
         }
     }
     protected void renderEnergyBar(MatrixStack matrixStack){

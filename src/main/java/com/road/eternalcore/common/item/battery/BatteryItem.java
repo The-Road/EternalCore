@@ -1,8 +1,10 @@
 package com.road.eternalcore.common.item.battery;
 
 import com.road.eternalcore.api.RGB;
+import com.road.eternalcore.api.energy.CapEnergy;
 import com.road.eternalcore.api.energy.EnergyUtils;
 import com.road.eternalcore.api.energy.eu.EUTier;
+import com.road.eternalcore.api.energy.eu.IEUStorage;
 import com.road.eternalcore.api.energy.eu.ItemEUProvider;
 import com.road.eternalcore.api.energy.eu.ItemEUStorage;
 import com.road.eternalcore.common.item.group.ModGroup;
@@ -13,23 +15,18 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import com.road.eternalcore.api.energy.CapEnergy;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class BatteryItem extends Item {
-    private int maxEnergy;
-    private EUTier euTier;
-    // 充电过程的材质变化
-    public static final String ChargeLevel = "charge_level";
+    private final int maxEnergy;
+    private final EUTier euTier;
     public static final IItemPropertyGetter GetChargeLevel = (itemStack, clientWorld, livingEntity) -> getChargeLevel(itemStack);
 
     public BatteryItem(int maxEnergy, EUTier euTier, Properties properties) {
@@ -39,19 +36,19 @@ public class BatteryItem extends Item {
     }
     // 获取当前充电程度
     public static int getChargeLevel(ItemStack itemStack){
-        AtomicInteger result = new AtomicInteger();
-        itemStack.getCapability(CapEnergy.EU).ifPresent(storage -> {
+        IEUStorage storage = itemStack.getCapability(CapEnergy.EU).orElse(null);
+        if (storage != null){
             int energyStored = storage.getEnergyStored();
             int maxEnergy = storage.getMaxEnergyStored();
             if (energyStored == maxEnergy){
-                result.set(5);
+                return 5;
             } else if (energyStored == 0) {
-                result.set(0);
+                return 0;
             } else {
-                result.set(1 + (int)(4.0 * energyStored / maxEnergy));
+                return 1 + (int)(4.0 * energyStored / maxEnergy);
             }
-        });
-        return result.get();
+        }
+        return 0;
     }
 
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
@@ -63,7 +60,7 @@ public class BatteryItem extends Item {
         itemStack.getCapability(CapEnergy.EU).ifPresent(storage -> {
             int energy = storage.getEnergyStored();
             int maxEnergy = storage.getMaxEnergyStored();
-            list.add(EnergyUtils.energyStorageText(energy, maxEnergy));
+            list.add(EnergyUtils.energyStorageText(storage.getTier(), energy, maxEnergy));
         });
     }
     // 添加没电和满电两种电池
@@ -82,11 +79,11 @@ public class BatteryItem extends Item {
         return stack.getCapability(CapEnergy.EU).isPresent();
     }
     public double getDurabilityForDisplay(ItemStack stack){
-        AtomicReference<Double> energyRate = new AtomicReference<>(0.0);
-        stack.getCapability(CapEnergy.EU).ifPresent(storage -> {
-            energyRate.set(1.0 - 1.0 * storage.getEnergyStored() / storage.getMaxEnergyStored());
-        });
-        return energyRate.get();
+        IEUStorage storage = stack.getCapability(CapEnergy.EU).orElse(null);
+        if (storage != null){
+            return 1.0 - 1.0 * storage.getEnergyStored() / storage.getMaxEnergyStored();
+        }
+        return 0;
     }
     public int getRGBDurabilityForDisplay(ItemStack stack){
         return new RGB(0, 170, 255).getColorValue();

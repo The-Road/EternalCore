@@ -1,9 +1,10 @@
 package com.road.eternalcore.common.tileentity;
 
+import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.tileentity.data.MachineCover;
-import com.road.eternalcore.common.tileentity.data.TileEntityCovers;
+import com.road.eternalcore.common.tileentity.data.MachineTileEntityCoverData;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.LockableLootTileEntity;
@@ -11,7 +12,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 
 public abstract class MachineTileEntity extends LockableLootTileEntity {
-    protected TileEntityCovers covers = new TileEntityCovers(this);
+    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
@@ -37,6 +38,17 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
         if (nbt.contains("material", 8)){
             Materials material = Materials.get(nbt.getString("material"));
             blockData = MaterialBlockData.get(material);
+        }
+    }
+
+    // 更改材料，同时更新方块状态
+    public void setMaterial(Materials material){
+        blockData = MaterialBlockData.get(material);
+        BlockState blockState = getBlockState();
+        if (blockState.hasProperty(ModBlockStateProperties.MachineMaterial)) {
+            if (Materials.get(blockState.getValue(ModBlockStateProperties.MachineMaterial)) != material) {
+                this.level.setBlock(getBlockPos(), ModBlockStateProperties.MachineMaterial.setBlockStateProperty(blockState, material), 3);
+            }
         }
     }
     public Materials getMaterial(){

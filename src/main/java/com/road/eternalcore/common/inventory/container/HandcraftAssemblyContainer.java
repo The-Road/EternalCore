@@ -162,8 +162,8 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
             if (itemStack.getCount() == itemStackCopy.getCount()) {
                 return ItemStack.EMPTY;
             }
-
             ItemStack itemstack2 = slot.onTake(player, itemStack);
+            // 如果合成产物只成功移动了一部分，那么剩下的会掉到地上
             if (slotId == 0) {
                 player.drop(itemstack2, false);
             }

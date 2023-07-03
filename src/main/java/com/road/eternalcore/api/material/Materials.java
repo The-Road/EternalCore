@@ -110,6 +110,9 @@ public class Materials {
     protected boolean isFireResistant = false;
     protected LazyValue<ITag<Item>> customIngredientTag;
     public Materials(String name, Type type){
+        if (Objects.equals(name, "null")){
+            throw new IllegalStateException("Cannot register null as material name.");
+        }
         if (materials.containsKey(name)){
             throw new IllegalStateException("Material "+name+" has already existed!");
         }

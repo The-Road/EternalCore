@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Utils.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class CommonSetupEventHandler {
+public class CommonEventHandler {
     @SubscribeEvent
     public static void onSetUpEvent(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {

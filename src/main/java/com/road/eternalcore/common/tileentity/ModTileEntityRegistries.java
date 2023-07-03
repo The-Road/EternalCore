@@ -10,6 +10,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class ModTileEntityRegistries {
@@ -25,8 +26,8 @@ public class ModTileEntityRegistries {
             MachineBlocks.machineBlock
     );
 
-    public static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String name, Supplier<T> supplier, RegistryObject<Block> block){
-        return TILE_ENTITY.register(name, () -> TileEntityType.Builder.of(supplier, block.get()).build(null));
+    public static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String name, Supplier<T> supplier, RegistryObject<Block>... blocks){
+        return TILE_ENTITY.register(name, () -> TileEntityType.Builder.of(supplier, Arrays.stream(blocks).map(RegistryObject::get).toArray(Block[]::new)).build(null));
     }
     public static void register(IEventBus bus) {
         TILE_ENTITY.register(bus);

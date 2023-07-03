@@ -11,7 +11,7 @@ public class ModItemModelsProperties {
         for(Item item :ModItems.getAll()){
             // 给电池物品添加电量标记
             if (item instanceof BatteryItem){
-                registerProperty(item, BatteryItem.ChargeLevel, BatteryItem.GetChargeLevel);
+                registerProperty(item, "charge_level", BatteryItem.GetChargeLevel);
             }
         }
     }

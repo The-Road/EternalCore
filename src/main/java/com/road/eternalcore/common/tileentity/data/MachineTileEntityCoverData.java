@@ -1,6 +1,7 @@
 package com.road.eternalcore.common.tileentity.data;
 
 import com.road.eternalcore.common.tileentity.MachineTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -9,11 +10,11 @@ import net.minecraft.util.Direction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TileEntityCovers {
+public class MachineTileEntityCoverData {
     private Map<Direction, MachineCover> covers = new HashMap<>();
     private final MachineTileEntity tileEntity;
 
-    public TileEntityCovers(MachineTileEntity tileEntity){
+    public MachineTileEntityCoverData(MachineTileEntity tileEntity){
         this.tileEntity = tileEntity;
     }
     public MachineCover getCover(Direction direction){
@@ -25,20 +26,25 @@ public class TileEntityCovers {
         }
     }
     private Direction checkFace(){
-        if (tileEntity.getBlockState().getProperties().contains(BlockStateProperties.HORIZONTAL_FACING)){
-            Direction faceDirection = tileEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-            if (getCover(faceDirection) != MachineCover.FACE){
+        // 返回机器正面的朝向
+        BlockState blockState = tileEntity.getBlockState();
+        Direction facing = null;
+        if (blockState.getProperties().contains(BlockStateProperties.FACING)){
+            facing = blockState.getValue(BlockStateProperties.FACING);
+        } else if (blockState.getProperties().contains(BlockStateProperties.HORIZONTAL_FACING)){
+            facing = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        }
+        if (facing != null) {
+            if (getCover(facing) != MachineCover.FACE){
                 for (Map.Entry<Direction, MachineCover> entry : covers.entrySet()){
                     if (entry.getValue() == MachineCover.FACE){
                         covers.remove(entry.getKey());
                     }
                 }
-                covers.put(faceDirection, MachineCover.FACE);
+                covers.put(facing, MachineCover.FACE);
             }
-            return faceDirection;
-        } else {
-            return null;
         }
+        return facing;
     }
 
     public void load(ListNBT listNBT){

@@ -15,6 +15,8 @@ public class EnergyMachineGUIData implements IIntArray {
                 return tileEntity.getEnergyStored();
             case 1:
                 return tileEntity.getMaxEnergyStored();
+            case 2:
+                return tileEntity.getTier().getLevel();
             default:
                 return 0;
         }
@@ -25,6 +27,6 @@ public class EnergyMachineGUIData implements IIntArray {
     }
 
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

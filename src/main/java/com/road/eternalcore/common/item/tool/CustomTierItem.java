@@ -2,6 +2,7 @@ package com.road.eternalcore.common.item.tool;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.road.eternalcore.Constant;
 import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.material.Materials;
 import net.minecraft.block.BlockState;
@@ -39,7 +40,6 @@ public class CustomTierItem extends Item {
     protected float atkSpeed; // 面板攻速（表示每秒的攻击次数），MC原版获取物品的getAttackSpeed的时候会-4
 
     protected boolean onlyForCrafting; // 不可用于破坏方块或打怪的工具，这类工具在挖掘或攻击时不会掉耐久，也不会显示挖掘等级、挖掘速度、攻击力和攻速
-    public static final String DURABILITY_DECIMAL = "durabilityDecimal"; // 存储耐久尾数的NBT标签名称
     public static final int DEFAULT_DURABILITY_SUBDIVIDE = 20; // 每一点耐久的细分程度
 
     public CustomTierItem(Properties itemProperties){
@@ -56,20 +56,20 @@ public class CustomTierItem extends Item {
         // 其实只要有耐久的物品都可以用
         int damage = 0;
         CompoundNBT tag = itemStack.getOrCreateTag();
-        int lastDecimal = tag.getInt(DURABILITY_DECIMAL);
+        int lastDecimal = tag.getInt(Constant.Durability_decimal);
         int binary = getBinary(itemStack);
         lastDecimal += damageDecimal;
         damage = lastDecimal / binary;
         lastDecimal %= binary;
-        tag.putInt(DURABILITY_DECIMAL, lastDecimal);
+        tag.putInt(Constant.Durability_decimal, lastDecimal);
         return damage;
     }
     public static void addItemDamageNoUpdate(ItemStack itemStack, int damageDecimal){
         // 只增加耐久尾数，不刷新耐久度
         CompoundNBT tag = itemStack.getOrCreateTag();
-        int lastDecimal = tag.getInt(DURABILITY_DECIMAL);
+        int lastDecimal = tag.getInt(Constant.Durability_decimal);
         lastDecimal += damageDecimal;
-        tag.putInt(DURABILITY_DECIMAL, lastDecimal);
+        tag.putInt(Constant.Durability_decimal, lastDecimal);
     }
     public static int getBinary(ItemStack itemStack){
         // 耐久附魔的效果改为每一级固定增加50%耐久

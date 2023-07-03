@@ -19,8 +19,8 @@ public class MachineBlocks {
     public static final Map<Materials, RegistryObject<Block>> machine_casing = new HashMap<>();
     public static final Map<String, RegistryObject<Block>> machines = new HashMap<>();
 
-    public static final RegistryObject<Block> locker = register("locker", LockerBlock::new);
-    public static final RegistryObject<Block> machineBlock = register("machine_block", MachineBlockBlock::new);
+    public static final RegistryObject<Block> locker = registerMachine("locker", LockerBlock::new);
+    public static final RegistryObject<Block> machineBlock = registerMachine("machine_block", MachineBlockBlock::new);
 
     private static void init(){
         registerMachineCasing();
@@ -35,14 +35,21 @@ public class MachineBlocks {
             machine_casing.put(material, casing);
         });
     }
-
-    private static RegistryObject<Block> register(final String name, final Supplier<? extends Block> sup){
+    private static RegistryObject<Block> registerMachine(final String name, final Supplier<? extends Block> sup){
         RegistryObject<Block> machine = BLOCKS.registerFunctional(name, sup);
         machines.put(name, machine);
         return machine;
     }
+
     public static Collection<Block> getAll(){
         return machines.values().stream().map(RegistryObject::get).collect(Collectors.toList());
+    }
+    public static Block getMachineCasing(Materials material){
+        if (machine_casing.containsKey(material)){
+            return machine_casing.get(material).get();
+        }
+        // 默认材质为铁
+        return machine_casing.get(Materials.IRON).get();
     }
 
     static{init();}

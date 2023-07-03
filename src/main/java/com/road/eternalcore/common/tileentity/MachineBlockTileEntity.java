@@ -13,7 +13,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -25,25 +24,6 @@ public class MachineBlockTileEntity extends EnergyMachineTileEntity implements I
 
     protected NonNullList<ItemStack> items;
     protected final EnergyMachineGUIData guiData = new EnergyMachineGUIData(this);
-    protected final IIntArray guiData2 = new IIntArray() {
-        public int get(int i) {
-            switch (i) {
-                case 0:
-                    return MachineBlockTileEntity.this.getEnergyStored();
-                case 1:
-                    return MachineBlockTileEntity.this.getMaxEnergyStored();
-                default:
-                    return 0;
-            }
-        }
-
-        public void set(int p_221477_1_, int p_221477_2_) {
-        }
-
-        public int getCount() {
-            return 2;
-        }
-    };
     public MachineBlockTileEntity(int containerSize){
         super(ModTileEntityType.machineBlock);
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
