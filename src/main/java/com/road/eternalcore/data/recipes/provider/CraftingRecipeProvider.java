@@ -1,6 +1,7 @@
 package com.road.eternalcore.data.recipes.provider;
 
 import com.google.common.collect.Sets;
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.MaterialTierData;
@@ -64,7 +65,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
             ToolShapedRecipeBuilder.toolShaped(MachineBlocks.locker.get())
                     .nbt((tag) -> {
                         CompoundNBT blockTag = new CompoundNBT();
-                        blockTag.putString("material", material.getName());
+                        blockTag.putString(ModConstant.Material, material.getName());
                         tag.put("BlockEntityTag", blockTag);
                     })
                     .toolUse(CraftToolType.WRENCH)
@@ -86,7 +87,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                 ToolShapedRecipeBuilder.toolShaped(MachineBlocks.machineBlock.get())
                         .nbt((tag) -> {
                             CompoundNBT blockTag = new CompoundNBT();
-                            blockTag.putString("material", material.getName());
+                            blockTag.putString(ModConstant.Material, material.getName());
                             tag.put("BlockEntityTag", blockTag);
                         })
                         .toolUse(CraftToolType.WRENCH)
@@ -113,7 +114,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                 // 添加软锤
                 if (tierData.isByHand()){
                     NBTShapedRecipeBuilder.shaped(ModItems.softHammer)
-                            .nbt((tag) -> tag.putString("material", material.getName()))
+                            .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()))
                             .pattern("XX ")
                             .pattern("XX#")
                             .pattern("XX ")
@@ -124,7 +125,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                             .save(consumer, "craft_soft_hammer_" + material);
                 }else{
                     ToolShapedRecipeBuilder.toolShaped(ModItems.softHammer)
-                            .nbt((tag) -> tag.putString("material", material.getName()))
+                            .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()))
                             .toolUse(CraftToolType.HAMMER)
                             .pattern("XX ")
                             .pattern("XX#")
@@ -139,7 +140,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                 // 添加锤子配方
                 if (tierData.isByHand()){
                     NBTShapedRecipeBuilder.shaped(ModItems.hammer)
-                            .nbt((tag) -> tag.putString("material", material.getName()))
+                            .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()))
                             .pattern("XX ")
                             .pattern("XX#")
                             .pattern("XX ")
@@ -150,7 +151,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                             .save(consumer, "craft_hammer_" + material);
                 }else{
                     ToolShapedRecipeBuilder.toolShaped(ModItems.hammer)
-                            .nbt((tag) -> tag.putString("material", material.getName()))
+                            .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()))
                             .toolUse(CraftToolType.HAMMER)
                             .pattern("XX ")
                             .pattern("XX#")
@@ -169,7 +170,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
             if (!tierData.isSoft() && !tierData.isByHand() && material.getType() == Materials.Type.SOLID) {
                 // 添加扳手配方
                 ToolShapedRecipeBuilder.toolShaped(ModItems.wrench)
-                        .nbt((tag) -> tag.putString("material", material.getName()))
+                        .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()))
                         .toolUse(CraftToolType.HAMMER)
                         .pattern("X X")
                         .pattern("XXX")

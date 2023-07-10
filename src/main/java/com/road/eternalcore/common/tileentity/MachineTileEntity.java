@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.tileentity;
 
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
@@ -20,8 +21,8 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
 
     public CompoundNBT save(CompoundNBT nbt) {
         super.save(nbt);
-        nbt.put("covers", covers.save());
-        nbt.putString("material", getMaterial().getName());
+        nbt.put(ModConstant.Machine_cover, covers.save());
+        nbt.putString(ModConstant.Material, getMaterial().getName());
         return nbt;
     }
     public void load(BlockState blockState, CompoundNBT nbt){
@@ -30,13 +31,13 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
         loadMaterialNBT(nbt);
     }
     protected void loadCoversNBT(CompoundNBT nbt){
-        if (nbt.contains("covers")){
-            covers.load(nbt.getList("covers", 8));
+        if (nbt.contains(ModConstant.Machine_cover)){
+            covers.load(nbt.getList(ModConstant.Machine_cover, 8));
         }
     }
     protected void loadMaterialNBT(CompoundNBT nbt){
-        if (nbt.contains("material", 8)){
-            Materials material = Materials.get(nbt.getString("material"));
+        if (nbt.contains(ModConstant.Material, 8)){
+            Materials material = Materials.get(nbt.getString(ModConstant.Material));
             blockData = MaterialBlockData.get(material);
         }
     }

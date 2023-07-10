@@ -3,16 +3,11 @@ package com.road.eternalcore.registries;
 import com.road.eternalcore.Utils;
 import com.road.eternalcore.client.gui.ModScreenManager;
 import com.road.eternalcore.client.renderer.ModRenderType;
-import com.road.eternalcore.client.renderer.model.MachineModel;
-import com.road.eternalcore.common.block.machine.MachineBlocks;
+import com.road.eternalcore.client.renderer.model.builder.ModModelLoaderRegistry;
 import com.road.eternalcore.common.item.ModItemModelsProperties;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.BlockModelShapes;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -33,17 +28,13 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
+    public static void onModelRegistryEvent(ModelRegistryEvent event){
+        ModModelLoaderRegistry.init();
+    }
+
+    @SubscribeEvent
     public static void onModelBakeEvent(ModelBakeEvent event){
-        for (Block machine : MachineBlocks.getAll()){
-            for (BlockState blockState :machine.getStateDefinition().getPossibleStates()) {
-                ModelResourceLocation modelRL = BlockModelShapes.stateToModelLocation(blockState);
-                IBakedModel originModel = event.getModelRegistry().get(modelRL);
-                if (originModel != null && !(originModel instanceof MachineModel)){
-                    MachineModel machineModel = new MachineModel(originModel);
-                    event.getModelRegistry().put(modelRL, machineModel);
-                }
-            }
-        }
+
     }
 
 }

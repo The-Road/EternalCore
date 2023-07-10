@@ -1,6 +1,6 @@
 package com.road.eternalcore.mixin;
 
-import com.road.eternalcore.Constant;
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -16,7 +16,7 @@ public class ItemStackMixin {
     @Inject(method = "isDamaged", at = @At(value = "RETURN"), cancellable = true)
     protected void isDamaged$advance(CallbackInfoReturnable<Boolean> cir){
         ItemStack self = (ItemStack) (Object) this;
-        boolean result = self.isDamageableItem() && self.getTag().getInt(Constant.Durability_decimal) > 0;
+        boolean result = self.isDamageableItem() && self.getTag().getInt(ModConstant.Durability_decimal) > 0;
         cir.setReturnValue(cir.getReturnValue() || result);
     }
 
@@ -24,11 +24,11 @@ public class ItemStackMixin {
     @ModifyArg(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 15))
     protected Object getTooltipLines$addDurabilityDecimal(Object arg){
         ItemStack self = (ItemStack) (Object) this;
-        if (self.getTag().getInt(Constant.Durability_decimal) > 0){
+        if (self.getTag().getInt(ModConstant.Durability_decimal) > 0){
             return new TranslationTextComponent(
                     "item.durability",
                     ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(
-                            self.getMaxDamage() - self.getDamageValue() - 1.0 * self.getTag().getInt(Constant.Durability_decimal) / CustomTierItem.getBinary(self)
+                            self.getMaxDamage() - self.getDamageValue() - 1.0 * self.getTag().getInt(ModConstant.Durability_decimal) / CustomTierItem.getBinary(self)
                     ),
                     self.getMaxDamage()
             );

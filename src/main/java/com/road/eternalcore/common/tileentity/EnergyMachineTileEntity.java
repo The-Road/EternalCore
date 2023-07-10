@@ -1,6 +1,6 @@
 package com.road.eternalcore.common.tileentity;
 
-import com.road.eternalcore.Constant;
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.energy.CapEnergy;
 import com.road.eternalcore.api.energy.FEtoEUStorage;
 import com.road.eternalcore.api.energy.eu.EUTier;
@@ -26,8 +26,8 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
     }
     public CompoundNBT save(CompoundNBT nbt) {
         super.save(nbt);
-        nbt.putInt(Constant.Machine_energy, energy);
-        nbt.putInt(Constant.Machine_euTier, euTier.getLevel());
+        nbt.putInt(ModConstant.Machine_energy, energy);
+        nbt.putInt(ModConstant.Machine_euTier, euTier.getLevel());
         return nbt;
     }
     public void load(BlockState blockState, CompoundNBT nbt){
@@ -36,13 +36,13 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
         loadEUTierNBT(nbt);
     }
     protected void loadEnergyNBT(CompoundNBT nbt){
-        if (nbt.contains(Constant.Machine_energy, 3)){
-            saveEnergy(nbt.getInt(Constant.Machine_energy));
+        if (nbt.contains(ModConstant.Machine_energy, 3)){
+            saveEnergy(nbt.getInt(ModConstant.Machine_energy));
         }
     }
     protected void loadEUTierNBT(CompoundNBT nbt){
-        if (nbt.contains(Constant.Machine_euTier, 3)){
-            setTier(EUTier.tier(nbt.getInt(Constant.Machine_euTier)));
+        if (nbt.contains(ModConstant.Machine_euTier, 3)){
+            setTier(EUTier.tier(nbt.getInt(ModConstant.Machine_euTier)));
         }
         // 机器的默认最大储电量等于电压等级的40倍（两秒充满）
         setMaxEnergyStored(getTier().getMaxVoltage() * 40);

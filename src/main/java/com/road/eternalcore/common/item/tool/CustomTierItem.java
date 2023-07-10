@@ -2,7 +2,7 @@ package com.road.eternalcore.common.item.tool;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.road.eternalcore.Constant;
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.material.Materials;
 import net.minecraft.block.BlockState;
@@ -56,20 +56,20 @@ public class CustomTierItem extends Item {
         // 其实只要有耐久的物品都可以用
         int damage = 0;
         CompoundNBT tag = itemStack.getOrCreateTag();
-        int lastDecimal = tag.getInt(Constant.Durability_decimal);
+        int lastDecimal = tag.getInt(ModConstant.Durability_decimal);
         int binary = getBinary(itemStack);
         lastDecimal += damageDecimal;
         damage = lastDecimal / binary;
         lastDecimal %= binary;
-        tag.putInt(Constant.Durability_decimal, lastDecimal);
+        tag.putInt(ModConstant.Durability_decimal, lastDecimal);
         return damage;
     }
     public static void addItemDamageNoUpdate(ItemStack itemStack, int damageDecimal){
         // 只增加耐久尾数，不刷新耐久度
         CompoundNBT tag = itemStack.getOrCreateTag();
-        int lastDecimal = tag.getInt(Constant.Durability_decimal);
+        int lastDecimal = tag.getInt(ModConstant.Durability_decimal);
         lastDecimal += damageDecimal;
-        tag.putInt(Constant.Durability_decimal, lastDecimal);
+        tag.putInt(ModConstant.Durability_decimal, lastDecimal);
     }
     public static int getBinary(ItemStack itemStack){
         // 耐久附魔的效果改为每一级固定增加50%耐久
@@ -78,8 +78,8 @@ public class CustomTierItem extends Item {
     }
     public static MaterialTierData getMaterialData(ItemStack itemStack){
         CompoundNBT itemNBT = itemStack.getTag();
-        if (itemNBT != null && itemNBT.contains("material", 8)){
-            return MaterialTierData.get(Materials.get(itemNBT.getString("material")));
+        if (itemNBT != null && itemNBT.contains(ModConstant.Material, 8)){
+            return MaterialTierData.get(Materials.get(itemNBT.getString(ModConstant.Material)));
         }
         return MaterialTierData.NULL;
     }

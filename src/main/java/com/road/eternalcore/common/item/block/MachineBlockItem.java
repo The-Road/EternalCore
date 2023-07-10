@@ -1,8 +1,11 @@
 package com.road.eternalcore.common.item.block;
 
+import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
+import com.road.eternalcore.client.renderer.tileentity.MachineISTER;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,15 +18,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 public class MachineBlockItem extends ModBlockItem{
+    private static final Supplier<Callable<ItemStackTileEntityRenderer>> ISTER = () -> () -> MachineISTER.instance;
     public MachineBlockItem(Block block, Properties properties) {
-        super(block, properties);
+        super(block, properties.setISTER(ISTER));
     }
     public static MaterialBlockData getMaterialBlockData(ItemStack itemStack){
         CompoundNBT tileEntityTag = itemStack.getTagElement("BlockEntityTag");
-        if (tileEntityTag != null && tileEntityTag.contains("material", 8)){
-            return MaterialBlockData.get(Materials.get(tileEntityTag.getString("material")));
+        if (tileEntityTag != null && tileEntityTag.contains(ModConstant.Material, 8)){
+            return MaterialBlockData.get(Materials.get(tileEntityTag.getString(ModConstant.Material)));
         }
         return MaterialBlockData.NULL;
     }
