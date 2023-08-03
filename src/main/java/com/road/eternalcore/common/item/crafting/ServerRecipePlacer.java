@@ -178,12 +178,12 @@ public class ServerRecipePlacer<C extends IInventory> implements IRecipePlacer<I
          if (!itemStack1.isEmpty() && itemStack.getItem() == itemStack1.getItem() &&
                  ItemStack.tagMatches(itemStack, itemStack1) && !itemStack1.isDamaged() &&
                  !itemStack1.isEnchanted() && !itemStack1.hasCustomHoverName()) {
-            return new Pair<>(tempInventory, j);
+            return Pair.of(tempInventory, j);
          }
       }
       int i = this.inventory.findSlotMatchingUnusedItem(itemStack);
       if (i != -1) {
-         return new Pair<>(this.inventory, i);
+         return Pair.of(this.inventory, i);
       }
       return null;
    }

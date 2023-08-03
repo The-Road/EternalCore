@@ -10,7 +10,7 @@ import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.inventory.ToolCraftingInventory;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -234,7 +234,7 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IToolUsedRecipe {
             for(int i = 0; i < toolNum; i++){
                 CraftToolType tool = CraftToolType.get(buffer.readUtf());
                 int use = buffer.readVarInt();
-                toolUses.add(new Pair<>(tool, use));
+                toolUses.add(Pair.of(tool, use));
             }
             // 读取产物数据
             ItemStack result = buffer.readItem();

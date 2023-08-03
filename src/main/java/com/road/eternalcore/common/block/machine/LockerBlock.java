@@ -28,7 +28,7 @@ public class LockerBlock extends MachineBlock{
     protected DirectionProperty facingType(){
         return BlockStateProperties.HORIZONTAL_FACING;
     };
-    protected boolean TileEntityMatch(TileEntity tileEntity) {
+    protected boolean tileEntityMatch(TileEntity tileEntity) {
         return tileEntity instanceof LockerTileEntity;
     }
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
@@ -37,7 +37,7 @@ public class LockerBlock extends MachineBlock{
 
     public void tick(BlockState blockState, ServerWorld world, BlockPos pos, Random random) {
         TileEntity tileEntity = world.getBlockEntity(pos);
-        if (TileEntityMatch(tileEntity)){
+        if (tileEntityMatch(tileEntity)){
             ((LockerTileEntity)tileEntity).recheckOpenState();
         }
     }

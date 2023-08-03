@@ -21,6 +21,7 @@ public class MachineBlocks {
 
     public static final RegistryObject<Block> locker = registerMachine("locker", LockerBlock::new);
     public static final RegistryObject<Block> machineBlock = registerMachine("machine_block", MachineBlockBlock::new);
+    public static final RegistryObject<Block> batteryBuffer = registerMachine("battery_buffer", BatteryBufferBlock::new);
 
     private static void init(){
         registerMachineCasing();
@@ -43,6 +44,9 @@ public class MachineBlocks {
 
     public static Collection<Block> getAll(){
         return machines.values().stream().map(RegistryObject::get).collect(Collectors.toList());
+    }
+    public static Collection<Block> getAllCasing(){
+        return machine_casing.values().stream().map(RegistryObject::get).collect(Collectors.toList());
     }
     public static Block getMachineCasing(Materials material){
         if (machine_casing.containsKey(material)){

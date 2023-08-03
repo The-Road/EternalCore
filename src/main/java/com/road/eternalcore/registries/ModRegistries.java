@@ -6,6 +6,7 @@ import com.road.eternalcore.common.item.ModItemRegistries;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializerRegistries;
 import com.road.eternalcore.common.tileentity.ModTileEntityRegistries;
 import com.road.eternalcore.common.world.generate.ScatteredOreGen;
+import com.road.eternalcore.data.loot.conditions.ModLootConditionManager;
 import com.road.eternalcore.data.loot.functions.ModLootFunctionManager;
 import com.road.eternalcore.data.loot.modifiers.GLMRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +29,7 @@ public class ModRegistries {
         // 注册配方类型
         IModRecipeSerializerRegistries.register(bus);
         // 注册战利品
+        ModLootConditionManager.init();
         ModLootFunctionManager.init();
         GLMRegistry.GLM.register(bus);
         // 注册容器

@@ -4,6 +4,7 @@ import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.item.block.MachineBlockItem;
+import com.road.eternalcore.common.item.tool.ModToolType;
 import com.road.eternalcore.common.stats.ModStats;
 import com.road.eternalcore.common.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
@@ -16,6 +17,8 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -31,6 +34,9 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class MachineBlock extends AbstractMachineBlock{
     // 机器类方块，全部提供TileEntity和Inventory接口
     // 这一类方块的TileEntity全部实现IMaterialTileEntity接口，拥有材质属性
@@ -45,14 +51,14 @@ public abstract class MachineBlock extends AbstractMachineBlock{
             return ActionResultType.SUCCESS;
         }else{
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (TileEntityMatch(tileEntity)){
+            if (tileEntityMatch(tileEntity)){
                 player.openMenu((INamedContainerProvider) tileEntity);
                 player.awardStat(ModStats.INTERACT_WITH_MACHINE);
             }
             return ActionResultType.CONSUME;
         }
     }
-    protected abstract boolean TileEntityMatch(TileEntity tileEntity);
+    protected abstract boolean tileEntityMatch(TileEntity tileEntity);
 
     public void onRemove(BlockState thisBlock, World world, BlockPos pos, BlockState lastBlock, boolean blockUpdate) {
         if (!thisBlock.is(lastBlock.getBlock())){
@@ -66,6 +72,30 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         }
     }
 
+    @Override
+    public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContext$builder) {
+        ItemStack tool = lootContext$builder.getOptionalParameter(LootParameters.TOOL);
+        if (tool != null && tool.getToolTypes().stream().anyMatch((type -> type == ModToolType.WRENCH))){
+            return super.getDrops(blockState, lootContext$builder);
+        } else {
+            TileEntity tileEntity = lootContext$builder.getOptionalParameter(LootParameters.BLOCK_ENTITY);
+            List<ItemStack> list = tileEntityMatch(tileEntity) ?
+                    getPartsDrops((MachineTileEntity) tileEntity) : new ArrayList<>();
+            return list;
+        }
+    }
+
+    // 获取机器的零件掉落
+    public List<ItemStack> getPartsDrops(MachineTileEntity tileEntity){
+        List<ItemStack> list = new ArrayList<>();
+        Materials material = tileEntity.getMaterial();
+        // 获取机器外壳
+        list.add(new ItemStack(MachineBlocks.getMachineCasing(material)));
+        // 获取机器零件（待添加）
+
+        return list;
+    }
+
     public boolean hasTileEntity(BlockState state){
         return true;
     }
@@ -74,7 +104,7 @@ public abstract class MachineBlock extends AbstractMachineBlock{
     public void setPlacedBy(World world, BlockPos pos, BlockState blockState, LivingEntity player, ItemStack itemStack) {
         if (itemStack.hasCustomHoverName()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (TileEntityMatch(tileEntity)) {
+            if (tileEntityMatch(tileEntity)) {
                 ((LockableTileEntity)tileEntity).setCustomName(itemStack.getHoverName());
             }
         }

@@ -7,7 +7,7 @@ import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.inventory.SmithingTableInventory;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
 import com.road.eternalcore.common.item.crafting.IModRecipeType;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
@@ -154,7 +154,7 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
             }
             CraftToolType tool = CraftToolType.get(buffer.readUtf());
             int use = buffer.readVarInt();
-            Pair<CraftToolType, Integer> toolUse = new Pair<>(tool, use);
+            Pair<CraftToolType, Integer> toolUse = Pair.of(tool, use);
             ItemStack result = buffer.readItem();
             return new SmithingRecipe(id, group, level, recipeItems, toolUse, result);
         }

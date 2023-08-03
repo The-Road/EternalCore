@@ -1,7 +1,7 @@
 package com.road.eternalcore.data.recipes.builder;
 
 import com.mojang.datafixers.util.Pair;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.item.Item;
@@ -30,7 +30,7 @@ public class ISmithingRecipeBuilder<T extends SmithingRecipeBuilder> extends IRe
         return toolUse(tool, CustomTierItem.DEFAULT_DURABILITY_SUBDIVIDE);
     }
     public ISmithingRecipeBuilder<T> toolUse(CraftToolType tool, int use){
-        builder.toolUse = new Pair<>(tool.getName(), use);
+        builder.toolUse = Pair.of(tool.getName(), use);
         return this;
     }
     public ISmithingRecipeBuilder<T> requires(ITag<Item> tag) {

@@ -65,7 +65,7 @@ public class MaterialItems {
         registerMap.forEach((shape, materials) -> {
             String shapeName = shape.getName();
             for (Materials material : materials){
-                Pair<MaterialShape, Materials> pair = new Pair<>(shape, material);
+                Pair<MaterialShape, Materials> pair = Pair.of(shape, material);
                 if (!VanillaMaterialItemMap.containsKey(pair)){
                     String registerID = Materials.getRegisterName(shape, material);
                     RegistryObject<Item> item = ITEMS.register(
@@ -86,7 +86,7 @@ public class MaterialItems {
                         registerID,
                         () -> new OreProduct(ore, shape)
                 );
-                OreItemMap.put(new Pair<>(shape, ore), item);
+                OreItemMap.put(Pair.of(shape, ore), item);
                 ItemIdMap.put(registerID, item);
             }
         }

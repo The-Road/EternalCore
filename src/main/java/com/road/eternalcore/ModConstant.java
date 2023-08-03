@@ -11,4 +11,7 @@ public class ModConstant {
     public static final String Machine_energy = "energy";
     public static final String Machine_euTier = "euTier";
 
+    public static String blockEntityTag(String str){
+        return String.format("BlockEntityTag.%s", str);
+    }
 }

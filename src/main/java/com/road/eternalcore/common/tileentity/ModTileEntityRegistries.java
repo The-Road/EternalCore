@@ -25,6 +25,11 @@ public class ModTileEntityRegistries {
             MachineBlockTileEntity::new,
             MachineBlocks.machineBlock
     );
+    public static final RegistryObject<TileEntityType<BatteryBufferTileEntity>> batteryBuffer = register(
+            "battery_buffer",
+            BatteryBufferTileEntity::new,
+            MachineBlocks.batteryBuffer
+    );
 
     public static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String name, Supplier<T> supplier, RegistryObject<Block>... blocks){
         return TILE_ENTITY.register(name, () -> TileEntityType.Builder.of(supplier, Arrays.stream(blocks).map(RegistryObject::get).toArray(Block[]::new)).build(null));

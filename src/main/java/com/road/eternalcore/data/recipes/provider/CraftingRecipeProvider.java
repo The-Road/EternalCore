@@ -9,7 +9,7 @@ import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.item.ModItems;
 import com.road.eternalcore.common.item.block.BlockItems;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.data.recipes.builder.NBTShapedRecipeBuilder;
 import com.road.eternalcore.data.recipes.builder.ToolShapedRecipeBuilder;
 import com.road.eternalcore.data.tags.ModTags;

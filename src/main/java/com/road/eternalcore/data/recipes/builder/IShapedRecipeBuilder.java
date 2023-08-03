@@ -1,7 +1,7 @@
 package com.road.eternalcore.data.recipes.builder;
 
 import com.mojang.datafixers.util.Pair;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.item.Item;
@@ -25,7 +25,7 @@ public class IShapedRecipeBuilder<T extends NBTShapedRecipeBuilder> extends IRec
         return toolUse(tool, CustomTierItem.DEFAULT_DURABILITY_SUBDIVIDE);
     }
     public IShapedRecipeBuilder<T> toolUse(CraftToolType tool, int use){
-        ((ToolShapedRecipeBuilder) builder).toolUses.add(new Pair<>(tool.getName(), use));
+        ((ToolShapedRecipeBuilder) builder).toolUses.add(Pair.of(tool.getName(), use));
         return this;
     }
     public IShapedRecipeBuilder<T> define(Character character, ITag<Item> tag){

@@ -1,5 +1,6 @@
-package com.road.eternalcore.common.item.tool;
+package com.road.eternalcore.api.tool;
 
+import com.road.eternalcore.common.item.tool.ModToolType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 
@@ -34,10 +35,10 @@ public class CraftToolType {
     public List<ToolType> getList(){
         return list;
     }
-    public boolean match(ToolType type){
+    public boolean matchType(ToolType type){
         return list.contains(type);
     }
     public boolean match(ItemStack itemStack){
-        return itemStack.getToolTypes().stream().anyMatch(this::match);
+        return itemStack.getToolTypes().stream().anyMatch(this::matchType);
     }
 }

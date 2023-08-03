@@ -1,7 +1,7 @@
 package com.road.eternalcore.data.recipes.provider;
 
 import com.road.eternalcore.common.item.material.MaterialItems;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.data.recipes.builder.SmithingRecipeBuilder;
 import com.road.eternalcore.data.tags.ModTags;
 import net.minecraft.data.DataGenerator;

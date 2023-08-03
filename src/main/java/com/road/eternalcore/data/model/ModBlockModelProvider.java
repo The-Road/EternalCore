@@ -108,6 +108,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
         addMachineCasing();
         addOrientableMachine(MachineBlocks.locker.get(), "locker");
         addOrientableMachine(MachineBlocks.machineBlock.get(), "machine_block");
+        addOrientableMachine(MachineBlocks.batteryBuffer.get(), "battery_buffer");
     }
     private void addMachineCasing(){
         MachineBlocks.machine_casing.forEach((material, blockRegistryObject) -> {

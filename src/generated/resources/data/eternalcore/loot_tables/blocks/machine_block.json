@@ -6,12 +6,30 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "material",
+                  "target": "BlockEntityTag.material",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "eternalcore:machine_block"
         }
       ],
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "condition": "eternalcore:match_tool",
+          "predicate": {
+            "tool": [
+              "eternalcore_wrench"
+            ]
+          }
         }
       ]
     }

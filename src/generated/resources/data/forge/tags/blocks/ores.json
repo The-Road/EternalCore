@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:ores/tin",
-    "#forge:ores/copper"
+    "#forge:ores/copper",
+    "#forge:ores/tin"
   ]
 }

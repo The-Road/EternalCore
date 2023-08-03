@@ -19,7 +19,7 @@
               ]
             }
           ],
-          "name": "eternalcore:locker"
+          "name": "eternalcore:battery_buffer"
         }
       ],
       "conditions": [

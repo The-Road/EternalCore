@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.api.material.MaterialTierData;
-import com.road.eternalcore.common.item.tool.CraftToolType;
+import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -100,7 +100,7 @@ public interface IToolUsedRecipe {
             if (toolUse.has("use")) {
                 use = JSONUtils.getAsInt(toolUse, "use");
             }
-            return new Pair<>(tool, use);
+            return Pair.of(tool, use);
         } catch (Exception e){
             throw new JsonSyntaxException("toolUse elements must be {\"tool\": xxx, \"use\": xxx}");
         }
