@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(RecipeBookContainer.class)
-public class RecipeBookContainerMixin<C extends IInventory> {
+public abstract class RecipeBookContainerMixin<C extends IInventory> {
     /**
      * @author
      * @reason

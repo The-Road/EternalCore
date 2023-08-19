@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import static com.road.eternalcore.api.energy.eu.EUTier.*;
 
 public class MaterialWireData {
-    protected static final Map<Materials, MaterialWireData> materialWireData = new HashMap<>();
+    protected static final Map<Materials, MaterialWireData> materialWireData = new LinkedHashMap<>();
     public static final MaterialWireData NULL = new MaterialWireData(Materials.NULL)
             .wire(LV, 1,0);
 

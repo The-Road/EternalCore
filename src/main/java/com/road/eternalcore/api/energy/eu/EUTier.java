@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EUTier {
+public class EUTier implements IEUTier{
     // 电压等级，注意这里的电压等级顺序是写死的（按照注册的顺序排序），不要改动
     protected static final Map<String, EUTier> tiers = new HashMap<>();
     protected static final List<EUTier> tierList = new ArrayList<>();
@@ -69,7 +69,8 @@ public class EUTier {
         return new TranslationTextComponent(getDescriptionId());
     }
 
-    public boolean higherThan(EUTier another){
-        return getLevel() > another.getLevel();
+
+    public EUTier getTier() {
+        return this;
     }
 }

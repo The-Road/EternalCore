@@ -2,12 +2,12 @@ package com.road.eternalcore.api.material;
 
 import com.road.eternalcore.api.machine.BlastFurnaceProcessData;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MaterialSmeltData {
     // 管理材料的加工和冶炼数据，例如是否需要用高炉冶炼等
-    protected static final Map<Materials, MaterialSmeltData> materialSmeltData = new HashMap<>();
+    protected static final Map<Materials, MaterialSmeltData> materialSmeltData = new LinkedHashMap<>();
     public static final MaterialSmeltData IRON = setData(Materials.IRON).exp(0.7F);
     public static final MaterialSmeltData COPPER = setData(Materials.COPPER).exp(0.5F);
     public static final MaterialSmeltData TIN = setData(Materials.TIN).exp(0.5F);

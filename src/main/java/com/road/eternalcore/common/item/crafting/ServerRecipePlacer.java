@@ -48,6 +48,7 @@ public class ServerRecipePlacer<C extends IInventory> implements IRecipePlacer<I
                player.connection.send(new SPlaceGhostRecipePacket(player.containerMenu.containerId, recipe));
             }
             player.inventory.setChanged();
+            tempInventory.clearContent();
          }
       }
    }

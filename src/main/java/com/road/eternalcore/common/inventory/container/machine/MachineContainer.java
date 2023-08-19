@@ -1,73 +1,48 @@
-package com.road.eternalcore.common.inventory.container;
+package com.road.eternalcore.common.inventory.container.machine;
 
-import com.road.eternalcore.common.inventory.container.slot.BatterySlot;
-import com.road.eternalcore.common.tileentity.MachineBlockTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
 
-public class MachineBlockContainer extends Container {
-    protected final PlayerEntity player;
-    protected final MachineBlockTileEntity container;
-    protected final IIntArray guiData;
-    protected final int inputSize = 1;
-    protected final int resultSize = 0;
-    protected final int batterySize = 1;
+import javax.annotation.Nullable;
+
+public abstract class MachineContainer extends Container {
+    protected int inputSize;
+    protected int resultSize;
+    protected int batterySize;
 
     protected int batteryStartIndex;
     protected int playerStartIndex;
-    public MachineBlockContainer(int containerId, PlayerInventory inventory) {
-        this(containerId, inventory, new MachineBlockTileEntity(), new IntArray(3));
-    }
-    public MachineBlockContainer(int containerId, PlayerInventory inventory, MachineBlockTileEntity container, IIntArray guiData) {
-        super(ModContainerType.machineBlock, containerId);
-        this.player = inventory.player;
-        this.container = container;
+    protected final IIntArray guiData;
+    protected MachineContainer(@Nullable ContainerType<?> containerType, int containerId, IIntArray guiData) {
+        super(containerType, containerId);
         this.guiData = guiData;
-
-        calculateSlotIndex();
-
-        addInputSlots();
-        addResultSlots();
-        addBatterySlots();
-        addPlayerSlots(inventory);
-        addDataSlots(guiData);
     }
 
-    protected void calculateSlotIndex(){
+    protected void initContainerRange(int inputSize, int resultSize, int batterySize){
+        this.inputSize = inputSize;
+        this.resultSize = resultSize;
+        this.batterySize = batterySize;
         this.batteryStartIndex = inputSize + resultSize;
         this.playerStartIndex = batteryStartIndex + batterySize;
     }
-    protected void addInputSlots(){
-        for (int i=0; i < inputSize; i++) {
-            addSlot(new Slot(container, i, 80, 36));
-        }
-    }
-    protected void addResultSlots(){
-        // 机器方块本身没有输出格
-    }
-    protected void addBatterySlots(){
-        for (int i=batteryStartIndex; i < playerStartIndex; i++) {
-            addSlot(new BatterySlot(container, i, 80, 72));
-        }
-    }
-    protected void addPlayerSlots(PlayerInventory inventory){
+
+    abstract protected void addInputSlots();
+    abstract protected void addResultSlots();
+    abstract protected void addBatterySlots();
+    protected void addPlayerSlots(PlayerInventory inventory, int x0, int y0){
         for(int k = 0; k < 3; ++k) {
             for(int i1 = 0; i1 < 9; ++i1) {
-                addSlot(new Slot(inventory, i1 + k * 9 + 9, 8 + i1 * 18, 102 + k * 18));
+                addSlot(new Slot(inventory, i1 + k * 9 + 9, x0 + i1 * 18, y0 + k * 18));
             }
         }
         for(int l = 0; l < 9; ++l) {
-            addSlot(new Slot(inventory, l, 8 + l * 18, 160));
+            addSlot(new Slot(inventory, l, x0 + l * 18, y0 + 58));
         }
-    }
-
-    public boolean stillValid(PlayerEntity player) {
-        return container.stillValid(player);
     }
 
     public ItemStack quickMoveStack(PlayerEntity player, int slotId) {
@@ -115,12 +90,11 @@ public class MachineBlockContainer extends Container {
         }
         return itemStackCopy;
     }
-
     protected boolean checkBatteryExtra(ItemStack itemStack){
-        // 特殊电池检测，例如合金炉可以把红石粉作为材料，所以快捷移动的时候会把红石移到输入栏而不是电池栏
+        // 特殊电池检测，如果这个物品在该机器中不视作电池则返回false
+        // 例如合金炉可以把红石粉作为材料，所以快捷移动的时候应该红石移到输入栏而不是电池栏
         return true;
     }
-
     // 用于GUI描绘的数据
     public int getEnergy(){
         return guiData.get(0);

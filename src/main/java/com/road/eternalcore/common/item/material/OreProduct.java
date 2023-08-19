@@ -17,13 +17,6 @@ public class OreProduct extends Item {
         this.shape = shape;
     }
     public ITextComponent getName(ItemStack itemStack) {
-        if (hasSpecialName(itemStack)){
-            return super.getName(itemStack);
-        } else {
-            return new TranslationTextComponent(shape.getDescriptionId(), ore.getMainProduct().getText());
-        }
-    }
-    private boolean hasSpecialName(ItemStack itemStack){
-        return false;
+        return new TranslationTextComponent(shape.getDescriptionId(), ore.getMainProduct().getText());
     }
 }

@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
+public abstract class PlayerEntityMixin {
 
     // 获取挖掘速度时根据主手物品种类添加速度倍率
     @Inject(method = "getDigSpeed", at = @At(value = "RETURN"), cancellable = true, remap = false)
-    protected void getDigSpeed$applySpeedRate(BlockState blockState, BlockPos pos, CallbackInfoReturnable<Float> cir){
+    private void getDigSpeed$applySpeedRate(BlockState blockState, BlockPos pos, CallbackInfoReturnable<Float> cir){
         PlayerEntity self = (PlayerEntity) (Object) this;
         ItemStack mainHandItem = self.getMainHandItem();
         if (mainHandItem.getItem() instanceof CustomTierItem){

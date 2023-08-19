@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.block.machine;
 
+import com.road.eternalcore.api.block.MaterialBlockProperty;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.common.tileentity.BatteryBufferTileEntity;
 import net.minecraft.block.BlockState;
@@ -13,7 +14,7 @@ public class BatteryBufferBlock extends MachineBlock{
     public BatteryBufferBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(ModBlockStateProperties.MachineMaterial, "null")
+                .setValue(ModBlockStateProperties.MachineMaterial, MaterialBlockProperty.DefaultValue)
                 .setValue(facingType(), Direction.NORTH)
         );
     }

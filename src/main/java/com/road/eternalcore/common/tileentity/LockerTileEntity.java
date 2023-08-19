@@ -5,13 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -21,38 +17,19 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.util.stream.IntStream;
+
 public class LockerTileEntity extends MachineTileEntity{
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.locker");
-    private final int ContainerSize = 54;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(ContainerSize, ItemStack.EMPTY);
+    private static final int ContainerSize = 54;
+    private static final int[] ContainerRange = IntStream.range(0, ContainerSize).toArray();
     protected int openCount = 0;
     public LockerTileEntity(){
         super(ModTileEntityType.locker);
     }
-    // 保存/读取物品栏
-    public CompoundNBT save(CompoundNBT nbt) {
-        super.save(nbt);
-        if (!trySaveLootTable(nbt)) {
-            ItemStackHelper.saveAllItems(nbt, this.items);
-        }
-        return nbt;
-    }
-    public void load(BlockState blockState, CompoundNBT nbt) {
-        super.load(blockState, nbt);
-        this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-        if (!tryLoadLootTable(nbt)) {
-            ItemStackHelper.loadAllItems(nbt, this.items);
-        }
-    }
     // IInventory接口
     public int getContainerSize(){
         return ContainerSize;
-    }
-    protected NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-    protected void setItems(NonNullList<ItemStack> items) {
-        this.items = items;
     }
     protected ITextComponent getDefaultName(){
         return TITLE;

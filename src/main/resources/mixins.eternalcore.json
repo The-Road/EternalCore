@@ -3,6 +3,8 @@
   "mixins": [
     "ItemStackMixin",
     "PlayerEntityMixin",
-    "RecipeBookContainerMixin"
+    "RecipeBookContainerMixin",
+    "StateHolderMixin",
+    "TestMixin"
   ]
 }

@@ -7,6 +7,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class MachineCasingBlock extends MachineStructureBlock{
     public static final String NAME = "machine_casing";
+    // 统一DescriptionId，因为不同机器外壳的注册ID不一样
+    private static final String DESCRIPTION_ID = Utils.BlockDescriptionId(NAME);
     public MachineCasingBlock(MaterialBlockData blockData) {
         super(blockData);
     }
@@ -14,7 +16,8 @@ public class MachineCasingBlock extends MachineStructureBlock{
     public IFormattableTextComponent getName(){
         return new TranslationTextComponent(this.getDescriptionId(), blockData.getMaterial().getText());
     }
+
     public String getDescriptionId() {
-        return Utils.BlockDescriptionId(NAME);
+        return DESCRIPTION_ID;
     }
 }

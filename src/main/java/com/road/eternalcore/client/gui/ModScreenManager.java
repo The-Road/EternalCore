@@ -1,5 +1,6 @@
 package com.road.eternalcore.client.gui;
 
+import com.road.eternalcore.client.gui.screen.inventory.BatteryBufferScreen;
 import com.road.eternalcore.client.gui.screen.inventory.HandcraftAssemblyScreen;
 import com.road.eternalcore.client.gui.screen.inventory.MachineBlockScreen;
 import com.road.eternalcore.client.gui.screen.inventory.SmithingTableScreen;
@@ -14,5 +15,6 @@ public class ModScreenManager extends ScreenManager {
         register(ModContainerType.handcraftAssembly, HandcraftAssemblyScreen::new);
         register(ModContainerType.smithingTable, SmithingTableScreen::new);
         register(ModContainerType.machineBlock, MachineBlockScreen::new);
+        register(ModContainerType.batteryBuffer, BatteryBufferScreen::new);
     }
 }

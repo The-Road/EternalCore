@@ -1,11 +1,11 @@
 package com.road.eternalcore.api.material;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MaterialBlockData {
     // 管理方块属性，包括硬度和爆炸抗性之类的
-    protected static final Map<Materials, MaterialBlockData> materialBlockData = new HashMap<>();
+    protected static final Map<Materials, MaterialBlockData> materialBlockData = new LinkedHashMap<>();
     public static final MaterialBlockData NULL = new MaterialBlockData(Materials.NULL)
             .block(5.0F, 6.0F)
             .hull(3.0F, 4.8F);

@@ -4,17 +4,25 @@ import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
-import com.road.eternalcore.common.tileentity.data.MachineCover;
 import com.road.eternalcore.common.tileentity.data.MachineTileEntityCoverData;
 import net.minecraft.block.BlockState;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class MachineTileEntity extends LockableLootTileEntity {
     protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
+    protected NonNullList<ItemStack> items = NonNullList.withSize(0, ItemStack.EMPTY);
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
     }
@@ -23,12 +31,25 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
         super.save(nbt);
         nbt.put(ModConstant.Machine_cover, covers.save());
         nbt.putString(ModConstant.Material, getMaterial().getName());
+        if (!trySaveLootTable(nbt)) {
+            ItemStackHelper.saveAllItems(nbt, this.items);
+        }
         return nbt;
     }
     public void load(BlockState blockState, CompoundNBT nbt){
         super.load(blockState, nbt);
         loadCoversNBT(nbt);
         loadMaterialNBT(nbt);
+        this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        if (!tryLoadLootTable(nbt)) {
+            ItemStackHelper.loadAllItems(nbt, this.items);
+        }
+    }
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
+    }
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
     }
     protected void loadCoversNBT(CompoundNBT nbt){
         if (nbt.contains(ModConstant.Machine_cover)){
@@ -58,10 +79,15 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     public MaterialBlockData getMaterialBlockData(){
         return blockData;
     }
-    // 判断接触面是否空闲（非正面且无覆盖板）
-    public boolean sideFree(Direction side){
-        // 四面朝向的机器正面非空闲（六面朝向的机器正面是输出口）
-        return covers.getCover(side) == MachineCover.NULL;
-    }
 
+    // 统一将判断!remove放在开头，子类只需改写getMachineCapability
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (!this.remove){
+            return getMachineCapability(cap, side);
+        }
+        return super.getCapability(cap, side);
+    }
+    protected <T> LazyOptional<T> getMachineCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        return super.getCapability(cap, side);
+    }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static com.road.eternalcore.api.material.MaterialShape.*;
 
 public class Materials {
-    protected static final Map<String, Materials> materials = new HashMap<>();
+    protected static final Map<String, Materials> materials = new LinkedHashMap<>();
     // 无材质，用于设置一些默认值
     public static final Materials NULL = new Materials("", Type.OTHER){
         public String getDescriptionId(){
@@ -98,10 +98,6 @@ public class Materials {
             .setIngredientTag(() -> ItemTags.PLANKS);
     public static Materials STONE = addCustom("stone", DUST)
             .setIngredientTag(() -> ItemTags.STONE_TOOL_MATERIALS);
-
-    static{
-        MaterialShape.init();
-    }
 
     // ----实例变量----
     protected final String name;
@@ -193,8 +189,8 @@ public class Materials {
     // 添加材料对应的种类
     protected Materials addShape(MaterialShape shape){
         this.shapes.add(shape);
-        if (relatedShapes.containsKey(shape)){
-            this.shapes.addAll(relatedShapes.get(shape));
+        if (RelatedShapes.containsKey(shape)){
+            this.shapes.addAll(RelatedShapes.get(shape));
         }
         return this;
     }

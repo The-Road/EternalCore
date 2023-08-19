@@ -11,7 +11,6 @@ public class MachineCover {
     private static final Map<String, MachineCover> machineCover = new HashMap<>();
     // 处理覆盖板数据的类
     public static final MachineCover NULL = new MachineCover(""); // 无覆盖板
-    public static final MachineCover FACE = new MachineCover("face"); // 机器正面
 
     private final String name;
     private final Item item;

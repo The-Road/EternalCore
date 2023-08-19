@@ -5,13 +5,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraftforge.common.Tags;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class MaterialTierData {
     // 记录材料的工具和锻造等级
-    protected static final Map<Materials, MaterialTierData> materialTierData = new HashMap<>();
+    protected static final Map<Materials, MaterialTierData> materialTierData = new LinkedHashMap<>();
     public static final MaterialTierData NULL = new MaterialTierData(Materials.NULL).tier(
             2, 256, 6.0F, 2.0F, 14
     );

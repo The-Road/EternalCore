@@ -30,7 +30,6 @@ public class ItemEUStorage implements IEUStorage {
         return this;
     }
 
-    @Override
     public EUTier getTier() {
         return euTier;
     }

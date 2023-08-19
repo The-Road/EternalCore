@@ -1,6 +1,8 @@
 package com.road.eternalcore.common.inventory.container;
 
 import com.road.eternalcore.Utils;
+import com.road.eternalcore.common.inventory.container.machine.BatteryBufferContainer;
+import com.road.eternalcore.common.inventory.container.machine.MachineBlockContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,6 +18,9 @@ public class ModContainerRegistries {
             "smithing_table", SmithingTableContainer::new);
     public static final RegistryObject<ContainerType<MachineBlockContainer>> machineBlock = register(
             "machine_block", MachineBlockContainer::new);
+
+    public static final RegistryObject<ContainerType<BatteryBufferContainer>> batteryBuffer = register(
+            "battery_buffer", BatteryBufferContainer::new);
     private static <T extends Container> RegistryObject<ContainerType<T>> register(String name, ContainerType.IFactory<T> factory){
         return CONTAINERS.register(name, () -> new ContainerType<>(factory));
     }

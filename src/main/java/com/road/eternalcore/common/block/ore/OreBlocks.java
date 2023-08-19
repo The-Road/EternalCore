@@ -25,7 +25,7 @@ public class OreBlocks {
         for(Ores ore : Ores.getAllOres()){
             RegistryObject<Block> block =  BLOCKS.registerNormal(
                     Ores.getRegisterName(OreShape.ORE, ore),
-                    () -> new OreBlock(ore.getBlockProperties())
+                    () -> new OreBlock(ore)
             );
             blockMap.put(ore, block);
         }

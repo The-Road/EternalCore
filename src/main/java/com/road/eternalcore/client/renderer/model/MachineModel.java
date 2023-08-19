@@ -34,7 +34,7 @@ import java.util.function.Function;
 public class MachineModel extends BakedModelWrapper<IBakedModel>{
     // 机器类方块的模型，用于额外渲染方块的材质（从对应的MachineCasing中读取）,机器的正面和输出面，以及覆盖板等。
     // 方块的模型文件中只有机器表面的贴图，渲染时会通过getQuads获取机器外壳的贴图作为solid层
-    // 是MultiLayerBakedModel的延伸
+    // 是MultiLayerBakedModel的延伸，不过MultiLayerBakedModel是private所以这里只能继承IBakedModel了
     public MachineModel(IBakedModel originalModel) {
         super(originalModel);
     }
@@ -65,7 +65,7 @@ public class MachineModel extends BakedModelWrapper<IBakedModel>{
     }
 
     public IBakedModel handlePerspective(ItemCameraTransforms.TransformType cameraTransformType, MatrixStack mat) {
-        // super会返回一个MultiLayerModel，需要重新包装一下
+        // super会返回一个MultiLayerBakedModel，需要重新包装一下
         IBakedModel result = super.handlePerspective(cameraTransformType, mat);
         if (!(result instanceof MachineModel)){
             result = new MachineModel(result);

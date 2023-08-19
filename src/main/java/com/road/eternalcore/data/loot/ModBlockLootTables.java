@@ -112,6 +112,7 @@ public class ModBlockLootTables extends BlockLootTables implements ModLootTableH
         }
     }
     private void addMachineTables(){
+        // 用扳手拆除机器掉落机器本身，需要保存的NBT包括材料和电力等级
         // 机器因非扳手拆除而掉落的零件写在机器的getDrops里
         // 没有爆炸判定
         for (Block block : MachineBlocks.getAll()){
@@ -120,6 +121,7 @@ public class ModBlockLootTables extends BlockLootTables implements ModLootTableH
                             .add(lootItem(block)
                                     .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY)
                                             .copy(ModConstant.Material, ModConstant.blockEntityTag(ModConstant.Material))
+                                            .copy(ModConstant.Machine_euTier, ModConstant.blockEntityTag(ModConstant.Machine_euTier))
                                     )
                             )
                             .when(HAS_WRENCH)

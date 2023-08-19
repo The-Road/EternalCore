@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.LazyValue;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -15,7 +15,7 @@ import static com.road.eternalcore.api.material.Materials.*;
 
 public class Ores {
     // 管理矿石种类的
-    protected static final Map<Materials, Ores> ores = new HashMap<>();
+    protected static final Map<Materials, Ores> ores = new LinkedHashMap<>();
     // 矿石名称即主产物名称，所以混合矿石需要在Materials里添加对应的材料（粉末类）
     public static final Ores COPPER_ORE = addSimple(COPPER,
             new OreByProducts(COBALT))

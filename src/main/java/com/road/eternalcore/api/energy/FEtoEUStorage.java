@@ -4,6 +4,7 @@ import com.road.eternalcore.api.energy.eu.IEUStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class FEtoEUStorage implements IEnergyStorage {
+    // 针对FE能量的接口，按照1EU=8FE的比例转换，能量交换方法返回交换的FE数值
     private final IEUStorage euStorage;
     public FEtoEUStorage(IEUStorage euStorage){
         this.euStorage = euStorage;
@@ -14,7 +15,7 @@ public class FEtoEUStorage implements IEnergyStorage {
         if (isReceive){
             eu = fe >> 3;
         }else{
-            eu = (fe - 1) >> 3 + 1;
+            eu = fe > 0 ? (fe - 1) >> 3 + 1 : 0;
         }
         return eu;
     }

@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.block.machine;
 
+import com.road.eternalcore.api.block.MaterialBlockProperty;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.common.tileentity.LockerTileEntity;
 import net.minecraft.block.Block;
@@ -20,7 +21,7 @@ public class LockerBlock extends MachineBlock{
     public LockerBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(ModBlockStateProperties.MachineMaterial, "null")
+                .setValue(ModBlockStateProperties.MachineMaterial, MaterialBlockProperty.DefaultValue)
                 .setValue(facingType(), Direction.NORTH)
                 .setValue(BlockStateProperties.OPEN, false)
         );

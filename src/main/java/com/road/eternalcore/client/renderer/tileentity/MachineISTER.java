@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.data.IModelData;
 
 public class MachineISTER extends ItemStackTileEntityRenderer {
+    // 渲染机器类方块的ISTER
     public static final MachineISTER instance = new MachineISTER();
 
     public void renderByItem(ItemStack itemStack, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {

@@ -1,5 +1,7 @@
 package com.road.eternalcore.common.item.material;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.Materials;
@@ -11,10 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.road.eternalcore.api.material.MaterialShape.*;
 import static com.road.eternalcore.api.material.Materials.*;
@@ -23,14 +22,14 @@ import static com.road.eternalcore.api.material.Materials.*;
 public class MaterialItems {
     public static final ItemRegister ITEMS = new ItemRegister();
     // 用于获取物品的Map，通过MaterialItems.get(type, name)可以获取材料对应的物品
-    private static final Map<Pair<MaterialShape, Materials>, RegistryObject<Item>> MaterialItemMap = new HashMap<>();
-    private static final Map<Pair<MaterialShape, Materials>, Item> VanillaMaterialItemMap = new HashMap<>();
-    private static final Map<Pair<OreShape, Ores>, RegistryObject<Item>> OreItemMap = new HashMap<>();
+    private static final Table<MaterialShape, Materials, RegistryObject<Item>> MaterialItemTable = HashBasedTable.create();
+    private static final Table<MaterialShape, Materials, Item> VanillaMaterialItemTable = HashBasedTable.create();
+    private static final Table<OreShape, Ores, RegistryObject<Item>> OreItemTable = HashBasedTable.create();
     // 通过物品ID(无前缀)获取对应物品的Map，通过MaterialItems.get(item_id)可以获取对应物品
     private static final Map<String, RegistryObject<Item>> ItemIdMap = new HashMap<>();
     private static final Map<String, Item> VanillaItemIdMap = new HashMap<>();
     private static void addVanillaItem(MaterialShape shape, Materials material, Item item){
-        VanillaMaterialItemMap.put(Pair.of(shape, material), item);
+        VanillaMaterialItemTable.put(shape, material, item);
         VanillaItemIdMap.put(ForgeRegistries.ITEMS.getKey(item).getPath(), item);
     }
     private static void addVanillaItems(){
@@ -43,7 +42,6 @@ public class MaterialItems {
         addVanillaItem(GEM, DIAMOND, Items.DIAMOND);
         addVanillaItem(GEM, EMERALD, Items.EMERALD);
         addVanillaItem(DUST, REDSTONE, Items.REDSTONE);
-
     }
     private static void init(){
         // 注册物品
@@ -53,7 +51,7 @@ public class MaterialItems {
     }
     private static void registerMaterials(){
         // 用一个Map来管理注册以方便创造模式物品栏里的排序
-        Map<MaterialShape, List<Materials>> registerMap = new HashMap<>();
+        Map<MaterialShape, List<Materials>> registerMap = new LinkedHashMap<>();
         for (MaterialShape shape : MaterialShape.getAllShapes()){
             registerMap.put(shape, new ArrayList<>());
         }
@@ -63,16 +61,14 @@ public class MaterialItems {
             }
         }
         registerMap.forEach((shape, materials) -> {
-            String shapeName = shape.getName();
             for (Materials material : materials){
-                Pair<MaterialShape, Materials> pair = Pair.of(shape, material);
-                if (!VanillaMaterialItemMap.containsKey(pair)){
+                if (!VanillaMaterialItemTable.contains(shape, material)){
                     String registerID = Materials.getRegisterName(shape, material);
                     RegistryObject<Item> item = ITEMS.register(
                             registerID,
                             () -> new BasicMaterialItem(material, shape, material.getProperties())
                     );
-                    MaterialItemMap.put(pair, item);
+                    MaterialItemTable.put(shape, material, item);
                     ItemIdMap.put(registerID, item);
                 }
             }
@@ -86,24 +82,22 @@ public class MaterialItems {
                         registerID,
                         () -> new OreProduct(ore, shape)
                 );
-                OreItemMap.put(Pair.of(shape, ore), item);
+                OreItemTable.put(shape, ore, item);
                 ItemIdMap.put(registerID, item);
             }
         }
     }
     // 获取物品
     public static Item get(MaterialShape shape, Materials material){
-        Pair<MaterialShape, Materials> key = Pair.of(shape, material);
-        if (VanillaMaterialItemMap.containsKey(key)){
-            return VanillaMaterialItemMap.get(key);
+        if (VanillaMaterialItemTable.contains(shape, material)){
+            return VanillaMaterialItemTable.get(shape, material);
         }else{
             return getMod(shape, material);
         }
     }
     public static Item get(OreShape shape, Ores ore){
-        Pair<OreShape, Ores> key = Pair.of(shape, ore);
-        if (OreItemMap.containsKey(key)){
-            return OreItemMap.get(key).get();
+        if (OreItemTable.contains(shape, ore)){
+            return OreItemTable.get(shape, ore).get();
         }else{
             return null;
         }
@@ -117,8 +111,8 @@ public class MaterialItems {
     }
     public static Item getMod(MaterialShape shape, Materials material){
         Pair<MaterialShape, Materials> key = Pair.of(shape, material);
-        if (MaterialItemMap.containsKey(key)) {
-            return MaterialItemMap.get(key).get();
+        if (MaterialItemTable.contains(shape, material)) {
+            return MaterialItemTable.get(shape, material).get();
         }else{
             return null;
         }

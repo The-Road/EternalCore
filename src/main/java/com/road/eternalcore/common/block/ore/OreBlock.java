@@ -1,11 +1,18 @@
 package com.road.eternalcore.common.block.ore;
 
-import net.minecraft.block.AbstractBlock;
+import com.road.eternalcore.api.ore.OreShape;
+import com.road.eternalcore.api.ore.Ores;
 import net.minecraft.block.Block;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class OreBlock extends Block {
-
-    public OreBlock(AbstractBlock.Properties properties) {
-        super(properties);
+    protected final Ores ore;
+    public OreBlock(Ores ore) {
+        super(ore.getBlockProperties());
+        this.ore = ore;
+    }
+    public IFormattableTextComponent getName(){
+        return new TranslationTextComponent(OreShape.ORE.getDescriptionId(), ore.getMainProduct().getText());
     }
 }

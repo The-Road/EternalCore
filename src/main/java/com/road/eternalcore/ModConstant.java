@@ -2,7 +2,7 @@ package com.road.eternalcore;
 
 public class ModConstant {
     // 存储物品耐久尾数的NBT
-    public static final String Durability_decimal = "EtCDbDecimal";
+    public static final String Durability_decimal = "etcDbDecimal";
     // 存储材料的NBT
     public static final String Material = "material";
     // 存储覆盖板数据的NBT

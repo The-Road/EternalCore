@@ -2,15 +2,14 @@ package com.road.eternalcore.api.energy.eu;
 
 import net.minecraftforge.energy.IEnergyStorage;
 
-public interface IEUStorage extends IEnergyStorage {
+public interface IEUStorage extends IEnergyStorage, IEUTier{
     // EU能量接口
-    EUTier getTier();
     void saveEnergy(int energy);
 
-    default boolean energyIsFull(){
+    default boolean isEnergyFull(){
         return getEnergyStored() == getMaxEnergyStored();
     }
-    default boolean energyIsEmpty(){
+    default boolean isEnergyEmpty(){
         return getEnergyStored() == 0;
     }
     default int setEnergy(int energy){

@@ -3,6 +3,7 @@ package com.road.eternalcore.api.energy;
 import com.road.eternalcore.api.RGB;
 import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.api.energy.eu.IEUStorage;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.*;
 
 public class EnergyUtils {
@@ -30,7 +31,7 @@ public class EnergyUtils {
             return 0;
         }
         // 不能从高压输送到低压
-        if (storageFrom.getTier().higherThan(storageTo.getTier())){
+        if (storageFrom.tierHigherThan(storageTo)){
             return 0;
         }
         int maxExchange = Math.min(storageFrom.getEnergyStored(), storageFrom.getTier().getMaxVoltage());
@@ -40,5 +41,18 @@ public class EnergyUtils {
             storageTo.receiveEnergy(exchangeValue, false);
         }
         return exchangeValue;
+    }
+    // 电池格合法检查（电池不超过指定电压）
+    public static boolean checkBatteryValid(ItemStack itemStack, int tierLevel){
+        IEUStorage storage = itemStack.getCapability(CapEnergy.EU).orElse(null);
+        if (storage != null) {
+            return !(storage.tierHigherThan(tierLevel));
+        }
+        DisposableBattery battery = DisposableBattery.get(itemStack.getItem());
+        return battery != null && !(battery.tierHigherThan(tierLevel));
+    }
+    public static boolean checkChargeableBatteryValid(ItemStack itemStack, int tierLevel){
+        IEUStorage storage = itemStack.getCapability(CapEnergy.EU).orElse(null);
+        return storage != null && !(storage.tierHigherThan(tierLevel));
     }
 }

@@ -19,7 +19,6 @@ public class ModMatchTool implements ILootCondition {
 
     public boolean test(LootContext lootContext) {
         ItemStack itemStack = lootContext.getParamOrNull(LootParameters.TOOL);
-        System.out.println(itemStack);
         return itemStack != null && this.predicate.match(itemStack);
     }
 
