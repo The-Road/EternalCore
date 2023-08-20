@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "eternalcore:block/battery_buffer",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "eternalcore:block/battery_buffer"
+    },
+    "facing=north": {
+      "model": "eternalcore:block/battery_buffer",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "eternalcore:block/battery_buffer",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "eternalcore:block/battery_buffer",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "eternalcore:block/battery_buffer",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

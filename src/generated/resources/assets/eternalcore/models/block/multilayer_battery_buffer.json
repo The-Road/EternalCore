@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "eternalcore:block/machine/side/empty",
+    "top": "eternalcore:block/machine/face/battery_buffer"
+  }
+}

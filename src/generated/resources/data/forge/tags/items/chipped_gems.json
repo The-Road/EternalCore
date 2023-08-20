@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:chipped_gems/diamond",
+    "#forge:chipped_gems/emerald"
+  ]
+}

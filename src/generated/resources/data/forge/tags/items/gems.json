@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:gems/emerald",
-    "#forge:gems/diamond"
+    "#forge:gems/diamond",
+    "#forge:gems/emerald"
   ]
 }

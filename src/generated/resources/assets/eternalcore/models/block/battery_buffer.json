@@ -1,16 +1,12 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "eternalcore:block/machine/side/empty"
-  },
   "loader": "eternalcore:machine",
   "layers": {
     "cutout_mipped": {
-      "parent": "minecraft:block/orientable",
+      "parent": "minecraft:block/cube_top",
       "textures": {
         "side": "eternalcore:block/machine/side/empty",
-        "front": "eternalcore:block/machine/face/battery_buffer",
-        "top": "eternalcore:block/machine/side/empty"
+        "top": "eternalcore:block/machine/face/battery_buffer"
       }
     }
   }

@@ -13,8 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class BatteryBufferTileEntity extends EnergyMachineTileEntity{
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.battery_buffer");
     public BatteryBufferTileEntity() {
-        super(ModTileEntityType.batteryBuffer);
-        initContainerRange(0, 0, 8);
+        super(ModTileEntityType.batteryBuffer, 0, 0, 8);
     }
 
     protected ITextComponent getDefaultName() {
@@ -31,10 +30,11 @@ public class BatteryBufferTileEntity extends EnergyMachineTileEntity{
         return EnergyUtils.checkChargeableBatteryValid(itemStack, getTier().getLevel());
     }
     public boolean canTakeItem(int slotID, ItemStack itemStack){
-        // 可以抽走空的不可充电电池
+        // 可以抽走空的不可充电电池，或者充满电的工具
         IEUStorage storage = itemStack.getCapability(CapEnergy.EU).orElse(null);
         if (storage != null) {
-            return !storage.canReceive() && storage.isEnergyEmpty();
+            return (!storage.canReceive() && storage.isEnergyEmpty()) ||
+                    (!storage.canExtract() && storage.isEnergyFull());
         }
         return true;
     }

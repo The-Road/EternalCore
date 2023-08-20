@@ -9,8 +9,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class MachineBlockTileEntity extends EnergyMachineTileEntity{
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.machine_block");
     public MachineBlockTileEntity(){
-        super(ModTileEntityType.machineBlock);
-        initContainerRange(1, 0, 1);
+        super(ModTileEntityType.machineBlock, 1, 0, 1);
     }
 
     protected ITextComponent getDefaultName(){

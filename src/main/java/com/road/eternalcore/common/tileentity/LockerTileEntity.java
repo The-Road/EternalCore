@@ -17,12 +17,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import java.util.stream.IntStream;
-
 public class LockerTileEntity extends MachineTileEntity{
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.locker");
     private static final int ContainerSize = 54;
-    private static final int[] ContainerRange = IntStream.range(0, ContainerSize).toArray();
     protected int openCount = 0;
     public LockerTileEntity(){
         super(ModTileEntityType.locker);

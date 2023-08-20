@@ -1,8 +1,5 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "eternalcore:block/machine/side/empty"
-  },
   "loader": "eternalcore:machine",
   "layers": {
     "cutout_mipped": {

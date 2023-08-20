@@ -22,11 +22,16 @@ import javax.annotation.Nullable;
 public abstract class MachineTileEntity extends LockableLootTileEntity {
     protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(0, ItemStack.EMPTY);
+    protected NonNullList<ItemStack> items;
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
+        initItems();
     }
-
+    protected void initItems(){
+        if (this.items == null || this.items.size() < getContainerSize()){
+            this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        }
+    }
     public CompoundNBT save(CompoundNBT nbt) {
         super.save(nbt);
         nbt.put(ModConstant.Machine_cover, covers.save());

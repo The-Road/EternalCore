@@ -15,6 +15,11 @@
                   "source": "material",
                   "target": "BlockEntityTag.material",
                   "op": "replace"
+                },
+                {
+                  "source": "euTier",
+                  "target": "BlockEntityTag.euTier",
+                  "op": "replace"
                 }
               ]
             }

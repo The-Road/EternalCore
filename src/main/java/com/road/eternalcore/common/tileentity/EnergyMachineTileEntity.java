@@ -15,7 +15,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -40,8 +39,9 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
     protected int[] resultRange;
     protected int[] batteryRange;
     protected final EnergyMachineGUIData guiData = new EnergyMachineGUIData(this);
-    public EnergyMachineTileEntity(TileEntityType<?> tileEntityType) {
+    public EnergyMachineTileEntity(TileEntityType<?> tileEntityType, int inputSize, int resultSize, int batterySize) {
         super(tileEntityType);
+        initContainerRange(inputSize, resultSize, batterySize);
     }
 
     protected void initContainerRange(int inputSize, int resultSize, int batterySize){
@@ -51,10 +51,7 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
         this.inputRange = IntStream.range(0, inputSize).toArray();
         this.resultRange = IntStream.range(inputSize, inputSize + resultSize).toArray();
         this.batteryRange = IntStream.range(inputSize + resultSize, inputSize + resultSize + batterySize).toArray();
-        // 防止出bug
-        if (this.items == null || this.items.size() < getContainerSize()){
-            this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-        }
+        initItems();
     }
 
     public int getContainerSize() {
