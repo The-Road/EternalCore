@@ -2,9 +2,14 @@ package com.road.eternalcore.data.model;
 
 import com.road.eternalcore.Utils;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
+import com.road.eternalcore.api.block.properties.PipeConnection;
+import com.road.eternalcore.api.material.MaterialWireData;
 import com.road.eternalcore.api.ore.Ores;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.ore.OreBlocks;
+import com.road.eternalcore.common.block.pipe.AbstractPipeBlock;
+import com.road.eternalcore.common.block.pipe.PipeBlocks;
+import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -36,6 +41,7 @@ public class ModBlockStateProvider extends BlockStateProvider{
         blockModels.registerModels();
         itemModels.registerModels();
         addOres();
+        addPipesAndWires();
         addMachines();
     }
     protected ResourceLocation mcBlock(String name){
@@ -54,6 +60,9 @@ public class ModBlockStateProvider extends BlockStateProvider{
     protected ModelFile getModel(Block block, String extra){
         return blockModels.generatedModels.get(new ResourceLocation(block.getRegistryName() + "_" + extra));
     }
+    protected ModelFile getModel(ResourceLocation resourceLocation){
+        return blockModels.generatedModels.get(resourceLocation);
+    }
 
     private void addOres(){
         for(Ores ore : Ores.getAllOres()){
@@ -62,6 +71,33 @@ public class ModBlockStateProvider extends BlockStateProvider{
                 simpleBlock(block, getModel(block));
             }
         }
+    }
+    private void addPipesAndWires(){
+        for (MaterialWireData.WireType wireType : MaterialWireData.WireType.values()){
+            PipeBlocks.getWires(wireType).forEach(wire -> {
+                if (hasModel(wire)) {
+                    if (wireType.radius < 8){
+                        addWire(wire, "wire", wireType.radius);
+                    } else {
+                        simpleBlock(wire, getModel(wire));
+                    }
+                }
+            });
+        }
+    }
+    private void addWire(Block block, String wireName, int radius){
+        ModelFile core = getModel(new ModResourceLocation(wireName + "_core_" + radius));
+        ModelFile side = getModel(new ModResourceLocation(wireName + "_side_" + radius));
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(block)
+                .part().modelFile(core).addModel().end();
+        AbstractPipeBlock.DIRECTION_CONNECTION.forEach((dir, property) -> {
+            builder.part().modelFile(side)
+                    .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .addModel()
+                    .condition(property, PipeConnection.ON)
+                    .end();
+        });
     }
     private void addMachines(){
         addMachineCasing();
@@ -84,7 +120,7 @@ public class ModBlockStateProvider extends BlockStateProvider{
                             .modelFile(getModel(block))
                             .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                             .build(),
-                    ModBlockStateProperties.MachineMaterial
+                    ModBlockStateProperties.MATERIAL
             );
         }
     }
@@ -94,7 +130,7 @@ public class ModBlockStateProvider extends BlockStateProvider{
                             .modelFile(state.getValue(BlockStateProperties.OPEN) ? getModel(block, "open") : getModel(block))
                             .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                             .build(),
-                    ModBlockStateProperties.MachineMaterial
+                    ModBlockStateProperties.MATERIAL
             );
         }
     }
@@ -107,7 +143,7 @@ public class ModBlockStateProvider extends BlockStateProvider{
                         .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
                         .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                         .build();
-                }, ModBlockStateProperties.MachineMaterial
+                }, ModBlockStateProperties.MATERIAL
             );
         }
     }

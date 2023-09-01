@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MaterialBlockProperty extends Property<String> {
-    public static final String DefaultValue = "null";
+    public static final String DEFAULT = "null";
     private final ImmutableSet<String> values;
     protected MaterialBlockProperty() {
         super("material", String.class);
@@ -22,7 +22,7 @@ public class MaterialBlockProperty extends Property<String> {
     private Collection<String> getAllMaterials(){
         // 读取所有的MaterialBlockData对应的String
         List<String> allValues = new ArrayList<>();
-        allValues.add(DefaultValue);
+        allValues.add(DEFAULT);
         allValues.addAll(MaterialBlockData.getData().keySet().stream().map(Materials::getName).collect(Collectors.toList()));
         return allValues;
     }
@@ -36,7 +36,7 @@ public class MaterialBlockProperty extends Property<String> {
     }
 
     public Optional<String> getValue(String value) {
-        return Optional.of(values.contains(value) ? value : DefaultValue);
+        return Optional.of(values.contains(value) ? value : DEFAULT);
     }
 
     public int generateHashCode() {
@@ -49,7 +49,7 @@ public class MaterialBlockProperty extends Property<String> {
     public BlockState setBlockStateProperty(BlockState blockState, Materials material){
         String materialName = getValue(material.getName()).get();
         if (!values.contains(materialName)){
-            materialName = DefaultValue;
+            materialName = DEFAULT;
         }
         return blockState.setValue(this, materialName);
     }

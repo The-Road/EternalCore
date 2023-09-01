@@ -41,6 +41,7 @@ public class MaterialItems {
         addVanillaItem(NUGGET, GOLD, Items.GOLD_NUGGET);
         addVanillaItem(GEM, DIAMOND, Items.DIAMOND);
         addVanillaItem(GEM, EMERALD, Items.EMERALD);
+        addVanillaItem(MINERAL, COAL, Items.COAL);
         addVanillaItem(DUST, REDSTONE, Items.REDSTONE);
     }
     private static void init(){

@@ -2,9 +2,7 @@ package com.road.eternalcore.data;
 
 import com.road.eternalcore.data.loot.ModLootTableProvider;
 import com.road.eternalcore.data.loot.modifiers.GLMDataProvider;
-import com.road.eternalcore.data.model.ModBlockModelProvider;
 import com.road.eternalcore.data.model.ModBlockStateProvider;
-import com.road.eternalcore.data.model.ModItemModelProvider;
 import com.road.eternalcore.data.recipes.provider.ModRecipeProvider;
 import com.road.eternalcore.data.tags.ModBlockTagsProvider;
 import com.road.eternalcore.data.tags.ModItemTagsProvider;
@@ -19,7 +17,6 @@ public class DataGenerateEvent {
     @SubscribeEvent
     public static void dataGenerate(GatherDataEvent event){
         DataGenerator gen = event.getGenerator();
-
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         ModBlockTagsProvider blockTags = new ModBlockTagsProvider(gen, existingFileHelper);
         gen.addProvider(blockTags);

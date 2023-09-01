@@ -14,7 +14,7 @@ public class BatteryBufferBlock extends MachineBlock{
     public BatteryBufferBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(ModBlockStateProperties.MachineMaterial, MaterialBlockProperty.DefaultValue)
+                .setValue(ModBlockStateProperties.MATERIAL, MaterialBlockProperty.DEFAULT)
                 .setValue(facingType(), Direction.NORTH)
         );
     }

@@ -1,6 +1,7 @@
 package com.road.eternalcore.api.material;
 
 import com.road.eternalcore.Utils;
+import com.road.eternalcore.api.RGB;
 import com.road.eternalcore.data.tags.ModTags;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
@@ -89,6 +90,8 @@ public class Materials {
     public static final Materials EMERALD = addGem("emerald");
 
     // 矿物类材料
+    public static final Materials COAL = addMineral("coal");
+    public static final Materials QUARTZ = addMineral("quartz");
 
     // 粉末类材料
     public static final Materials REDSTONE = addPowder("redstone");
@@ -103,6 +106,7 @@ public class Materials {
     protected final String name;
     protected final Type type;
     protected Set<MaterialShape> shapes = new HashSet<>();
+    protected RGB rgb = new RGB(255, 255, 255);
     protected boolean isFireResistant = false;
     protected LazyValue<ITag<Item>> customIngredientTag;
     public Materials(String name, Type type){
@@ -153,9 +157,9 @@ public class Materials {
         return newGem;
     }
     protected static Materials addMineral(String name){
-        Materials newGem = new Materials(name, Type.MINERAL);
-        newGem.addShape(MINERAL, DUST);
-        return newGem;
+        Materials newMineral = new Materials(name, Type.MINERAL);
+        newMineral.addShape(MINERAL, DUST);
+        return newMineral;
     }
     protected static Materials addPowder(String name){
         Materials newPowder = new Materials(name, Type.POWDER);
@@ -179,6 +183,9 @@ public class Materials {
     public Set<MaterialShape> getShapes(){
         return shapes;
     }
+    public RGB getRGB(){
+        return this.rgb;
+    }
     public Item.Properties getProperties(){
         if (this.isFireResistant){
             return new Item.Properties().fireResistant();
@@ -198,6 +205,10 @@ public class Materials {
         for(MaterialShape shape : shapes){
             addShape(shape);
         }
+        return this;
+    }
+    protected Materials setRGB(int r, int g, int b){
+        this.rgb = new RGB(r, g, b);
         return this;
     }
 

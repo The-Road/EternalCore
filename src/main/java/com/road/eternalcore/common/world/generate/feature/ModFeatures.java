@@ -1,6 +1,7 @@
 package com.road.eternalcore.common.world.generate.feature;
 
-import com.road.eternalcore.common.block.ModBlocks;
+import com.road.eternalcore.api.ore.Ores;
+import com.road.eternalcore.common.block.ore.OreBlocks;
 import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.registry.Registry;
@@ -41,7 +42,7 @@ public class ModFeatures {
         return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ModResourceLocation(name), feature);
     }
     public static final class States {
-        protected static final BlockState copperOre = ModBlocks.copperOre.defaultBlockState();
-        protected static final BlockState tinOre = ModBlocks.tinOre.defaultBlockState();
+        protected static final BlockState copperOre = OreBlocks.get(Ores.COPPER_ORE).defaultBlockState();
+        protected static final BlockState tinOre = OreBlocks.get(Ores.TIN_ORE).defaultBlockState();
     }
 }

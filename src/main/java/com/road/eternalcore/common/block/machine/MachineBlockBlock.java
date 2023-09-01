@@ -14,7 +14,7 @@ public class MachineBlockBlock extends MachineBlock{
     public MachineBlockBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(ModBlockStateProperties.MachineMaterial,  MaterialBlockProperty.DefaultValue)
+                .setValue(ModBlockStateProperties.MATERIAL,  MaterialBlockProperty.DEFAULT)
                 .setValue(facingType(), Direction.NORTH)
         );
     }

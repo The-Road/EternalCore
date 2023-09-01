@@ -37,11 +37,8 @@ public class MachineBlockItem extends ModBlockItem{
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
         MaterialBlockData blockData = getMaterialBlockData(itemStack);
-        list.add(
-                new TranslationTextComponent(
-                        "eternalcore.toolTip.block.material",
-                        blockData.getMaterial().getText()
-                ).withStyle(TextFormatting.GRAY)
-        );
+        list.add(new TranslationTextComponent(
+                "eternalcore.toolTip.block.material", blockData.getMaterial().getText()
+        ).withStyle(TextFormatting.GRAY));
     }
 }

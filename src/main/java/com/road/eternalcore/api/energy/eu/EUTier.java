@@ -3,15 +3,12 @@ package com.road.eternalcore.api.energy.eu;
 import com.road.eternalcore.Utils;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EUTier implements IEUTier{
     // 电压等级，注意这里的电压等级顺序是写死的（按照注册的顺序排序），不要改动
-    protected static final Map<String, EUTier> tiers = new HashMap<>();
-    protected static final List<EUTier> tierList = new ArrayList<>();
+    protected static final Map<String, EUTier> tiers = new LinkedHashMap<>();
+    protected static final List<EUTier> tierList = new ArrayList<>(15);
 
     public static final EUTier ULV = new EUTier("ulv", 2 << 2); // 8
     public static final EUTier LV = new EUTier("lv", 2 << 4); // 32
@@ -33,7 +30,7 @@ public class EUTier implements IEUTier{
     protected final int level;
     protected final String name;
     protected final int maxVoltage;
-    protected EUTier(String name, int maxVoltage){
+    private EUTier(String name, int maxVoltage){
         if (tiers.containsKey(name)){
             throw new IllegalStateException("EUTierLevel "+name+" has already existed!");
         }
@@ -68,7 +65,12 @@ public class EUTier implements IEUTier{
     public TranslationTextComponent getText(){
         return new TranslationTextComponent(getDescriptionId());
     }
-
+    public EUTier nextTier(){
+        return EUTier.tier(getLevel() + 1);
+    }
+    public EUTier lastTier(){
+        return EUTier.tier(getLevel() - 1);
+    }
 
     public EUTier getTier() {
         return this;

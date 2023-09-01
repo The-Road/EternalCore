@@ -1,7 +1,5 @@
 package com.road.eternalcore.common.block;
 
-import com.road.eternalcore.api.ore.Ores;
-import com.road.eternalcore.common.block.ore.OreBlocks;
 import com.road.eternalcore.registries.BlockRegister;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
@@ -11,8 +9,6 @@ import java.util.stream.Collectors;
 
 public class ModBlocks {
     // 矿石
-    public static final Block copperOre = OreBlocks.get(Ores.COPPER_ORE);
-    public static final Block tinOre = OreBlocks.get(Ores.TIN_ORE);
     public static final Block handcraftAssemblyTable = ModBlockRegistries.handcraftAssemblyTable.get();
     public static final Block smithingTable = ModBlockRegistries.smithingTable.get();
     public static Collection<Block> getNormalBlocks(){

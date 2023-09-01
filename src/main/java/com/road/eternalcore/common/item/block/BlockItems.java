@@ -2,6 +2,7 @@ package com.road.eternalcore.common.item.block;
 
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
+import com.road.eternalcore.common.block.pipe.PipeBlocks;
 import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.registries.BlockRegister;
 import com.road.eternalcore.registries.ItemRegister;
@@ -20,11 +21,15 @@ public class BlockItems {
     private static final Map<String, RegistryObject<Item>> blockItems = new HashMap<>();
     private static void init(){
         // 注册普通方块
-        BlockRegister.getNormalBlocks().forEach((name, block) -> registerNormalBlock(name, () -> new ModBlockItem(block.get(), new Item.Properties().tab(ModGroup.blockGroup))));
-        // 注册机器
-        MachineBlocks.machines.forEach((name, machine) -> registerFunctionalBlock(name, () -> new MachineBlockItem(machine.get(), new Item.Properties().tab(ModGroup.functionalBlockGroup))));
-        // 注册剩余的功能型方块
-        BlockRegister.getFunctionalBlocks().forEach((name, block) -> registerFunctionalBlock(name, () -> new ModBlockItem(block.get(), new Item.Properties().tab(ModGroup.functionalBlockGroup))));
+        PipeBlocks.wires.forEach((name, wire) -> registerNormalBlock(
+                name, () -> new WireBlockItem(wire.get(), new Item.Properties().tab(ModGroup.blockGroup))));
+        BlockRegister.getNormalBlocks().forEach((name, block) -> registerNormalBlock(
+                name, () -> new ModBlockItem(block.get(), new Item.Properties().tab(ModGroup.blockGroup))));
+        // 注册功能型方块
+        MachineBlocks.machines.forEach((name, machine) -> registerFunctionalBlock(
+                name, () -> new MachineBlockItem(machine.get(), new Item.Properties().tab(ModGroup.functionalBlockGroup))));
+        BlockRegister.getFunctionalBlocks().forEach((name, block) -> registerFunctionalBlock(
+                name, () -> new ModBlockItem(block.get(), new Item.Properties().tab(ModGroup.functionalBlockGroup))));
     }
     private static void registerNormalBlock(String name, Supplier<? extends Item> sup){
         if (blockItems.containsKey(name)){

@@ -5,12 +5,23 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 
 public class BlockMaterial {
-    public static final Material Machine = material(
+    // 记录方块的属性
+    public static final Material MACHINE = material(
             MaterialColor.METAL,
             false,
             true,
             true,
             true,
+            false,
+            false,
+            PushReaction.BLOCK
+    );
+    public static final Material PIPE = material(
+            MaterialColor.NONE,
+            false,
+            true,
+            true,
+            false,
             false,
             false,
             PushReaction.BLOCK

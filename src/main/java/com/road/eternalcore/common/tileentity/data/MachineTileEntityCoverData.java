@@ -1,6 +1,5 @@
 package com.road.eternalcore.common.tileentity.data;
 
-import com.road.eternalcore.common.tileentity.MachineTileEntity;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Direction;
@@ -10,11 +9,8 @@ import java.util.Map;
 
 public class MachineTileEntityCoverData {
     private Map<Direction, MachineCover> covers = new HashMap<>();
-    private final MachineTileEntity tileEntity;
 
-    public MachineTileEntityCoverData(MachineTileEntity tileEntity){
-        this.tileEntity = tileEntity;
-    }
+    public MachineTileEntityCoverData(){}
     public MachineCover getCover(Direction direction){
         return covers.getOrDefault(direction, MachineCover.NULL);
     }

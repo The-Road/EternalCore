@@ -7,17 +7,19 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.road.eternalcore.Utils;
+import com.road.eternalcore.api.material.MaterialWireData;
 import com.road.eternalcore.api.ore.Ores;
 import com.road.eternalcore.client.renderer.model.builder.MachineModelBuilder;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.ore.OreBlocks;
+import com.road.eternalcore.common.block.pipe.PipeBlocks;
+import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
@@ -26,7 +28,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 public class ModBlockModelProvider extends BlockModelProvider{
     private final JsonObject missingTexture = new JsonObject();
@@ -51,6 +52,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
     @Override
     protected void registerModels() {
         addOres();
+        addPipesAndWires();
         addMachines();
         addCube(ModBlocks.handcraftAssemblyTable,
                 mcBlock("oak_planks"),
@@ -104,6 +106,15 @@ public class ModBlockModelProvider extends BlockModelProvider{
             }
         }
     }
+    private void addPipesAndWires(){
+        for (MaterialWireData.WireType wireType : MaterialWireData.WireType.values()){
+            ResourceLocation texture = modBlock("wire/wire");
+            addWireModel("wire", wireType.radius, texture);
+            PipeBlocks.getWires(wireType).forEach(wire -> {
+                addWire(wire, wireType, texture);
+            });
+        }
+    }
     private void addMachines(){
         addMachineCasing();
         addOrientableMachine(MachineBlocks.locker.get(), "locker");
@@ -130,9 +141,6 @@ public class ModBlockModelProvider extends BlockModelProvider{
         });
     }
 
-    protected void add(Block block, Supplier<BlockModelBuilder> sup){
-        generatedModels.put(block.getRegistryName(), sup.get());
-    }
     protected void addCube(Block block, ResourceLocation down, ResourceLocation up, ResourceLocation north, ResourceLocation south, ResourceLocation east, ResourceLocation west){
         generatedModels.put(block.getRegistryName(), cube(
                 ModBlocks.getBlockName(block),
@@ -146,6 +154,25 @@ public class ModBlockModelProvider extends BlockModelProvider{
         ).texture("particle", particle));
     }
     protected void addCubeAll(Block block, ResourceLocation texture){
+        generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
+    }
+    // 添加管道类材质
+    protected void addWireModel(String name, int radius, ResourceLocation texture){
+        if (radius < 1 || radius > 7) return;
+        String coreName = name + "_core_" + radius;
+        String sideName = name + "_side_" + radius;
+        ResourceLocation coreRL = new ModResourceLocation(coreName);
+        ResourceLocation sideRL = new ModResourceLocation(sideName);
+        generatedModels.put(coreRL, withExistingParent(
+                coreName, modLoc(BLOCK_FOLDER + "/template_pipe_core_" + radius))
+                .texture("cover", texture)
+        );
+        generatedModels.put(sideRL, withExistingParent(
+                sideName, modLoc(BLOCK_FOLDER + "/template_pipe_side_" + radius))
+                .texture("cover", texture)
+        );
+    }
+    protected void addWire(Block block, MaterialWireData.WireType wireType, ResourceLocation texture){
         generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
     }
     // 有朝向的机器，提供正面材质和侧面材质（注意该材质是贴在机器外壳材质上面一层的）
@@ -192,4 +219,5 @@ public class ModBlockModelProvider extends BlockModelProvider{
                 )).end()
         );
     }
+
 }

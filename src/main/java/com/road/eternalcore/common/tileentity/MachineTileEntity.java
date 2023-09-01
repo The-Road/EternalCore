@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class MachineTileEntity extends LockableLootTileEntity {
-    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
+    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData();
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
     protected NonNullList<ItemStack> items;
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
@@ -72,9 +72,9 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     public void setMaterial(Materials material){
         blockData = MaterialBlockData.get(material);
         BlockState blockState = getBlockState();
-        if (blockState.hasProperty(ModBlockStateProperties.MachineMaterial)) {
-            if (Materials.get(blockState.getValue(ModBlockStateProperties.MachineMaterial)) != material) {
-                this.level.setBlock(getBlockPos(), ModBlockStateProperties.MachineMaterial.setBlockStateProperty(blockState, material), 3);
+        if (blockState.hasProperty(ModBlockStateProperties.MATERIAL)) {
+            if (Materials.get(blockState.getValue(ModBlockStateProperties.MATERIAL)) != material) {
+                this.level.setBlock(getBlockPos(), ModBlockStateProperties.MATERIAL.setBlockStateProperty(blockState, material), 3);
             }
         }
     }

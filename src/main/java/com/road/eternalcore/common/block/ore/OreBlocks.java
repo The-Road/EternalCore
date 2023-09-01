@@ -18,12 +18,11 @@ public class OreBlocks {
     public static final Map<Ores, RegistryObject<Block>> blockMap = new HashMap<>();
 
     private static void init(){
-        // 注册矿石
         registerOres();
     }
     private static void registerOres(){
         for(Ores ore : Ores.getAllOres()){
-            RegistryObject<Block> block =  BLOCKS.registerNormal(
+            RegistryObject<Block> block = BLOCKS.registerNormal(
                     Ores.getRegisterName(OreShape.ORE, ore),
                     () -> new OreBlock(ore)
             );

@@ -1,0 +1,6 @@
+{
+  "parent": "eternalcore:block/template_pipe_side_4",
+  "textures": {
+    "cover": "eternalcore:block/wire/wire"
+  }
+}

@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -16,8 +16,8 @@ public class MachineBlocks {
     // 机器的注册就单独写了
     // 机器结构方块的注册批量处理
     public static final BlockRegister BLOCKS = new BlockRegister();
-    public static final Map<Materials, RegistryObject<Block>> machine_casing = new HashMap<>();
-    public static final Map<String, RegistryObject<Block>> machines = new HashMap<>();
+    public static final Map<Materials, RegistryObject<Block>> machine_casing = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<Block>> machines = new LinkedHashMap<>();
 
     public static final RegistryObject<Block> locker = registerMachine("locker", LockerBlock::new);
     public static final RegistryObject<Block> machineBlock = registerMachine("machine_block", MachineBlockBlock::new);
@@ -27,7 +27,7 @@ public class MachineBlocks {
         registerMachineCasing();
     }
 
-    protected static void registerMachineCasing(){
+    private static void registerMachineCasing(){
         MaterialBlockData.getData().forEach((material, blockData) -> {
             RegistryObject<Block> casing = BLOCKS.registerNormal(
                     material + "_" + MachineCasingBlock.NAME,

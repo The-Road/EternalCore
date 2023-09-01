@@ -21,7 +21,7 @@ public class LockerBlock extends MachineBlock{
     public LockerBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(ModBlockStateProperties.MachineMaterial, MaterialBlockProperty.DefaultValue)
+                .setValue(ModBlockStateProperties.MATERIAL, MaterialBlockProperty.DEFAULT)
                 .setValue(facingType(), Direction.NORTH)
                 .setValue(BlockStateProperties.OPEN, false)
         );

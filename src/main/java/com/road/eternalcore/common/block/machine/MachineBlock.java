@@ -8,7 +8,6 @@ import com.road.eternalcore.common.item.tool.ModToolType;
 import com.road.eternalcore.common.stats.ModStats;
 import com.road.eternalcore.common.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -111,16 +110,12 @@ public abstract class MachineBlock extends AbstractMachineBlock{
 
     }
 
-    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
-        return BlockRenderType.MODEL;
-    }
-
     // 四面朝向的机器正面不可接入覆盖板和电线（视为拥有覆盖板），六面朝向的机器正面是输出口
     protected abstract DirectionProperty facingType();
     public BlockState getStateForPlacement(BlockItemUseContext useContext) {
         BlockState blockState = this.defaultBlockState();
         Materials material = MachineBlockItem.getMaterialBlockData(useContext.getItemInHand()).getMaterial();
-        blockState = ModBlockStateProperties.MachineMaterial.setBlockStateProperty(blockState, material);
+        blockState = ModBlockStateProperties.MATERIAL.setBlockStateProperty(blockState, material);
         if (facingType() == BlockStateProperties.FACING){
             blockState = blockState.setValue(facingType(), useContext.getNearestLookingDirection().getOpposite());
         } else if (facingType() == BlockStateProperties.HORIZONTAL_FACING){
@@ -129,7 +124,7 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         return blockState;
     }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(ModBlockStateProperties.MachineMaterial);
+        builder.add(ModBlockStateProperties.MATERIAL);
         builder.add(facingType());
     }
     public BlockState rotate(BlockState blockState, Rotation rotation) {

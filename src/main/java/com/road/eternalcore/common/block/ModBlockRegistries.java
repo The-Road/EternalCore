@@ -2,6 +2,7 @@ package com.road.eternalcore.common.block;
 
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.ore.OreBlocks;
+import com.road.eternalcore.common.block.pipe.PipeBlocks;
 import com.road.eternalcore.registries.BlockRegister;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -28,6 +29,7 @@ public class ModBlockRegistries {
     public static void register(IEventBus bus){
         BLOCKS.register(bus);
         OreBlocks.BLOCKS.register(bus);
+        PipeBlocks.BLOCKS.register(bus);
         MachineBlocks.BLOCKS.register(bus);
     }
 }

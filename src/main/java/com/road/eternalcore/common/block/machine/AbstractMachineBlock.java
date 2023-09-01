@@ -13,7 +13,7 @@ import net.minecraft.world.IBlockReader;
 public abstract class AbstractMachineBlock extends Block {
     // 机器方块类
     public AbstractMachineBlock(float destroyTime, float explosionResistance) {
-        super(Properties.of(BlockMaterial.Machine)
+        super(Properties.of(BlockMaterial.MACHINE)
                 .requiresCorrectToolForDrops().harvestTool(ModToolType.WRENCH)
                 .strength(destroyTime, explosionResistance)
                 .sound(SoundType.METAL)
