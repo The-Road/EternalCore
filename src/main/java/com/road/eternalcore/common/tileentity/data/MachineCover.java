@@ -32,6 +32,9 @@ public class MachineCover {
     public String getName(){
         return name;
     }
+    public Item getItem(){
+        return item;
+    }
     public ItemStack getItemStack(){
         return new ItemStack(item);
     }

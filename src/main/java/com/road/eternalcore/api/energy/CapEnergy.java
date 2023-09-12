@@ -7,11 +7,11 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class CapEnergy {
-    public static Capability<IEnergyStorage> FE = CapabilityEnergy.ENERGY;
+    @CapabilityInject(IEnergyStorage.class)
+    public static Capability<IEnergyStorage> FE;
     @CapabilityInject(IEUStorage.class)
     public static Capability<IEUStorage> EU;
 

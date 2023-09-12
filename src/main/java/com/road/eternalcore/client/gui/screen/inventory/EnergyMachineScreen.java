@@ -11,12 +11,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class MachineScreen<T extends MachineContainer> extends ContainerScreen<T> {
+public abstract class EnergyMachineScreen<T extends MachineContainer> extends ContainerScreen<T> {
     // 电量条在GUI中的位置
     protected Rectangle2d energyBarRect = new Rectangle2d(78, 91, 20, 4);
     // 电量条在材质贴图中的位置（只用到了左上角坐标，W和H用的是energyBarRect的）
     protected Rectangle2d energyBarTextureRect = new Rectangle2d(176, 0, 20, 4);
-    public MachineScreen(T machineContainer, PlayerInventory inventory, ITextComponent title) {
+    public EnergyMachineScreen(T machineContainer, PlayerInventory inventory, ITextComponent title) {
         super(machineContainer, inventory, title);
     }
 
@@ -47,7 +47,7 @@ public abstract class MachineScreen<T extends MachineContainer> extends Containe
     protected void renderEnergyRateTooltip(MatrixStack matrixStack, int mouseX, int mouseY){
         // 移到电量槽上时显示当前机器储电量
         if (this.minecraft.player.inventory.getCarried().isEmpty() && energyBarRect.contains(mouseX - this.leftPos, mouseY - this.topPos)){
-            renderTooltip(matrixStack, EnergyUtils.energyStorageText(EUTier.tier(this.menu.getTierLevel()), this.menu.getEnergy(), this.menu.getMaxEnergy()), mouseX, mouseY);
+            renderTooltip(matrixStack, EnergyUtils.energyStorageText(EUTier.tier(this.menu.getTierLevel()), this.menu.getEnergy(), this.menu.getMaxEnergy(), false), mouseX, mouseY);
         }
     }
 

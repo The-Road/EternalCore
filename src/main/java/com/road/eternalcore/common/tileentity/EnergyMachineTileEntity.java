@@ -7,8 +7,11 @@ import com.road.eternalcore.api.energy.EnergyUtils;
 import com.road.eternalcore.api.energy.FEtoEUStorage;
 import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.api.energy.eu.IEUStorage;
+import com.road.eternalcore.api.energy.eu.ISidedEUStorage;
+import com.road.eternalcore.api.energy.eu.SidedEUStorage;
 import com.road.eternalcore.common.tileentity.data.EnergyMachineGUIData;
 import com.road.eternalcore.common.tileentity.wrapper.EnergyMachineWrapper;
+import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,15 +25,17 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public abstract class EnergyMachineTileEntity extends MachineTileEntity implements IEUStorage, ITickableTileEntity{
+public abstract class EnergyMachineTileEntity extends MachineTileEntity implements ISidedEUStorage, ITickableTileEntity{
     // 通常的工作机器类，拥有输入槽，输出槽，电池槽，流体槽（还没写）
     protected int energy = 0;
-    protected int maxEnergy = 1000;
+    protected int maxEnergy = 1280;
     protected EUTier euTier = EUTier.LV;
-    protected final LazyOptional<IEUStorage> storage = LazyOptional.of(() -> this);
+    protected final Map<Direction, LazyOptional<IEUStorage>> storage = createEuStorages();
     // 设置输入槽、输出槽、电池槽的大小
     protected int inputSize;
     protected int resultSize;
@@ -103,7 +108,7 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
     protected void setTier(EUTier euTier){
         this.euTier = euTier;
     }
-    // IEUStorage接口
+    // -----ISidedEUStorage接口-----
     public EUTier getTier(){
         return euTier;
     }
@@ -119,29 +124,41 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
     public int getMaxEnergyStored(){
         return maxEnergy;
     };
-
+    private Map<Direction, LazyOptional<IEUStorage>> createEuStorages(){
+        Map<Direction, LazyOptional<IEUStorage>> map = new HashMap<>();
+        for (Direction side : Direction.values()){
+            map.put(side, LazyOptional.of(() -> new SidedEUStorage(this, side)));
+        }
+        return map;
+    }
     protected <T> LazyOptional<T> getMachineCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (Objects.equals(cap, CapEnergy.EU)){
-            return storage.cast();
+            return storage.get(side).cast();
         }else if (Objects.equals(cap, CapEnergy.FE)){
-            return storage.lazyMap(FEtoEUStorage::new).cast();
+            return storage.get(side).lazyMap(FEtoEUStorage::new).cast();
         }
         return super.getMachineCapability(cap, side);
     }
-    //Energy接口，一般都是true
-    public boolean canExtract() {
-        return true;
-    }
-    public boolean canReceive() {
-        return true;
-    }
-    // ITickableTileEntity接口
+    // -----ITickableTileEntity接口-----
     public void tick() {
-        // 充电检查
-        tickEnergyCharge();
+        if (this.level != null && !this.level.isClientSide()) {
+            // 机器工作
+            machineTickWork();
+            // 充电检查
+            batteryEnergyCharge();
+            // 和电网互动
+            EnergyNetworkManager networkManager = EnergyNetworkManager.get(this.level);
+            if (this instanceof IEnergyProviderTileEntity && ((IEnergyProviderTileEntity) this).canProvideEnergyToNetwork()) {
+                networkManager.addEnergyProviderMachine(getBlockPos(), (IEnergyProviderTileEntity) this);
+            }
+            if (this instanceof IEnergyReceiverTileEntity && ((IEnergyReceiverTileEntity) this).canReceiveEnergyFromNetwork()) {
+                networkManager.addEnergyReceiverMachine(getBlockPos(), (IEnergyReceiverTileEntity) this);
+            }
+        }
     }
-    // 机器的充电处理，正常情况下每帧都调用
-    protected void tickEnergyCharge(){
+    public void machineTickWork(){}
+    // 机器内部的充电处理
+    protected void batteryEnergyCharge(){
         // 检查电池格中的电池
         Arrays.stream(this.batteryRange).forEach(i -> {
             ItemStack itemStack = getItem(i);
@@ -150,7 +167,7 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
                 itemStack.getCapability(CapEnergy.EU).ifPresent(storage -> {
                     // 如果自身电量未满且电池中有电，则试图从电池中充电
                     if (!isEnergyFull() && !storage.isEnergyEmpty()) {
-                        EnergyUtils.energyExchange(storage, this);
+                        EnergyUtils.energyExchange(storage, this, false);
                     }
                 });
                 // 如果是一次性电池，则试图消耗物品充电
@@ -163,8 +180,5 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
                 }
             }
         });
-        // 检查外部输电
-        // 如果自身电量未满，则给自己充电
-        // 如果自身电量已满，则给电池充电
     }
 }

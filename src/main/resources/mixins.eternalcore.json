@@ -1,10 +1,10 @@
 {
   "package": "com.road.eternalcore.mixin",
   "mixins": [
+    "ContainerMixin",
     "ItemStackMixin",
     "PlayerEntityMixin",
     "RecipeBookContainerMixin",
-    "StateHolderMixin",
-    "TestMixin"
+    "StateHolderMixin"
   ]
 }

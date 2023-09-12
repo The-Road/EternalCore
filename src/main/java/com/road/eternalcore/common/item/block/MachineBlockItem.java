@@ -22,7 +22,7 @@ import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public class MachineBlockItem extends ModBlockItem{
-    private static final Supplier<Callable<ItemStackTileEntityRenderer>> ISTER = () -> () -> MachineISTER.instance;
+    private static final Supplier<Callable<ItemStackTileEntityRenderer>> ISTER = () -> () -> MachineISTER.INSTANCE;
     public MachineBlockItem(Block block, Properties properties) {
         super(block, properties.setISTER(ISTER));
     }

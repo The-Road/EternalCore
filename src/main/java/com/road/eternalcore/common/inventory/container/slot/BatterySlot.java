@@ -14,6 +14,6 @@ public class BatterySlot extends Slot {
     }
 
     public boolean mayPlace(ItemStack itemStack) {
-        return EnergyUtils.checkBatteryValid(itemStack, container.getTierLevel());
+        return EnergyUtils.checkExtractableBatteryValid(itemStack, container.getTierLevel());
     }
 }

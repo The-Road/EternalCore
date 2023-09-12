@@ -59,15 +59,15 @@ public abstract class MachineBlock extends AbstractMachineBlock{
     }
     protected abstract boolean tileEntityMatch(TileEntity tileEntity);
 
-    public void onRemove(BlockState thisBlock, World world, BlockPos pos, BlockState lastBlock, boolean blockUpdate) {
-        if (!thisBlock.is(lastBlock.getBlock())){
+    public void onRemove(BlockState thisState, World world, BlockPos pos, BlockState newState, boolean blockUpdate) {
+        if (!thisState.is(newState.getBlock())){
             // 被破坏时掉落自身物品栏
             TileEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntity instanceof IInventory){
                 InventoryHelper.dropContents(world, pos, (IInventory) tileEntity);
                 world.updateNeighbourForOutputSignal(pos, this);
             }
-            super.onRemove(thisBlock, world, pos, lastBlock, blockUpdate);
+            super.onRemove(thisState, world, pos, newState, blockUpdate);
         }
     }
 

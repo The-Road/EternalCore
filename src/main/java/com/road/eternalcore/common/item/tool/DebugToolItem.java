@@ -1,13 +1,15 @@
 package com.road.eternalcore.common.item.tool;
 
 import com.road.eternalcore.Utils;
+import com.road.eternalcore.api.energy.network.IEnergyNetworkWire;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.common.block.machine.MachineBlock;
 import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.common.tileentity.EnergyMachineTileEntity;
+import com.road.eternalcore.common.world.energy.EnergyNetwork;
+import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -77,7 +79,17 @@ public class DebugToolItem extends Item {
                 teMsgHelper.msg("euMaxStorage", energyMachineTileEntity.getMaxEnergyStored());
             }
         }
-        msgHelper.msgT(String.valueOf(Minecraft.getInstance().getBlockRenderer().getBlockModel(blockstate)));
+        EnergyNetwork energyNetwork = EnergyNetworkManager.get(world).getNetworkAtPos(blockpos);
+        if (energyNetwork != null){
+            DebugToolMsgHelper euMsgHelper = new DebugToolMsgHelper(player, "energy");
+            euMsgHelper.msg("title");
+            euMsgHelper.msg("network", energyNetwork);
+            IEnergyNetworkWire wire = energyNetwork.getWire(blockpos);
+            euMsgHelper.msg("euTier", wire.getTier().getText());
+            euMsgHelper.msg("maxCurrent", wire.getMaxCurrent());
+            euMsgHelper.msg("lineLoss", wire.getLineLoss());
+            euMsgHelper.msg("wireLoad", energyNetwork.getWireLoadAt(blockpos));
+        }
         return ActionResultType.SUCCESS;
     }
 
@@ -114,7 +126,7 @@ public class DebugToolItem extends Item {
     }
 
     // 用于在聊天栏中发送消息
-    protected class DebugToolMsgHelper{
+    protected static class DebugToolMsgHelper{
         private final PlayerEntity player;
         private final String keyHead;
         protected DebugToolMsgHelper(PlayerEntity player, String keyHead) {

@@ -31,7 +31,7 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
     private final CraftingInventory toolSlots = new CraftingInventory(this, 1, 3);
     private final ToolCraftingInventory craftAndToolSlots = new ToolCraftingInventory(craftSlots, toolSlots);
     private final CraftResultInventory resultSlots = new CraftResultInventory();
-    private final int craftSlotsNum = 13;
+    private final int playerStartIndex = 13;
     private final IWorldPosCallable access;
     private final Block accessBlock;
     private final PlayerEntity player;
@@ -132,24 +132,24 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
                 this.access.execute((world, blockPos) -> {
                     itemStack.getItem().onCraftedBy(itemStack, world, player);
                 });
-                if (!this.moveItemStackTo(itemStack, craftSlotsNum, craftSlotsNum + 36, true)) {
+                if (!this.moveItemStackTo(itemStack, playerStartIndex, playerStartIndex + 36, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemStack, itemStackCopy);
-            } else if (slotId >= craftSlotsNum && slotId < craftSlotsNum + 36) {
+            } else if (slotId >= playerStartIndex && slotId < playerStartIndex + 36) {
                 // 如果是工具则优先放置到左侧工具栏
                 if (!this.moveItemStackTo(itemStack, 10, 13, false)) {
                     if (!this.moveItemStackTo(itemStack, 1, 10, false)) {
-                        if (slotId < craftSlotsNum + 27) {
-                            if (!this.moveItemStackTo(itemStack, craftSlotsNum + 27, craftSlotsNum + 36, false)) {
+                        if (slotId < playerStartIndex + 27) {
+                            if (!this.moveItemStackTo(itemStack, playerStartIndex + 27, playerStartIndex + 36, false)) {
                                 return ItemStack.EMPTY;
                             }
-                        } else if (!this.moveItemStackTo(itemStack, craftSlotsNum, craftSlotsNum + 27, false)) {
+                        } else if (!this.moveItemStackTo(itemStack, playerStartIndex, playerStartIndex + 27, false)) {
                             return ItemStack.EMPTY;
                         }
                     }
                 }
-            } else if (!this.moveItemStackTo(itemStack, craftSlotsNum, craftSlotsNum + 36, false)) {
+            } else if (!this.moveItemStackTo(itemStack, playerStartIndex, playerStartIndex + 36, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -162,10 +162,10 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
             if (itemStack.getCount() == itemStackCopy.getCount()) {
                 return ItemStack.EMPTY;
             }
-            ItemStack itemstack2 = slot.onTake(player, itemStack);
             // 如果合成产物只成功移动了一部分，那么剩下的会掉到地上
+            ItemStack remainItem = slot.onTake(player, itemStack);
             if (slotId == 0) {
-                player.drop(itemstack2, false);
+                player.drop(remainItem, false);
             }
         }
 
@@ -190,7 +190,7 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
 
     @OnlyIn(Dist.CLIENT)
     public int getSize() {
-        return craftSlotsNum;
+        return playerStartIndex;
     }
 
     @OnlyIn(Dist.CLIENT)

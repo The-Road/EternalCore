@@ -59,7 +59,7 @@ public class MaterialBlockData {
         return this;
     }
 
-    public class BlockData{
+    public static class BlockData{
         private final float destroyTime;
         private final float explosionResistance;
         protected BlockData(float destroyTime, float explosionResistance){

@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class BatteryBufferScreen extends MachineScreen<BatteryBufferContainer>{
+public class BatteryBufferScreen extends EnergyMachineScreen<BatteryBufferContainer> {
     private static final ResourceLocation GUI_LOCATION = new ModResourceLocation("textures/gui/container/battery_buffer.png");
     public BatteryBufferScreen(BatteryBufferContainer container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory, title);

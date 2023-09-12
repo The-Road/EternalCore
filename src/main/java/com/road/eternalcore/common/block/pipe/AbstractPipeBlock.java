@@ -4,6 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.road.eternalcore.api.block.properties.PipeConnection;
 import com.road.eternalcore.common.block.BlockMaterial;
+import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 
 import java.util.HashMap;
@@ -124,12 +126,29 @@ public abstract class AbstractPipeBlock extends Block {
         }
         return placeState;
     }
-
+    public void onPlace(BlockState thisState, World world, BlockPos pos, BlockState lastState, boolean blockUpdate) {
+        if (!lastState.is(thisState.getBlock())) {
+            EnergyNetworkManager.updateWirePos(world, thisState, pos, true);
+        }
+        super.onPlace(thisState, world, pos, lastState, blockUpdate);
+    }
+    public void onRemove(BlockState thisState, World world, BlockPos pos, BlockState newState, boolean blockUpdate) {
+        if (!thisState.is(newState.getBlock())) {
+            EnergyNetworkManager.updateWirePos(world, thisState, pos, true);
+        }
+        super.onRemove(thisState, world, pos, newState, blockUpdate);
+    }
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState facingState, IWorld world, BlockPos blockPos, BlockPos facingPos) {
         EnumProperty<PipeConnection> property = DIRECTION_CONNECTION.get(direction);
         if (canConnectTo(blockState, direction, facingState, world, blockPos, facingPos)){
+            if (world instanceof ServerWorld) {
+                EnergyNetworkManager.updateWirePos((World) world, blockState, blockPos, false);
+            }
             return blockState.setValue(property, PipeConnection.ON);
         } else if (blockState.getValue(property).isConnected()){
+            if (world instanceof ServerWorld) {
+                EnergyNetworkManager.updateWirePos((World) world, blockState, blockPos, false);
+            }
             return blockState.setValue(property, PipeConnection.OFF);
         }
         return super.updateShape(blockState, direction, facingState, world, blockPos, facingPos);

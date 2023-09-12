@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class MachineTileEntity extends LockableLootTileEntity {
-    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData();
+    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
     protected NonNullList<ItemStack> items;
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
