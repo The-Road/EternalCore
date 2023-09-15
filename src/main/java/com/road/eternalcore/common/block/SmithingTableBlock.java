@@ -31,7 +31,7 @@ public class SmithingTableBlock extends Block {
     }
     public INamedContainerProvider getMenuProvider(BlockState blockState, World world, BlockPos pos) {
         return new SimpleNamedContainerProvider(
-                (containerId, playerInventory, playerEntity) -> new SmithingTableContainer(0, containerId, playerInventory, IWorldPosCallable.create(world, pos)),
+                (containerId, playerInventory, playerEntity) -> new SmithingTableContainer(1, containerId, playerInventory, IWorldPosCallable.create(world, pos)),
                 TITLE
         );
     }

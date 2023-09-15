@@ -4,9 +4,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
-public class MachineResultSlot extends Slot {
-    public MachineResultSlot(IInventory inventory, int index, int x, int y) {
-        super(inventory, index, x, y);
+public class NormalResultSlot extends Slot {
+    public NormalResultSlot(IInventory inventory, int index, int posX, int posY) {
+        super(inventory, index, posX, posY);
     }
 
     public boolean mayPlace(ItemStack itemStack) {

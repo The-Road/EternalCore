@@ -25,7 +25,6 @@ public interface IEUStorage extends IEnergyStorage, IEUTier{
         return forceSetEnergy(energyBefore + eu);
     }
 
-    @Override
     default int receiveEnergy(int maxReceive, boolean simulate){
         return receiveEnergy(maxReceive, simulate, false);
     }
@@ -39,7 +38,6 @@ public interface IEUStorage extends IEnergyStorage, IEUTier{
         return energyNew - energy;
     }
 
-    @Override
     default int extractEnergy(int maxExtract, boolean simulate) {
         if (!canExtract() || isEnergyEmpty())
             return 0;

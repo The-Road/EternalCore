@@ -6,11 +6,7 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.IRequirementsStrategy;
-import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,58 +17,49 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SmithingRecipeBuilder extends RecipeBuilder{
+public class SmithingRecipeBuilder extends MultiResultRecipeBuilder{
     protected int smithingLevel;
     protected Pair<String, Integer> toolUse;
     protected final List<Ingredient> ingredients = Lists.newArrayList();
 
-    public SmithingRecipeBuilder(IItemProvider item, int count){
-        super(item, count);
+    public SmithingRecipeBuilder(IItemProvider item, int count, Consumer<CompoundNBT> nbtConsumer){
+        super(item, count, nbtConsumer);
         this.smithingLevel = 0;
     }
-    public static ISmithingRecipeBuilder<SmithingRecipeBuilder> smith(IItemProvider item){
+    public static SmithingRecipeMaker<SmithingRecipeBuilder> smith(IItemProvider item){
         return smith(item, 1);
     }
-    public static ISmithingRecipeBuilder<SmithingRecipeBuilder> smith(IItemProvider item, int count){
-        return new ISmithingRecipeBuilder<>(new SmithingRecipeBuilder(item, count));
+    public static SmithingRecipeMaker<SmithingRecipeBuilder> smith(IItemProvider item, int count){
+        return smith(item, count, (nbt) -> {});
     }
+    public static SmithingRecipeMaker<SmithingRecipeBuilder> smith(IItemProvider item, int count, Consumer<CompoundNBT> nbtConsumer){
+        return new SmithingRecipeMaker<>(new SmithingRecipeBuilder(item, count, nbtConsumer));
+    }
+
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        this.ensureValid(id);
-        this.advancement.parent(new ResourceLocation("recipes/root"))
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(IRequirementsStrategy.OR);
+        saveId(id);
         consumer.accept(new Result(
                 id,
-                this.result,
-                this.nbt,
+                this.results,
                 this.smithingLevel,
                 this.toolUse,
-                this.count,
                 this.group == null ? "" : this.group,
                 this.ingredients,
                 this.advancement,
-                new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + id.getPath())
+                new ResourceLocation(id.getNamespace(), "recipes/" + this.results.get(0).item.getItemCategory().getRecipeFolderName() + "/" + id.getPath())
         ));
     }
-    protected void ensureValid(ResourceLocation id){
-
-    }
-    protected class Result extends RecipeBuilder.Result implements IFinishedRecipe {
+    protected static class Result extends MultiResultRecipeBuilder.Result{
         protected int smithingLevel;
         protected final List<Ingredient> ingredients;
         protected final Pair<String, Integer> toolUse;
-        public Result(ResourceLocation id, Item result, CompoundNBT nbt, int smithingLevel, Pair<String, Integer> toolUse, int count, String group, List<Ingredient> ingredients, Advancement.Builder advancement, ResourceLocation advancementId) {
-            super(id, result, nbt, count, group, advancement, advancementId);
+        public Result(ResourceLocation id, List<ResultData> results, int smithingLevel, Pair<String, Integer> toolUse, String group, List<Ingredient> ingredients, Advancement.Builder advancement, ResourceLocation advancementId) {
+            super(id, results, group, advancement, advancementId);
             this.smithingLevel = smithingLevel;
             this.ingredients = ingredients;
             this.toolUse = toolUse;
         }
 
-        public void serializeRecipeData(JsonObject json) {
-            serializeRecipeItems(json);
-            serializeRecipeResult(json);
-        }
         protected void serializeRecipeItems(JsonObject json){
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);

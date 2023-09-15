@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "eternalcore:craft_hammer_iron"
+      "eternalcore:toolcraft_hammer_copper"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/iron"
+            "tag": "forge:ingots/copper"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "eternalcore:craft_hammer_iron"
+        "recipe": "eternalcore:toolcraft_hammer_copper"
       }
     }
   },

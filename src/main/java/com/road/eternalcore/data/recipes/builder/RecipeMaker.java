@@ -7,10 +7,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
-public class IRecipeBuilder<T extends RecipeBuilder> {
-    // IxxxRecipeBuilder是用来在RecipeProvider中生成配方的
+public class RecipeMaker<T extends RecipeBuilder> {
+    // RecipeMaker是用来在RecipeProvider中生成配方的
     protected final T builder;
-    public IRecipeBuilder(T builder) {
+    public RecipeMaker(T builder) {
         this.builder = builder;
     }
     public void save(Consumer<IFinishedRecipe> consumer) {

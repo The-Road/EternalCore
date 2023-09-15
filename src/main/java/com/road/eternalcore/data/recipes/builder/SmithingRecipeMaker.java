@@ -12,53 +12,58 @@ import net.minecraft.util.IItemProvider;
 
 import java.util.function.Consumer;
 
-public class ISmithingRecipeBuilder<T extends SmithingRecipeBuilder> extends IRecipeBuilder<T> {
+public class SmithingRecipeMaker<T extends SmithingRecipeBuilder> extends RecipeMaker<T> {
 
-    public ISmithingRecipeBuilder(T builder) {
+    public SmithingRecipeMaker(T builder) {
         super(builder);
     }
-    public ISmithingRecipeBuilder<T> nbt(Consumer<CompoundNBT> consumer){
-        // 通过Consumer为产物添加NBT标签
-        consumer.accept(builder.nbt);
+    public SmithingRecipeMaker<T> byProduct(IItemProvider item){
+        return byProduct(item, 1);
+    }
+    public SmithingRecipeMaker<T> byProduct(IItemProvider item, int count){
+        return byProduct(item, count, (nbt) -> {});
+    }
+    public SmithingRecipeMaker<T> byProduct(IItemProvider item, int count, Consumer<CompoundNBT> nbtConsumer){
+        builder.addResult(item, count, nbtConsumer);
         return this;
     }
-    public ISmithingRecipeBuilder<T> level(int smithingLevel){
+    public SmithingRecipeMaker<T> level(int smithingLevel){
         builder.smithingLevel = smithingLevel;
         return this;
     }
-    public ISmithingRecipeBuilder<T> toolUse(CraftToolType tool){
+    public SmithingRecipeMaker<T> toolUse(CraftToolType tool){
         return toolUse(tool, CustomTierItem.DEFAULT_DURABILITY_SUBDIVIDE);
     }
-    public ISmithingRecipeBuilder<T> toolUse(CraftToolType tool, int use){
+    public SmithingRecipeMaker<T> toolUse(CraftToolType tool, int use){
         builder.toolUse = Pair.of(tool.getName(), use);
         return this;
     }
-    public ISmithingRecipeBuilder<T> requires(ITag<Item> tag) {
+    public SmithingRecipeMaker<T> requires(ITag<Item> tag) {
         return this.requires(tag, 1);
     }
-    public ISmithingRecipeBuilder<T> requires(ITag<Item> tag, int count) {
+    public SmithingRecipeMaker<T> requires(ITag<Item> tag, int count) {
         return this.requires(Ingredient.of(tag), count);
     }
-    public ISmithingRecipeBuilder<T> requires(IItemProvider item) {
+    public SmithingRecipeMaker<T> requires(IItemProvider item) {
         return this.requires(item, 1);
     }
-    public ISmithingRecipeBuilder<T> requires(IItemProvider item, int count) {
+    public SmithingRecipeMaker<T> requires(IItemProvider item, int count) {
         return this.requires(Ingredient.of(item), count);
     }
-    public ISmithingRecipeBuilder<T> requires(Ingredient ingredient) {
+    public SmithingRecipeMaker<T> requires(Ingredient ingredient) {
         return this.requires(ingredient, 1);
     }
-    public ISmithingRecipeBuilder<T> requires(Ingredient ingredient, int count) {
+    public SmithingRecipeMaker<T> requires(Ingredient ingredient, int count) {
         for(int i = 0; i < count; ++i) {
             builder.ingredients.add(ingredient);
         }
         return this;
     }
-    public ISmithingRecipeBuilder<T> unlockedBy(String criterionId, ICriterionInstance criterion){
+    public SmithingRecipeMaker<T> unlockedBy(String criterionId, ICriterionInstance criterion){
         builder.advancement.addCriterion(criterionId, criterion);
         return this;
     }
-    public ISmithingRecipeBuilder<T> group(String groupId){
+    public SmithingRecipeMaker<T> group(String groupId){
         builder.group = groupId;
         return this;
     }

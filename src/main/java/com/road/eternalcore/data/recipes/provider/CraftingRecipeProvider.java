@@ -55,7 +55,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                         .define('X', plateTag)
                         .group("machine_casing")
                         .unlockedBy("has_material", has(plateTag))
-                        .save(consumer, "craft_" + casingItem);
+                        .save(consumer, "toolcraft_" + casingItem);
             }
         });
     }
@@ -76,7 +76,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                     .define('C', Tags.Items.CHESTS_WOODEN)
                     .group("machine_locker")
                     .unlockedBy("has_material", has(plateTag))
-                    .save(consumer, "craft_locker_" + material);
+                    .save(consumer, "toolcraft_locker_" + material);
         });
     }
     private static void addMachineBlockRecipes(Consumer<IFinishedRecipe> consumer){
@@ -95,7 +95,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                         .define('X', casingItem)
                         .group("machine_machine_block")
                         .unlockedBy("has_machine_casing", has(casingItem))
-                        .save(consumer, "craft_machine_block_" + material);
+                        .save(consumer, "toolcraft_machine_block_" + material);
             }
         });
     }
@@ -134,7 +134,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                             .define('#', tierData.getItemTier().getRodIngredient())
                             .group("soft_hammer")
                             .unlockedBy("has_material", has(material.getIngredientTag()))
-                            .save(consumer, "craft_soft_hammer_" + material);
+                            .save(consumer, "toolcraft_soft_hammer_" + material);
                 }
             }else if(material.getType() != Materials.Type.OTHER || list.contains(material)){
                 // 添加锤子配方
@@ -160,7 +160,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                             .define('#', tierData.getItemTier().getRodIngredient())
                             .group("hammer")
                             .unlockedBy("has_material", has(material.getIngredientTag()))
-                            .save(consumer, "craft_hammer_" + material);
+                            .save(consumer, "toolcraft_hammer_" + material);
                 }
             }
         });
@@ -178,7 +178,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                         .define('X', tierData.getItemTier().getRepairIngredient())
                         .group("wrench")
                         .unlockedBy("has_material", has(material.getIngredientTag()))
-                        .save(consumer, "craft_wrench_" + material);
+                        .save(consumer, "toolcraft_wrench_" + material);
             }
         });
     }

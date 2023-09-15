@@ -5,9 +5,6 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.IRequirementsStrategy;
-import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -26,18 +23,14 @@ public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
     public ToolShapedRecipeBuilder(IItemProvider item, int count) {
         super(item, count);
     }
-    public static IShapedRecipeBuilder<ToolShapedRecipeBuilder> toolShaped(IItemProvider item){
+    public static ShapedRecipeMaker<ToolShapedRecipeBuilder> toolShaped(IItemProvider item){
         return toolShaped(item, 1);
     }
-    public static IShapedRecipeBuilder<ToolShapedRecipeBuilder> toolShaped(IItemProvider item, int count){
-        return new IShapedRecipeBuilder<>(new ToolShapedRecipeBuilder(item, count));
+    public static ShapedRecipeMaker<ToolShapedRecipeBuilder> toolShaped(IItemProvider item, int count){
+        return new ShapedRecipeMaker<>(new ToolShapedRecipeBuilder(item, count));
     }
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        this.ensureValid(id);
-        this.advancement.parent(new ResourceLocation("recipes/root"))
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(IRequirementsStrategy.OR);
+        saveId(id);
         consumer.accept(new Result(
                 id,
                 this.result,
@@ -51,7 +44,7 @@ public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
                 new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + id.getPath())
         ));
     }
-    protected class Result extends NBTShapedRecipeBuilder.Result{
+    protected static class Result extends NBTShapedRecipeBuilder.Result{
         protected final NonNullList<Pair<String, Integer>> toolUses;
         public Result(ResourceLocation id, Item result, CompoundNBT nbt, NonNullList<Pair<String, Integer>> toolUses, int count, String group, List<String> pattern, Map<Character, Ingredient> key, Advancement.Builder advancement, ResourceLocation advancementId) {
             super(id, result, nbt, count, group, pattern, key, advancement, advancementId);

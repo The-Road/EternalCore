@@ -35,7 +35,7 @@ import java.util.List;
 
 public class CustomTierItem extends Item {
     // 自定义工具和武器类
-    // 通过StringNBT标签ToolTier表示工具的材料(全大写字母)，工具的各项属性都通过该标签来获取
+    // 通过StringNBT标签material表示工具的材料，工具的各项属性都通过该标签来获取
     protected float atkDamage; // 基础攻击，默认伤害计算方式为基础攻击+材料攻击
     protected float atkSpeed; // 面板攻速（表示每秒的攻击次数），MC原版获取物品的getAttackSpeed的时候会-4
 
@@ -85,7 +85,7 @@ public class CustomTierItem extends Item {
     }
 
     protected static IItemTier getTier(ItemStack itemStack){
-        // 从NBT中的StringNBT ToolTier获取物品的材料
+        // 从NBT获取物品的材料
         MaterialTierData materialTierData = getMaterialData(itemStack);
         if (materialTierData != null && materialTierData.getItemTier() != null){
             return materialTierData.getItemTier();

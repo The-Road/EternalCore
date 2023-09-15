@@ -6,9 +6,6 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.IRequirementsStrategy;
-import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -34,18 +31,14 @@ public class NBTShapedRecipeBuilder extends RecipeBuilder {
     public NBTShapedRecipeBuilder(IItemProvider item, int count) {
         super(item, count);
     }
-    public static IShapedRecipeBuilder<NBTShapedRecipeBuilder> shaped(IItemProvider item){
+    public static ShapedRecipeMaker<NBTShapedRecipeBuilder> shaped(IItemProvider item){
         return shaped(item, 1);
     }
-    public static IShapedRecipeBuilder<NBTShapedRecipeBuilder> shaped(IItemProvider item, int count){
-        return new IShapedRecipeBuilder<>(new NBTShapedRecipeBuilder(item, count));
+    public static ShapedRecipeMaker<NBTShapedRecipeBuilder> shaped(IItemProvider item, int count){
+        return new ShapedRecipeMaker<>(new NBTShapedRecipeBuilder(item, count));
     }
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        this.ensureValid(id);
-        this.advancement.parent(new ResourceLocation("recipes/root"))
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(IRequirementsStrategy.OR);
+        saveId(id);
         consumer.accept(new Result(
                 id,
                 this.result,
@@ -84,7 +77,7 @@ public class NBTShapedRecipeBuilder extends RecipeBuilder {
             }
         }
     }
-    protected class Result extends RecipeBuilder.Result implements IFinishedRecipe {
+    protected static class Result extends RecipeBuilder.Result{
         protected final List<String> pattern;
         protected final Map<Character, Ingredient> key;
 
@@ -94,10 +87,6 @@ public class NBTShapedRecipeBuilder extends RecipeBuilder {
             this.key = key;
         }
 
-        public void serializeRecipeData(JsonObject json) {
-            serializeRecipeItems(json);
-            serializeRecipeResult(json);
-        }
         protected void serializeRecipeItems(JsonObject json){
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);

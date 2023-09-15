@@ -156,7 +156,7 @@ public abstract class EnergyMachineTileEntity extends MachineTileEntity implemen
             }
         }
     }
-    public void machineTickWork(){}
+    protected void machineTickWork(){}
     // 机器内部的充电处理
     protected void batteryEnergyCharge(){
         // 检查电池格中的电池

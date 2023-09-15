@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class EnergyNetworkManager extends WorldSavedData {
+    // 管理电网，每帧开始时更新所有电线的连接状态，每帧结束时所有机器通过电网输电
     private static final String NAME = Utils.MOD_ID + "_energy_network";
     private final ServerWorld world;
     private final Set<EnergyNetwork> networks = new HashSet<>();

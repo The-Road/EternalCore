@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.Overwrite;
 public abstract class RecipeBookContainerMixin<C extends IInventory> {
     /**
      * @author
+     * Road
      * @reason
+     * 修复配方书吞物品的BUG
      */
     @Overwrite
     public void handlePlacement(boolean p_217056_1_, IRecipe<?> p_217056_2_, ServerPlayerEntity p_217056_3_) {

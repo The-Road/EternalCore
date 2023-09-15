@@ -2,11 +2,11 @@ package com.road.eternalcore.common.item.material;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.api.ore.OreShape;
 import com.road.eternalcore.api.ore.Ores;
+import com.road.eternalcore.common.block.ore.OreBlocks;
 import com.road.eternalcore.registries.ItemRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -97,6 +97,9 @@ public class MaterialItems {
         }
     }
     public static Item get(OreShape shape, Ores ore){
+        if (shape == OreShape.ORE){
+            return OreBlocks.get(ore).asItem();
+        }
         if (OreItemTable.contains(shape, ore)){
             return OreItemTable.get(shape, ore).get();
         }else{
@@ -111,7 +114,6 @@ public class MaterialItems {
         }
     }
     public static Item getMod(MaterialShape shape, Materials material){
-        Pair<MaterialShape, Materials> key = Pair.of(shape, material);
         if (MaterialItemTable.contains(shape, material)) {
             return MaterialItemTable.get(shape, material).get();
         }else{

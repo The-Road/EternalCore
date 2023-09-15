@@ -8,6 +8,7 @@ import com.road.eternalcore.common.inventory.SmithingTableInventory;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
 import com.road.eternalcore.common.item.crafting.IModRecipeType;
 import com.road.eternalcore.api.tool.CraftToolType;
+import com.road.eternalcore.data.recipes.builder.MultiResultRecipeBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
@@ -15,7 +16,6 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -29,16 +29,16 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
     private final int smithingLevel;
     private final NonNullList<Ingredient> recipeItems;
     private final Pair<CraftToolType, Integer> toolItemUse;
-    private final ItemStack result;
+    private final NonNullList<ItemStack> results;
     private final boolean isSimple; // 参考ShapelessRecipe，如果合成材料有Damageable则为false
 
-    public SmithingRecipe(ResourceLocation id, String group, int smithingLevel, NonNullList<Ingredient> recipeItems, Pair<CraftToolType, Integer> toolItemUse, ItemStack result){
+    public SmithingRecipe(ResourceLocation id, String group, int smithingLevel, NonNullList<Ingredient> recipeItems, Pair<CraftToolType, Integer> toolItemUse, NonNullList<ItemStack> results){
         this.id = id;
         this.group = group;
         this.smithingLevel = smithingLevel;
         this.recipeItems = recipeItems;
         this.toolItemUse = toolItemUse;
-        this.result = result;
+        this.results = results;
         this.isSimple = recipeItems.stream().allMatch(Ingredient::isSimple);
     }
 
@@ -85,8 +85,17 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
     }
 
     public ItemStack getResultItem() {
-        return result;
+        return results.get(0);
     }
+
+    public List<ItemStack> getByProducts(){
+        List<ItemStack> list = new ArrayList<>(results.size() - 1);
+        for(int i = 1; i < results.size(); i++){
+            list.add(results.get(i));
+        }
+        return list;
+    }
+
     // 仅保留使用的工具的数据，剩下的材料直接-1
     public NonNullList<ItemStack> getRemainingItems(SmithingTableInventory inputSlots) {
         ItemStack toolRemainItem = getToolRemainItem(toolItemUse.getSecond(), inputSlots.getItem(0));
@@ -98,11 +107,11 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
     }
 
     public NonNullList<Ingredient> getIngredients() {
-        return IRecipe.super.getIngredients();
+        return recipeItems;
     }
 
     public String getGroup() {
-        return IRecipe.super.getGroup();
+        return group;
     }
 
     public ItemStack getToastSymbol() {
@@ -128,8 +137,8 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
             int level = JSONUtils.getAsInt(json, "level");
             NonNullList<Ingredient> recipeItems = itemsFromJson(JSONUtils.getAsJsonArray(json, "ingredients"));
             Pair<CraftToolType, Integer> toolItemUse = IToolUsedRecipe.toolUseFromJson(JSONUtils.getAsJsonObject(json, "toolUse"));
-            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
-            return new SmithingRecipe(id, group, level, recipeItems, toolItemUse, result);
+            NonNullList<ItemStack> results = MultiResultRecipeBuilder.getResultsFromJson(json);
+            return new SmithingRecipe(id, group, level, recipeItems, toolItemUse, results);
         }
 
         private static NonNullList<Ingredient> itemsFromJson(JsonArray jsonArray) {
@@ -155,8 +164,12 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
             CraftToolType tool = CraftToolType.get(buffer.readUtf());
             int use = buffer.readVarInt();
             Pair<CraftToolType, Integer> toolUse = Pair.of(tool, use);
-            ItemStack result = buffer.readItem();
-            return new SmithingRecipe(id, group, level, recipeItems, toolUse, result);
+            int resultSize = buffer.readVarInt();
+            NonNullList<ItemStack> results = NonNullList.withSize(size, ItemStack.EMPTY);
+            for (int i = 0; i < resultSize; i++){
+                results.set(i, buffer.readItem());
+            }
+            return new SmithingRecipe(id, group, level, recipeItems, toolUse, results);
         }
 
         public void toNetwork(PacketBuffer buffer, SmithingRecipe recipe) {
@@ -172,7 +185,10 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
             buffer.writeUtf(pair.getFirst().getName());
             buffer.writeInt(pair.getSecond());
             // 写入产物数据
-            buffer.writeItem(recipe.result);
+            buffer.writeVarInt(recipe.results.size());
+            for (ItemStack result : recipe.results) {
+                buffer.writeItem(result);
+            }
         }
     }
 }

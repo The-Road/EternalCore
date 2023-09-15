@@ -36,7 +36,6 @@ public class ItemEUStorage implements IEUStorage {
 
     public void saveEnergy(int energy){
         itemStack.getOrCreateTag().putInt(StorageNBTName, setEnergy(energy));
-        System.out.println("set energy "+energy);
     }
 
     public int getEnergyStored() {

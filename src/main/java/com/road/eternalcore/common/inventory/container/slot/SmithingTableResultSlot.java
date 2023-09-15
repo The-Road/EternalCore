@@ -2,27 +2,33 @@ package com.road.eternalcore.common.inventory.container.slot;
 
 import com.road.eternalcore.common.inventory.SmithingTableInventory;
 import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.recipe.SmithingRecipe;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.IRecipeHolder;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class SmithingTableResultSlot extends Slot {
     // 笔记：CraftingResultSlot里的removeCount是用来记录统计数据的，不用抄
     protected final SmithingTableInventory inputSlots;
+    protected final Inventory byProductSlot;
     protected final PlayerEntity player;
 
-    public SmithingTableResultSlot(PlayerEntity player, SmithingTableInventory inputSlots, IInventory resultSlots, int index, int x, int y) {
-        super(resultSlots, index, x, y);
+    public SmithingTableResultSlot(PlayerEntity player, SmithingTableInventory inputSlots, CraftResultInventory resultSlot, Inventory byProductSlot, int index, int posX, int posY) {
+        super(resultSlot, index, posX, posY);
         this.player = player;
         this.inputSlots = inputSlots;
+        this.byProductSlot = byProductSlot;
     }
 
     public boolean mayPlace(ItemStack itemStack) {
@@ -39,8 +45,19 @@ public class SmithingTableResultSlot extends Slot {
     public ItemStack onTake(PlayerEntity player, ItemStack itemStack) {
         checkTakeAchievements(itemStack);
         ForgeHooks.setCraftingPlayer(player);
+        Optional<SmithingRecipe> recipe = player.level.getRecipeManager().getRecipeFor(IModRecipeType.SMITHING, this.inputSlots, player.level);
         NonNullList<ItemStack> remainItemList = player.level.getRecipeManager().getRemainingItemsFor(IModRecipeType.SMITHING, this.inputSlots, player.level);
         ForgeHooks.setCraftingPlayer(null);
+        // 生成副产物，如果槽满了则直接塞到物品栏或掉落
+        if (recipe.isPresent()){
+            List<ItemStack> byProducts = recipe.get().getByProducts();
+            for (ItemStack byProduct : byProducts){
+                ItemStack remainItem = byProductSlot.addItem(byProduct);
+                if (!remainItem.isEmpty() && !this.player.inventory.add(remainItem)){
+                    this.player.drop(remainItem, false);
+                }
+            }
+        }
         // 消耗材料，减少工具耐久
         Consumer<Integer> normalRemainingItem = i -> {
             ItemStack originalItem = inputSlots.getItem(i);

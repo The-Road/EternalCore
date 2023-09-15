@@ -18,8 +18,8 @@ public class ToolCraftingResultSlot extends CraftingResultSlot {
     private final ToolCraftingInventory craftAndToolSlots;
     private PlayerEntity player;
 
-    public ToolCraftingResultSlot(PlayerEntity player, ToolCraftingInventory craftAndToolSlots, CraftResultInventory container, int slotId, int slotX, int slotY) {
-        super(player, craftAndToolSlots.getCraftSlots(), container, slotId, slotX, slotY);
+    public ToolCraftingResultSlot(PlayerEntity player, ToolCraftingInventory craftAndToolSlots, CraftResultInventory container, int index, int posX, int posY) {
+        super(player, craftAndToolSlots.getCraftSlots(), container, index, posX, posY);
         this.player = player;
         this.craftAndToolSlots = craftAndToolSlots;
     }

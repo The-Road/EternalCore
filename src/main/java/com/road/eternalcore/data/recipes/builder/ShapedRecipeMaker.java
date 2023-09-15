@@ -12,29 +12,29 @@ import net.minecraft.util.IItemProvider;
 
 import java.util.function.Consumer;
 
-public class IShapedRecipeBuilder<T extends NBTShapedRecipeBuilder> extends IRecipeBuilder<T> {
-    public IShapedRecipeBuilder(T builder) {
+public class ShapedRecipeMaker<T extends NBTShapedRecipeBuilder> extends RecipeMaker<T> {
+    public ShapedRecipeMaker(T builder) {
         super(builder);
     }
-    public IShapedRecipeBuilder<T> nbt(Consumer<CompoundNBT> consumer){
+    public ShapedRecipeMaker<T> nbt(Consumer<CompoundNBT> consumer){
         // 通过Consumer为产物添加NBT标签
         consumer.accept(builder.nbt);
         return this;
     }
-    public IShapedRecipeBuilder<T> toolUse(CraftToolType tool){
+    public ShapedRecipeMaker<T> toolUse(CraftToolType tool){
         return toolUse(tool, CustomTierItem.DEFAULT_DURABILITY_SUBDIVIDE);
     }
-    public IShapedRecipeBuilder<T> toolUse(CraftToolType tool, int use){
+    public ShapedRecipeMaker<T> toolUse(CraftToolType tool, int use){
         ((ToolShapedRecipeBuilder) builder).toolUses.add(Pair.of(tool.getName(), use));
         return this;
     }
-    public IShapedRecipeBuilder<T> define(Character character, ITag<Item> tag){
+    public ShapedRecipeMaker<T> define(Character character, ITag<Item> tag){
         return define(character, Ingredient.of(tag));
     }
-    public IShapedRecipeBuilder<T> define(Character character, IItemProvider item){
+    public ShapedRecipeMaker<T> define(Character character, IItemProvider item){
         return define(character, Ingredient.of(item));
     }
-    public IShapedRecipeBuilder<T> define(Character character, Ingredient ingredient) {
+    public ShapedRecipeMaker<T> define(Character character, Ingredient ingredient) {
         if (builder.key.containsKey(character)) {
             throw new IllegalArgumentException("Symbol '" + character + "' is already defined!");
         } else if (character == ' ') {
@@ -44,7 +44,7 @@ public class IShapedRecipeBuilder<T extends NBTShapedRecipeBuilder> extends IRec
             return this;
         }
     }
-    public IShapedRecipeBuilder<T> pattern(String s) {
+    public ShapedRecipeMaker<T> pattern(String s) {
         if (!builder.rows.isEmpty() && s.length() != builder.rows.get(0).length()) {
             throw new IllegalArgumentException("Pattern must be the same width on every line!");
         } else {
@@ -52,11 +52,11 @@ public class IShapedRecipeBuilder<T extends NBTShapedRecipeBuilder> extends IRec
             return this;
         }
     }
-    public IShapedRecipeBuilder<T> unlockedBy(String criterionId, ICriterionInstance criterion){
+    public ShapedRecipeMaker<T> unlockedBy(String criterionId, ICriterionInstance criterion){
         builder.advancement.addCriterion(criterionId, criterion);
         return this;
     }
-    public IShapedRecipeBuilder<T> group(String groupId){
+    public ShapedRecipeMaker<T> group(String groupId){
         builder.group = groupId;
         return this;
     }

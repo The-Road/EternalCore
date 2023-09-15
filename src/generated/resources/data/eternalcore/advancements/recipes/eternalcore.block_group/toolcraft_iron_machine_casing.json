@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "eternalcore:craft_bronze_machine_casing"
+      "eternalcore:toolcraft_iron_machine_casing"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/bronze"
+            "tag": "forge:plates/iron"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "eternalcore:craft_bronze_machine_casing"
+        "recipe": "eternalcore:toolcraft_iron_machine_casing"
       }
     }
   },

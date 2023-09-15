@@ -42,7 +42,7 @@ public class MaterialTierData {
 
     protected Materials material;
     protected ItemTier itemTier = null; // 工具等级，存储挖掘等级、耐久、基础挖掘速度、基础攻击力、附魔强度和基础材料
-    protected int smithLevel = 0; // 锻造等级，在锻造台上加工零件至少需要上一级的锻造台和工具
+    protected int smithLevel = 0; // 锻造等级，等于0则不可在锻造台上砸板
     protected boolean soft = false; // 用于判断制作出来的锤子是锻造锤还是软锤
     protected boolean byHand = false; // 是否可以徒手制作（使用普通工作台配方而非工具合成配方，同时部分工具/零件不支持此类材料）
     private MaterialTierData(Materials material){

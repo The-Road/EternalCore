@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "eternalcore:craft_iron_machine_casing"
+      "eternalcore:smith_netherite_plate"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/iron"
+            "tag": "forge:ingots/netherite"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "eternalcore:craft_iron_machine_casing"
+        "recipe": "eternalcore:smith_netherite_plate"
       }
     }
   },

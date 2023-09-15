@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "eternalcore:craft_wrench_netherite"
+      "eternalcore:toolcraft_machine_block_iron"
     ]
   },
   "criteria": {
-    "has_material": {
+    "has_machine_casing": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/netherite"
+            "item": "eternalcore:iron_machine_casing"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "eternalcore:craft_wrench_netherite"
+        "recipe": "eternalcore:toolcraft_machine_block_iron"
       }
     }
   },
   "requirements": [
     [
-      "has_material",
+      "has_machine_casing",
       "has_the_recipe"
     ]
   ]

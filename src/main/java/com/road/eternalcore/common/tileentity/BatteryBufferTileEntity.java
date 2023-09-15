@@ -45,28 +45,33 @@ public class BatteryBufferTileEntity extends EnergyMachineTileEntity implements 
         return true;
     }
 
-    public void machineTickWork(){
-        // 获取电池的状况决定最大输入/输出电流，同时将溢出的能量平均分配给所有未满的电池
-        providerBatteryCount = 0;
-        receiverBatteryCount = 0;
+    protected void batteryEnergyCharge(){
+        // 获取电池的状况决定最大输入/输出电流，同时将能量平均分配到电池
+        List<IEUStorage> provideList = new ArrayList<>();
         List<IEUStorage> chargeList = new ArrayList<>();
         for (ItemStack itemStack : items){
             IEUStorage storage = itemStack.getCapability(CapEnergy.EU).orElse(null);
             if (storage != null){
-                if (storage.canExtract()){
-                    providerBatteryCount++;
+                if (storage.canExtract() && !storage.isEnergyEmpty()){
+                    provideList.add(storage);
                 }
                 if (storage.canReceive() && !storage.isEnergyFull()){
-                    receiverBatteryCount++;
                     chargeList.add(storage);
                 }
             }
         }
+        providerBatteryCount = provideList.size();
+        receiverBatteryCount = chargeList.size();
         int remainEnergy = getEnergyStored() - getMaxEnergyStored();
-        if (remainEnergy > 0 && !chargeList.isEmpty()) {
-            remainEnergy /= chargeList.size();
-            for (IEUStorage storage : chargeList) {
+        if (remainEnergy >= receiverBatteryCount && receiverBatteryCount > 0) {
+            remainEnergy /= receiverBatteryCount;
+            for (IEUStorage storage : chargeList){
                 EnergyUtils.energyExchange(this, storage, remainEnergy, false);
+            }
+        } else if (-remainEnergy >= providerBatteryCount && providerBatteryCount > 0){
+            remainEnergy = -remainEnergy / providerBatteryCount;
+            for (IEUStorage storage : provideList){
+                EnergyUtils.energyExchange(storage, this, remainEnergy, false);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.road.eternalcore.api.ore;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class OreShape {
         return shapes.values();
     }
     public static Collection<OreShape> getProductShapes() {
-        Collection<OreShape> list = shapes.values();
+        Collection<OreShape> list = new ArrayList<>(shapes.values());
         list.remove(ORE);
         return list;
     }
