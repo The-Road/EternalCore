@@ -3,7 +3,7 @@ package com.road.eternalcore.common.inventory.container;
 import com.road.eternalcore.common.inventory.ToolCraftingInventory;
 import com.road.eternalcore.common.inventory.container.slot.CraftingToolSlot;
 import com.road.eternalcore.common.inventory.container.slot.ToolCraftingResultSlot;
-import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.common.item.crafting.ServerRecipePlacerToolCrafting;
 import com.road.eternalcore.common.item.crafting.recipe.IToolCraftingRecipe;
 import net.minecraft.block.Block;
@@ -73,7 +73,7 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
             CraftingInventory craftSlots = craftAndToolSlots.getCraftSlots();
             CraftingInventory toolSlots = craftAndToolSlots.getToolSlots();
             if (!toolSlots.isEmpty()){
-                Optional<IToolCraftingRecipe> toolRecipeOptional = world.getServer().getRecipeManager().getRecipeFor(IModRecipeType.TOOL_CRAFTING, craftAndToolSlots, world);
+                Optional<IToolCraftingRecipe> toolRecipeOptional = world.getServer().getRecipeManager().getRecipeFor(ModRecipeType.TOOL_CRAFTING, craftAndToolSlots, world);
                 if (toolRecipeOptional.isPresent()) {
                     IToolCraftingRecipe recipe = toolRecipeOptional.get();
                     if (resultSlots.setRecipeUsed(world, serverplayerentity, recipe)) {

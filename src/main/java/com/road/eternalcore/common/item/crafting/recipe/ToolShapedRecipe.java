@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class ToolShapedRecipe implements IToolCraftingRecipe, IToolUsedRecipe {
+public class ToolShapedRecipe implements IToolCraftingRecipe {
     private final ResourceLocation id;
     private final String group;
     private final int width;
@@ -45,6 +45,10 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IToolUsedRecipe {
         this.recipeItems = recipeItems;
         this.toolItemUses = toolItemUses;
         this.result = result;
+    }
+
+    public Pair<CraftToolType, Integer> getToolUse(int index){
+        return toolItemUses.size() > index ? toolItemUses.get(index) : null;
     }
 
     public boolean matches(ToolCraftingInventory craftAndToolSlots, World world) {

@@ -4,7 +4,7 @@ import com.road.eternalcore.common.inventory.SmithingTableInventory;
 import com.road.eternalcore.common.inventory.container.slot.CraftingToolSlot;
 import com.road.eternalcore.common.inventory.container.slot.NormalResultSlot;
 import com.road.eternalcore.common.inventory.container.slot.SmithingTableResultSlot;
-import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.common.item.crafting.recipe.SmithingRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -59,7 +59,7 @@ public class SmithingTableContainer extends Container {
         if (!world.isClientSide()) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)player;
             ItemStack itemstack = ItemStack.EMPTY;
-            Optional<SmithingRecipe> recipeOptional = world.getServer().getRecipeManager().getRecipeFor(IModRecipeType.SMITHING, inputSlots, world);
+            Optional<SmithingRecipe> recipeOptional = world.getServer().getRecipeManager().getRecipeFor(ModRecipeType.SMITHING, inputSlots, world);
             if (recipeOptional.isPresent()){
                 SmithingRecipe recipe = recipeOptional.get();
                 if (resultSlot.setRecipeUsed(world, serverplayerentity, recipe)){

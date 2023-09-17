@@ -7,9 +7,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.registry.Registry;
 
-public interface IModRecipeType<T extends IRecipe<?>> extends IRecipeType<T> {
-    IRecipeType<IToolCraftingRecipe> TOOL_CRAFTING = register("tool_crafting");
-    IRecipeType<SmithingRecipe> SMITHING = register("smithing");
+public class ModRecipeType {
+    public static IRecipeType<IToolCraftingRecipe> TOOL_CRAFTING = register("tool_crafting");
+    public static IRecipeType<SmithingRecipe> SMITHING = register("smithing");
 
     static <T extends IRecipe<?>> IRecipeType<T> register(final String name) {
         return Registry.register(Registry.RECIPE_TYPE, new ModResourceLocation(name), new IRecipeType<T>() {

@@ -140,6 +140,10 @@ public class CustomTierItem extends Item {
         // 获取挖掘等级
         return getTier(itemStack).getLevel();
     }
+    protected int getSmithingLevel(ItemStack itemStack){
+        // 获取锻造等级
+        return getMaterialData(itemStack).getSmithLevel();
+    }
 
     public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
         int i = super.getHarvestLevel(stack, tool, player, blockState);

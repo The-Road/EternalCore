@@ -19,6 +19,8 @@ import java.util.List;
 
 public interface IToolUsedRecipe {
     // 提供判断工具锻造等级和耐久消耗相关的接口
+    Pair<CraftToolType, Integer> getToolUse(int index);
+
     default int toolSmithLevel(IInventory slots){
         List<Integer> levels = new ArrayList<>(slots.getContainerSize());
         for(int i = 0; i < slots.getContainerSize(); i++){

@@ -1,19 +1,19 @@
 package com.road.eternalcore.data.loot.modifiers;
 
 import com.road.eternalcore.Utils;
-import com.road.eternalcore.common.item.ModItems;
-import net.minecraft.advancements.criterion.ItemPredicate;
+import com.road.eternalcore.api.advancements.criterion.ModToolPredicate;
+import com.road.eternalcore.common.item.tool.ModToolType;
+import com.road.eternalcore.data.loot.conditions.ModMatchTool;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.MatchTool;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 
 public class GLMDataProvider extends GlobalLootModifierProvider {
     public static final GlobalLootModifierSerializer<HammerSmashModifier> hammerSmash = GLMRegistry.hammerSmash.get();
 
-    private static final ILootCondition.IBuilder HAS_HAMMER = MatchTool.toolMatches(
-            ItemPredicate.Builder.item().of(ModItems.hammer)
+    private static final ILootCondition.IBuilder HAS_HAMMER = ModMatchTool.toolMatches(
+            ModToolPredicate.Builder.tool().of(ModToolType.HAMMER)
     );
 
     public GLMDataProvider(DataGenerator gen){

@@ -6,7 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.inventory.SmithingTableInventory;
 import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
-import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.data.recipes.builder.MultiResultRecipeBuilder;
 import net.minecraft.item.ItemStack;
@@ -40,6 +40,13 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
         this.toolItemUse = toolItemUse;
         this.results = results;
         this.isSimple = recipeItems.stream().allMatch(Ingredient::isSimple);
+    }
+
+    public int getSmithingLevel(){
+        return smithingLevel;
+    }
+    public Pair<CraftToolType, Integer> getToolUse(int index){
+        return toolItemUse;
     }
 
     public boolean matches(SmithingTableInventory inventory, World world) {
@@ -127,7 +134,7 @@ public class SmithingRecipe implements IRecipe<SmithingTableInventory>, IToolUse
     }
 
     public IRecipeType<?> getType() {
-        return IModRecipeType.SMITHING;
+        return ModRecipeType.SMITHING;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SmithingRecipe> {

@@ -1,7 +1,7 @@
 package com.road.eternalcore.common.inventory.container.slot;
 
 import com.road.eternalcore.common.inventory.SmithingTableInventory;
-import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.common.item.crafting.recipe.SmithingRecipe;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,8 +45,8 @@ public class SmithingTableResultSlot extends Slot {
     public ItemStack onTake(PlayerEntity player, ItemStack itemStack) {
         checkTakeAchievements(itemStack);
         ForgeHooks.setCraftingPlayer(player);
-        Optional<SmithingRecipe> recipe = player.level.getRecipeManager().getRecipeFor(IModRecipeType.SMITHING, this.inputSlots, player.level);
-        NonNullList<ItemStack> remainItemList = player.level.getRecipeManager().getRemainingItemsFor(IModRecipeType.SMITHING, this.inputSlots, player.level);
+        Optional<SmithingRecipe> recipe = player.level.getRecipeManager().getRecipeFor(ModRecipeType.SMITHING, this.inputSlots, player.level);
+        NonNullList<ItemStack> remainItemList = player.level.getRecipeManager().getRemainingItemsFor(ModRecipeType.SMITHING, this.inputSlots, player.level);
         ForgeHooks.setCraftingPlayer(null);
         // 生成副产物，如果槽满了则直接塞到物品栏或掉落
         if (recipe.isPresent()){

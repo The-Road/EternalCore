@@ -13,7 +13,7 @@ public class MaterialTierData {
     // 记录材料的工具和锻造等级
     protected static final Map<Materials, MaterialTierData> materialTierData = new LinkedHashMap<>();
     public static final MaterialTierData NULL = new MaterialTierData(Materials.NULL).tier(
-            2, 256, 6.0F, 2.0F, 14
+            0, 1, 1.0F, 0.0F, 1
     );
     public static final MaterialTierData IRON = setData(Materials.IRON).tier(
             2, 256, 6.0F, 2.0F, 14

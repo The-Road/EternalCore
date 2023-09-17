@@ -26,6 +26,7 @@
   "itemGroup.eternalcore.tool_group":"永恒核心 工具",
   "item.eternalcore.pickaxe": "%s镐",
   "item.eternalcore.hammer": "%s锤",
+  "item.eternalcore.wrench": "%s扳手",
 
   "eternalcore.eu.tier.ulv": "超低压",
   "eternalcore.eu.tier.lv": "低压",
@@ -143,7 +144,10 @@
   "eternalcore.toolTip.tool.mineSpeed": "挖掘速度: %s",
   "eternalcore.toolTip.tool.basicDamage": "基础伤害: %s",
   "eternalcore.toolTip.tool.attackSpeed": "攻击速度: %s",
+  "eternalcore.toolTip.tool.smithingLevel": "锻造等级: %s",
   "eternalcore.toolTip.block.material": "材质: %s",
+  "eternalcore.toolTip.jei.smithingLevel": "锻造等级: %s",
+  "eternalcore.toolTip.jei.toolUse": "消耗耐久: %s",
 
   "eternalcore.debugTool.block.title": "-----<方块信息>-----",
   "eternalcore.debugTool.block.name": "方块: %s",
@@ -174,6 +178,9 @@
   "container.eternalcore.locker": "储物柜",
   "container.eternalcore.machine_block": "机器方块",
   "container.eternalcore.battery_buffer": "电池箱",
+
+  "gui.eternalcore.jei.category.tool_crafting": "合成(需要工具)",
+  "gui.eternalcore.jei.category.smithing": "锻造",
 
   "占位符": "这样我就不会忘记加逗号了"
 }

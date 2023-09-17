@@ -10,6 +10,13 @@ plugins {
 }
 apply plugin: 'org.spongepowered.mixin'
 
+repositories {
+    maven { // JEI
+        name "Progwml6 maven"
+        url "https://dvs1.progwml6.com/files/maven/"
+    }
+}
+
 version = '1.0'
 group = 'com.road.eternalcore'
 archivesBaseName = 'eternalcore'
@@ -83,6 +90,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    compileOnly "mezz.jei:jei-1.16.5:7.7.1.152:api"
+    // runtimeOnly "mezz.jei:jei-1.16.5:7.7.1.152"
 }
 mixin{
     //add sourceSets.main, 'mixin.eternalcore.refmap.json'

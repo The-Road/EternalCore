@@ -1,7 +1,7 @@
 package com.road.eternalcore.common.inventory.container.slot;
 
 import com.road.eternalcore.common.inventory.ToolCraftingInventory;
-import com.road.eternalcore.common.item.crafting.IModRecipeType;
+import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
@@ -35,7 +35,7 @@ public class ToolCraftingResultSlot extends CraftingResultSlot {
             this.checkTakeAchievements(itemStack);
             // 据我观察，这个setCraftingPlayer是用来判断合成过程中是否有工具损坏的（但是好像没调用过）
             ForgeHooks.setCraftingPlayer(player);
-            NonNullList<ItemStack> remainItemList = player.level.getRecipeManager().getRemainingItemsFor(IModRecipeType.TOOL_CRAFTING, this.craftAndToolSlots, player.level);
+            NonNullList<ItemStack> remainItemList = player.level.getRecipeManager().getRemainingItemsFor(ModRecipeType.TOOL_CRAFTING, this.craftAndToolSlots, player.level);
             ForgeHooks.setCraftingPlayer(null);
             // 合成材料采用相同的逻辑消耗
             Consumer<Integer> normalRemainingItem = i -> {

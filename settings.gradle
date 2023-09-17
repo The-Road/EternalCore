@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
         maven {
-            name 'MinecraftForge'
-            url 'https://files.minecraftforge.net/maven/'
+            name "MinecraftForge"
+            url "https://files.minecraftforge.net/maven/"
         }
         mavenCentral()
     }
