@@ -1,0 +1,6 @@
+{
+  "parent": "eternalcore:item/handheld_spin",
+  "textures": {
+    "layer0": "eternalcore:item/knife"
+  }
+}

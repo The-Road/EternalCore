@@ -2,9 +2,8 @@
   "package": "com.road.eternalcore.mixin",
   "mixins": [
     "ContainerMixin",
+    "IceBlockMixin",
     "ItemStackMixin",
-    "PlayerEntityMixin",
-    "RecipeBookContainerMixin",
-    "StateHolderMixin"
+    "RecipeBookContainerMixin"
   ]
 }

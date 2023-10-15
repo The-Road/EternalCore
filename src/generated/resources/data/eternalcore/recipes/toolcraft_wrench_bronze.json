@@ -1,5 +1,5 @@
 {
-  "type": "eternalcore:toolcrafting_shaped",
+  "type": "eternalcore:tool_crafting_shaped",
   "group": "wrench",
   "pattern": [
     "X X",

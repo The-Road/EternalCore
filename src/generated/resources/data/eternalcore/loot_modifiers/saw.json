@@ -1,0 +1,13 @@
+{
+  "conditions": [
+    {
+      "condition": "eternalcore:match_tool",
+      "predicate": {
+        "tool": [
+          "eternalcore_saw"
+        ]
+      }
+    }
+  ],
+  "type": "eternalcore:saw"
+}

@@ -88,9 +88,20 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
     protected void addToolModels(){
         addHandheldModel(ModItems.debugTool);
-        addHandheldModel(ModItems.hammer);
         addHandheldModel(ModItems.pickaxe);
+        addHandheldModel(ModItems.axe);
+        addHandheldModel(ModItems.shovel);
+        addHandheldModel(ModItems.hoe);
+        addHandheldModel(ModItems.sword);
+        addHandheldSpinModel(ModItems.knife);
+        addHandheldModel(ModItems.hammer);
+        addHandheldMirrorModel(ModItems.softMallet);
         addHandheldVerticalModel(ModItems.wrench);
+        addHandheldMirrorModel(ModItems.file);
+        addHandheldVerticalModel(ModItems.wireCutter);
+        addHandheldMirrorModel(ModItems.screwdriver);
+        addHandheldModel(ModItems.crowbar);
+        addHandheldSpinModel(ModItems.saw);
     }
 
     protected void addFlatModel(Item item) {
@@ -107,6 +118,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 layer0
         ));
     }
+    // 标准手持模型，物品朝右上，正面向左
     protected void addHandheldModel(Item item){
         addHandheldModel(item, new ModResourceLocation(ITEM_FOLDER + "/" + item));
     }
@@ -118,6 +130,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 layer0
         ));
     }
+    // 垂直手持模型，物品朝正上，正面向左
     protected void addHandheldVerticalModel(Item item){
         addHandheldVerticalModel(item, new ModResourceLocation(ITEM_FOLDER + "/" + item));
     }
@@ -125,6 +138,30 @@ public class ModItemModelProvider extends ItemModelProvider {
         generatedModels.put(item.getRegistryName(), singleTexture(
                 item.toString(),
                 modLoc(ITEM_FOLDER + "/handheld_vertical"),
+                "layer0",
+                layer0
+        ));
+    }
+    // 转向手持模型，物品朝左上，正面向左
+    protected void addHandheldSpinModel(Item item){
+        addHandheldSpinModel(item, new ModResourceLocation(ITEM_FOLDER + "/" + item));
+    }
+    protected void addHandheldSpinModel(Item item, ResourceLocation layer0) {
+        generatedModels.put(item.getRegistryName(), singleTexture(
+                item.toString(),
+                modLoc(ITEM_FOLDER + "/handheld_spin"),
+                "layer0",
+                layer0
+        ));
+    }
+    // 镜像手持模型，物品朝左上，正面向右
+    protected void addHandheldMirrorModel(Item item){
+        addHandheldMirrorModel(item, new ModResourceLocation(ITEM_FOLDER + "/" + item));
+    }
+    protected void addHandheldMirrorModel(Item item, ResourceLocation layer0) {
+        generatedModels.put(item.getRegistryName(), singleTexture(
+                item.toString(),
+                modLoc(ITEM_FOLDER + "/handheld_mirror"),
                 "layer0",
                 layer0
         ));

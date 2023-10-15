@@ -1,0 +1,34 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "pickaxe",
+  "pattern": [
+    "PXP",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/gold"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/gold"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:pickaxe",
+    "nbt": "{material:\"gold\"}"
+  }
+}

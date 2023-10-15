@@ -4,7 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.road.eternalcore.api.block.properties.PipeConnection;
 import com.road.eternalcore.common.block.BlockMaterial;
-import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
+import com.road.eternalcore.common.world.pipenetwork.EnergyNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

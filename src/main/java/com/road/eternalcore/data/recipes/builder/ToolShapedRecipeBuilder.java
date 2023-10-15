@@ -3,7 +3,7 @@ package com.road.eternalcore.data.recipes.builder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
+import com.road.eternalcore.common.item.crafting.ModRecipeSerializer;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
@@ -62,7 +62,7 @@ public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
             json.add("toolUse", toolUseJson);
         }
         public IRecipeSerializer<?> getType() {
-            return IModRecipeSerializer.toolShapedRecipe;
+            return ModRecipeSerializer.toolShapedRecipe;
         }
     }
 }

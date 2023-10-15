@@ -1,0 +1,30 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "knife",
+  "pattern": [
+    "P",
+    "R"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/bronze"
+    },
+    "R": {
+      "tag": "forge:rods/bronze"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:knife",
+    "nbt": "{material:\"bronze\"}"
+  }
+}

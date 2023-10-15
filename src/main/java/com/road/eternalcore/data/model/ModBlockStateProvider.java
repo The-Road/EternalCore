@@ -101,7 +101,6 @@ public class ModBlockStateProvider extends BlockStateProvider{
     }
     private void addMachines(){
         addMachineCasing();
-        // 其他机器的方法，待添加
         addHorizontalOpenMachine(MachineBlocks.locker.get());
         addDirectionalMachine(MachineBlocks.machineBlock.get());
         addDirectionalMachine(MachineBlocks.batteryBuffer.get());

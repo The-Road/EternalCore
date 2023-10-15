@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "eternalcore:shovel",
+      "count": 1,
+      "nbt": "{material:\"netherite\",Damage:0}"
+    }
+  ],
+  "result": {
+    "item": "minecraft:netherite_shovel"
+  }
+}

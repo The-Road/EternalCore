@@ -9,4 +9,5 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GLMRegistry {
     public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Utils.MOD_ID);
     public static final RegistryObject<HammerSmashModifier.Serializer> hammerSmash = GLM.register("hammer_smash", HammerSmashModifier.Serializer::new);
+    public static final RegistryObject<SawModifier.Serializer> saw = GLM.register("saw", SawModifier.Serializer::new);
 }

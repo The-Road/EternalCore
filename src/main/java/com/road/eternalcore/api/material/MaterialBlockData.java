@@ -9,13 +9,14 @@ public class MaterialBlockData {
     public static final MaterialBlockData NULL = new MaterialBlockData(Materials.NULL)
             .block(5.0F, 6.0F)
             .hull(3.0F, 4.8F);
-
-    public static final MaterialBlockData IRON = setData(Materials.IRON)
-            .block(5.0F, 6.0F)
-            .hull(3.0F, 4.8F);
-    public static final MaterialBlockData BRONZE = setData(Materials.BRONZE)
-            .block(5.0F, 6.0F)
-            .hull(3.0F, 4.8F);
+    private static void init(){
+        setData(Materials.IRON)
+                .block(5.0F, 6.0F)
+                .hull(3.0F, 4.8F);
+        setData(Materials.BRONZE)
+                .block(5.0F, 6.0F)
+                .hull(3.0F, 4.8F);
+    }
 
     protected Materials material;
     protected BlockData blockData; // 实心块数据
@@ -73,4 +74,6 @@ public class MaterialBlockData {
             return explosionResistance;
         }
     }
+
+    static {init();}
 }

@@ -2,7 +2,9 @@ package com.road.eternalcore.data.loot.functions;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-import com.road.eternalcore.common.item.ModItems;
+import com.road.eternalcore.api.material.MaterialShape;
+import com.road.eternalcore.api.material.Materials;
+import com.road.eternalcore.common.item.material.MaterialItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
@@ -25,7 +27,7 @@ public class HammerSmash extends LootFunction {
             return stack;
         }else{
             if (stack.getItem() == Items.STONE || stack.getItem() == Items.COBBLESTONE){
-                ItemStack stack1 = new ItemStack(ModItems.stoneDust);
+                ItemStack stack1 = new ItemStack(MaterialItems.get(MaterialShape.DUST, Materials.STONE));
                 stack1.setCount(stack.getCount());
                 return stack1;
             }

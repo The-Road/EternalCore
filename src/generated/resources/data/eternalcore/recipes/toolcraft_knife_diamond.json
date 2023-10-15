@@ -1,0 +1,26 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "knife",
+  "pattern": [
+    "X",
+    "R"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "R": {
+      "tag": "forge:rods/diamond"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:knife",
+    "nbt": "{material:\"diamond\"}"
+  }
+}

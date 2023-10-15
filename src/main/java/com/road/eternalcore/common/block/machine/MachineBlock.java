@@ -90,7 +90,7 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         Materials material = tileEntity.getMaterial();
         // 获取机器外壳
         list.add(new ItemStack(MachineBlocks.getMachineCasing(material)));
-        // 获取机器零件（待添加）
+        // TODO: 获取机器零件
 
         return list;
     }

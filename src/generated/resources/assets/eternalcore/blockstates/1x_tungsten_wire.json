@@ -7,11 +7,38 @@
     },
     {
       "when": {
+        "up": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_2"
+      }
+    },
+    {
+      "when": {
         "down": "on"
       },
       "apply": {
         "model": "eternalcore:block/wire_side_2",
         "x": 180
+      }
+    },
+    {
+      "when": {
+        "south": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_2",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "north": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_2",
+        "x": 90
       }
     },
     {
@@ -26,39 +53,12 @@
     },
     {
       "when": {
-        "north": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_2",
-        "x": 90
-      }
-    },
-    {
-      "when": {
-        "up": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_2"
-      }
-    },
-    {
-      "when": {
         "east": "on"
       },
       "apply": {
         "model": "eternalcore:block/wire_side_2",
         "x": 90,
         "y": 90
-      }
-    },
-    {
-      "when": {
-        "south": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_2",
-        "x": 90,
-        "y": 180
       }
     }
   ]

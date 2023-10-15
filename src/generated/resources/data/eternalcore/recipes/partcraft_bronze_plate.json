@@ -1,0 +1,26 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "plate",
+  "level": 1,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bronze"
+    },
+    {
+      "tag": "forge:ingots/bronze"
+    }
+  ],
+  "toolUse": {
+    "tool": "hammer",
+    "use": 1
+  },
+  "result": [
+    {
+      "item": "eternalcore:bronze_plate"
+    },
+    {
+      "item": "eternalcore:small_bronze_dust",
+      "count": 2
+    }
+  ]
+}

@@ -2,13 +2,14 @@ package com.road.eternalcore.common.item.material;
 
 import com.road.eternalcore.api.ore.OreShape;
 import com.road.eternalcore.api.ore.Ores;
+import com.road.eternalcore.common.item.ModItem;
 import com.road.eternalcore.common.item.group.ModGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class OreProduct extends Item {
+public class OreProduct extends ModItem {
     private final Ores ore;
     private final OreShape shape;
     public OreProduct(Ores ore, OreShape shape){

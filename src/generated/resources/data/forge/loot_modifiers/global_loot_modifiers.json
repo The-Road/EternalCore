@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
+    "eternalcore:saw",
     "eternalcore:hammer_smash"
   ]
 }

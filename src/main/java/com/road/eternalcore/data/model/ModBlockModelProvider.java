@@ -63,7 +63,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
                 mcBlock("crafting_table_front"),
                 mcBlock("crafting_table_front")
         );
-        addCube(ModBlocks.smithingTable,
+        addCube(ModBlocks.partCraftTable,
                 mcBlock("oak_planks"),
                 mcBlock("enchanting_table_top"),
                 mcBlock("smithing_table_front"),
@@ -110,9 +110,7 @@ public class ModBlockModelProvider extends BlockModelProvider{
         for (MaterialWireData.WireType wireType : MaterialWireData.WireType.values()){
             ResourceLocation texture = modBlock("wire/wire");
             addWireModel("wire", wireType.radius, texture);
-            PipeBlocks.getWires(wireType).forEach(wire -> {
-                addWire(wire, wireType, texture);
-            });
+            PipeBlocks.getWires(wireType).forEach(wire -> addWireInventory(wire, wireType, texture));
         }
     }
     private void addMachines(){
@@ -172,8 +170,15 @@ public class ModBlockModelProvider extends BlockModelProvider{
                 .texture("cover", texture)
         );
     }
-    protected void addWire(Block block, MaterialWireData.WireType wireType, ResourceLocation texture){
-        generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
+    protected void addWireInventory(Block block, MaterialWireData.WireType wireType, ResourceLocation texture){
+        if (wireType.radius >= 1 && wireType.radius <= 7) {
+            String coreName = "wire_core_" + wireType.radius;
+            generatedModels.put(block.getRegistryName(), withExistingParent(
+                    ModBlocks.getBlockName(block), modLoc(BLOCK_FOLDER + "/" + coreName))
+            );
+        } else {
+            generatedModels.put(block.getRegistryName(), cubeAll(ModBlocks.getBlockName(block), texture));
+        }
     }
     // 有朝向的机器，提供正面材质和侧面材质（注意该材质是贴在机器外壳材质上面一层的）
     protected void addCubeTopMachine(Block block, String faceName) {

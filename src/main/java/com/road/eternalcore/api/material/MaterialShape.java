@@ -24,13 +24,10 @@ public class MaterialShape {
     public static MaterialShape ROD = new MaterialShape("rod", 72); //杆
     public static MaterialShape LONG_ROD = new MaterialShape("long_rod", "long_%s_rod", 144); //长杆
     public static MaterialShape FOIL = new MaterialShape("foil", 36); //箔
-    public static MaterialShape ROUND = new MaterialShape("round", 16); //滚珠
     public static MaterialShape FINE_WIRE = new MaterialShape("fine_wire", "fine_%s_wire", 18); //细导线
     public static MaterialShape LENS = new MaterialShape("lens", 144); //透镜
     public static MaterialShape ROTOR = new MaterialShape("rotor", 576); //转子
     public static MaterialShape RING = new MaterialShape("ring", 36); //环
-    public static MaterialShape BOLT = new MaterialShape("bolt", 18); //螺栓
-    public static MaterialShape SCREW = new MaterialShape("screw", 18); //螺丝
     public static MaterialShape GEAR = new MaterialShape("gear", 576); //齿轮
     public static MaterialShape SMALL_GEAR = new MaterialShape("small_gear", "small_%s_gear", 144); //小型齿轮
 

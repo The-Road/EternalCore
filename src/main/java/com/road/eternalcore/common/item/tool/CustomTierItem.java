@@ -5,10 +5,9 @@ import com.google.common.collect.Multimap;
 import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.material.Materials;
+import com.road.eternalcore.common.item.ModItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -16,30 +15,25 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
-import java.text.DecimalFormat;
 import java.util.List;
 
-public class CustomTierItem extends Item {
+public abstract class CustomTierItem extends ModItem {
     // 自定义工具和武器类
     // 通过StringNBT标签material表示工具的材料，工具的各项属性都通过该标签来获取
     protected float atkDamage; // 基础攻击，默认伤害计算方式为基础攻击+材料攻击
     protected float atkSpeed; // 面板攻速（表示每秒的攻击次数），MC原版获取物品的getAttackSpeed的时候会-4
 
-    protected boolean onlyForCrafting; // 不可用于破坏方块或打怪的工具，这类工具在挖掘或攻击时不会掉耐久，也不会显示挖掘等级、挖掘速度、攻击力和攻速
+    protected boolean onlyForCrafting = false; // 不可用于破坏方块或打怪的工具，这类工具在挖掘或攻击时不会掉耐久，也不会显示挖掘等级、挖掘速度、攻击力和攻速
     public static final int DEFAULT_DURABILITY_SUBDIVIDE = 20; // 每一点耐久的细分程度
 
     public CustomTierItem(Properties itemProperties){
@@ -49,7 +43,6 @@ public class CustomTierItem extends Item {
         super(itemProperties.defaultDurability(0).setNoRepair());
         this.atkDamage = atkDamage;
         this.atkSpeed = atkSpeed;
-        this.onlyForCrafting = false;
     }
     public static int addItemDamage(ItemStack itemStack, int damageDecimal){
         // 用于给CustomTierItem增加耐久损耗（可以让耐久精确到0.05）
@@ -72,9 +65,7 @@ public class CustomTierItem extends Item {
         tag.putInt(ModConstant.Durability_decimal, lastDecimal);
     }
     public static int getBinary(ItemStack itemStack){
-        // 耐久附魔的效果改为每一级固定增加50%耐久
-        int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, itemStack);
-        return DEFAULT_DURABILITY_SUBDIVIDE * (i + 2) / 2;
+        return DEFAULT_DURABILITY_SUBDIVIDE;
     }
     public static MaterialTierData getMaterialData(ItemStack itemStack){
         CompoundNBT itemNBT = itemStack.getTag();
@@ -161,22 +152,17 @@ public class CustomTierItem extends Item {
         return new TranslationTextComponent(this.getDescriptionId(itemStack), data.getMaterial().getText());
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
-        // 显示物品的挖掘等级、挖掘速度、攻击伤害、攻击速度
-        DecimalFormat format = ItemStack.ATTRIBUTE_MODIFIER_FORMAT;
-        if (!this.onlyForCrafting) {
-            IFormattableTextComponent tierLevelText = new TranslationTextComponent("eternalcore.toolTip.tool.tierLevel", format.format(getTierLevel(itemStack))).withStyle(TextFormatting.DARK_GREEN);
-            IFormattableTextComponent mineSpeedText = new TranslationTextComponent("eternalcore.toolTip.tool.mineSpeed", format.format(getMineSpeed(itemStack) * getMineSpeedRate())).withStyle(TextFormatting.DARK_GREEN);
-            IFormattableTextComponent atkDamageText = new TranslationTextComponent("eternalcore.toolTip.tool.basicDamage", format.format((getBasicAttackDamage(itemStack) + 1))).withStyle(TextFormatting.DARK_GREEN);
-            IFormattableTextComponent atkSpeedText = new TranslationTextComponent("eternalcore.toolTip.tool.attackSpeed", format.format((getAttackSpeed(itemStack) + 4))).withStyle(TextFormatting.DARK_GREEN);
-            list.add(tierLevelText);
-            list.add(mineSpeedText);
-            list.add(atkDamageText);
-            list.add(atkSpeedText);
+    protected void addSmithLevelText(ItemStack itemStack, List<ITextComponent> list){
+        list.add(new TranslationTextComponent(
+                "eternalcore.toolTip.tool.smithingLevel",
+                getSmithingLevel(itemStack)).withStyle(TextFormatting.BLUE));
+    }
+    protected void addDurabilityText(ItemStack itemStack, List<ITextComponent> list, ITooltipFlag tooltipFlag){
+        if (!itemStack.isDamaged() || !tooltipFlag.isAdvanced()) {
+            list.add(new TranslationTextComponent(
+                    "eternalcore.toolTip.tool.durability",
+                    getMaxDamage(itemStack)).withStyle(TextFormatting.DARK_GREEN));
         }
-        // 关掉原本的属性显示
-        itemStack.hideTooltipPart(ItemStack.TooltipDisplayFlags.MODIFIERS);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack){
@@ -199,11 +185,6 @@ public class CustomTierItem extends Item {
     }
     public float getMineSpeedRate(){
         return 1.0F;
-    }
-
-    public boolean forCrafting(){
-        // 判断是否可以用于合成的工具（可以放到合成界面的工具格子中）
-        return false;
     }
 
 }

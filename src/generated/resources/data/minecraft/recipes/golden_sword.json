@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "eternalcore:sword",
+      "count": 1,
+      "nbt": "{material:\"gold\",Damage:0}"
+    }
+  ],
+  "result": {
+    "item": "minecraft:golden_sword"
+  }
+}

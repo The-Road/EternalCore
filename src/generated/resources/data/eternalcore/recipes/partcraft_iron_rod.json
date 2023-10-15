@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "level": 2,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 2
+  },
+  "result": [
+    {
+      "item": "eternalcore:iron_rod"
+    },
+    {
+      "item": "eternalcore:small_iron_dust"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "level": 1,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bronze"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 1
+  },
+  "result": [
+    {
+      "item": "eternalcore:bronze_rod"
+    },
+    {
+      "item": "eternalcore:small_bronze_dust"
+    }
+  ]
+}

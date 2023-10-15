@@ -73,7 +73,7 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
         blockData = MaterialBlockData.get(material);
         BlockState blockState = getBlockState();
         if (blockState.hasProperty(ModBlockStateProperties.MATERIAL)) {
-            if (Materials.get(blockState.getValue(ModBlockStateProperties.MATERIAL)) != material) {
+            if (Materials.get(blockState.getValue(ModBlockStateProperties.MATERIAL).value()) != material) {
                 this.level.setBlock(getBlockPos(), ModBlockStateProperties.MATERIAL.setBlockStateProperty(blockState, material), 3);
             }
         }

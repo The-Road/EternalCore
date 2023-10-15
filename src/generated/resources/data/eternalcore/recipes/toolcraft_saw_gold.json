@@ -1,0 +1,30 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "saw",
+  "pattern": [
+    "###",
+    "PP#"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/gold"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:saw",
+    "nbt": "{material:\"gold\"}"
+  }
+}

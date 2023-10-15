@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "hammer_by_hand",
+  "group": "hammer",
   "pattern": [
     "XX ",
     "XX#",

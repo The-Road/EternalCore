@@ -5,9 +5,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraftforge.common.Tags;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class MaterialTierData {
     // 记录材料的工具和锻造等级
@@ -15,30 +17,40 @@ public class MaterialTierData {
     public static final MaterialTierData NULL = new MaterialTierData(Materials.NULL).tier(
             0, 1, 1.0F, 0.0F, 1
     );
-    public static final MaterialTierData IRON = setData(Materials.IRON).tier(
-            2, 256, 6.0F, 2.0F, 14
-    ).smith(2);
-    public static final MaterialTierData COPPER = setData(Materials.COPPER).tier(
-            1, 160, 5.0F, 1.5F, 18
-    ).smith(1);
-    public static final MaterialTierData GOLD = setData(Materials.GOLD).tier(
-            0, 32, 12.0F, 0.0F, 22
-    ).smith(1);
-    public static final MaterialTierData BRONZE = setData(Materials.BRONZE).tier(
-            2, 192, 6.0F, 2.0F, 14
-    ).smith(1);
-    public static final MaterialTierData NETHERITE = setData(Materials.NETHERITE).tier(
-            4, 2560, 10.0F, 4.0F, 15
-    ).smith(6);
-    public static final MaterialTierData DIAMOND = setData(Materials.DIAMOND).tier(
-            3, 1560, 8.0F, 3.0F, 10
-    );
-    public static final MaterialTierData WOOD = setData(Materials.WOOD).tier(
-            0, 64, 2.0F, 0.0F, 15
-    ).soft().byHand();
-    public static final MaterialTierData STONE = setData(Materials.STONE).tier(
-            1, 128, 4.0F, 1.0F, 5
-    ).byHand();
+    private static void init(){
+        // SOLID
+        setData(Materials.IRON).tier(
+                2, 256, 6.0F, 2.0F, 14
+        ).smith(2);
+        setData(Materials.COPPER).tier(
+                1, 160, 5.0F, 1.5F, 14
+        ).smith(1);
+        setData(Materials.TIN).smith(1);
+        setData(Materials.GOLD).tier(
+                0, 32, 12.0F, 0.0F, 22
+        ).smith(1);
+        setData(Materials.BRONZE).tier(
+                2, 192, 6.0F, 2.0F, 14
+        ).smith(1);
+        setData(Materials.NETHERITE).tier(
+                4, 2560, 10.0F, 4.0F, 15
+        ).smith(6);
+        // GEM
+        setData(Materials.DIAMOND).tier(
+                3, 1560, 8.0F, 3.0F, 10
+        ).smith(2);
+        // MINERAL
+        setData(Materials.FLINT).tier(
+                1, 96, 5.0F, 1.0F, 5
+        ).byHand();
+        // OTHER
+        setData(Materials.WOOD).tier(
+                0, 64, 2.0F, 0.0F, 15
+        ).soft().byHand();
+        setData(Materials.STONE).tier(
+                1, 128, 4.0F, 1.0F, 5
+        ).byHand();
+    }
 
     protected Materials material;
     protected ItemTier itemTier = null; // 工具等级，存储挖掘等级、耐久、基础挖掘速度、基础攻击力、附魔强度和基础材料
@@ -58,6 +70,16 @@ public class MaterialTierData {
     }
     public static Map<Materials, MaterialTierData> getData(){
         return materialTierData;
+    }
+    public static Collection<MaterialTierData> getValidTierData(){
+        return materialTierData.values().stream().filter(
+                data -> data.itemTier != null
+        ).collect(Collectors.toList());
+    }
+    public static Collection<MaterialTierData> getValidSmithingData(){
+        return materialTierData.values().stream().filter(
+                data -> data.smithLevel > 0 && data.material.getType() == Materials.Type.SOLID
+        ).collect(Collectors.toList());
     }
     public static MaterialTierData get(String name){
         return materialTierData.getOrDefault(Materials.get(name), NULL);
@@ -151,4 +173,6 @@ public class MaterialTierData {
             return this.rodIngredient.get();
         }
     }
+
+    static {init();}
 }

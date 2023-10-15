@@ -4,7 +4,7 @@
 
   "itemGroup.eternalcore.functional_block_group": "永恒核心 功能性方块",
   "block.eternalcore.handcraft_assembly_table": "手工装配台",
-  "block.eternalcore.smithing_table": "锻造台",
+  "block.eternalcore.part_craft_table": "零件加工台",
   "block.eternalcore.machine_casing": "%s机器外壳",
   "block.eternalcore.locker": "储物柜",
   "block.eternalcore.machine_block": "机器方块",
@@ -25,8 +25,19 @@
 
   "itemGroup.eternalcore.tool_group":"永恒核心 工具",
   "item.eternalcore.pickaxe": "%s镐",
+  "item.eternalcore.axe": "%s斧",
+  "item.eternalcore.shovel": "%s锹",
+  "item.eternalcore.hoe": "%s锄",
+  "item.eternalcore.sword": "%s剑",
+  "item.eternalcore.knife": "%s小刀",
   "item.eternalcore.hammer": "%s锤",
+  "item.eternalcore.soft_mallet": "%s软锤",
   "item.eternalcore.wrench": "%s扳手",
+  "item.eternalcore.file": "%s锉刀",
+  "item.eternalcore.wire_cutter": "%s剪线钳",
+  "item.eternalcore.screwdriver": "%s螺丝刀",
+  "item.eternalcore.crowbar": "%s撬棍",
+  "item.eternalcore.saw": "%s锯",
 
   "eternalcore.eu.tier.ulv": "超低压",
   "eternalcore.eu.tier.lv": "低压",
@@ -109,6 +120,7 @@
   "eternalcore.materials.emerald": "绿宝石",
   "eternalcore.materials.coal": "煤",
   "eternalcore.materials.quartz": "石英",
+  "eternalcore.materials.flint": "燧石",
   "eternalcore.materials.redstone": "红石",
   "eternalcore.materials.wood": "木",
   "eternalcore.materials.stone": "石",
@@ -145,8 +157,8 @@
   "eternalcore.toolTip.tool.basicDamage": "基础伤害: %s",
   "eternalcore.toolTip.tool.attackSpeed": "攻击速度: %s",
   "eternalcore.toolTip.tool.smithingLevel": "锻造等级: %s",
+  "eternalcore.toolTip.tool.durability": "耐久: %s",
   "eternalcore.toolTip.block.material": "材质: %s",
-  "eternalcore.toolTip.jei.smithingLevel": "锻造等级: %s",
   "eternalcore.toolTip.jei.toolUse": "消耗耐久: %s",
 
   "eternalcore.debugTool.block.title": "-----<方块信息>-----",
@@ -174,13 +186,15 @@
   "attribute.modifier.operation.2": "倍率",
 
   "container.eternalcore.handcraft_assembly_table": "手工装配台",
-  "container.eternalcore.smithing_table": "锻造台",
+  "container.eternalcore.part_craft_table": "零件加工台",
   "container.eternalcore.locker": "储物柜",
   "container.eternalcore.machine_block": "机器方块",
   "container.eternalcore.battery_buffer": "电池箱",
 
+  "gui.eternalcore.text.smithingLevel": "锻造等级: %s",
+
   "gui.eternalcore.jei.category.tool_crafting": "合成(需要工具)",
-  "gui.eternalcore.jei.category.smithing": "锻造",
+  "gui.eternalcore.jei.category.part_crafting": "零件加工",
 
   "占位符": "这样我就不会忘记加逗号了"
 }

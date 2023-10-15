@@ -4,16 +4,16 @@ import com.road.eternalcore.Utils;
 import com.road.eternalcore.api.energy.network.IEnergyNetworkWire;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.common.block.machine.MachineBlock;
+import com.road.eternalcore.common.item.ModItem;
 import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.common.tileentity.EnergyMachineTileEntity;
-import com.road.eternalcore.common.world.energy.EnergyNetwork;
-import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
+import com.road.eternalcore.common.world.pipenetwork.EnergyNetwork;
+import com.road.eternalcore.common.world.pipenetwork.EnergyNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.text.DecimalFormat;
 
-public class DebugToolItem extends Item {
+public class DebugToolItem extends ModItem {
     // 调试用工具，可以输出各种方块的信息
     public DebugToolItem(){
         super(new Properties().tab(ModGroup.toolGroup));
@@ -84,7 +84,7 @@ public class DebugToolItem extends Item {
             DebugToolMsgHelper euMsgHelper = new DebugToolMsgHelper(player, "energy");
             euMsgHelper.msg("title");
             euMsgHelper.msg("network", energyNetwork);
-            IEnergyNetworkWire wire = energyNetwork.getWire(blockpos);
+            IEnergyNetworkWire wire = energyNetwork.getNode(blockpos);
             euMsgHelper.msg("euTier", wire.getTier().getText());
             euMsgHelper.msg("maxCurrent", wire.getMaxCurrent());
             euMsgHelper.msg("lineLoss", wire.getLineLoss());

@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "level": 6,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/netherite"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 32
+  },
+  "result": [
+    {
+      "item": "eternalcore:netherite_rod"
+    },
+    {
+      "item": "eternalcore:small_netherite_dust"
+    }
+  ]
+}

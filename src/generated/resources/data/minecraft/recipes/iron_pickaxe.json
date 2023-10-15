@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "item": "eternalcore:pickaxe",
+      "count": 1,
+      "nbt": "{material:\"iron\",Damage:0}"
+    }
+  ],
+  "result": {
+    "item": "minecraft:iron_pickaxe"
+  }
+}

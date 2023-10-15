@@ -25,7 +25,7 @@ public class WireBlock extends AbstractPipeBlock implements IEnergyNetworkWire {
     private final int maxCurrent;
     private final int lineLoss;
     public WireBlock(MaterialWireData wireData, MaterialWireData.WireType wireType) {
-        super(1.0F, 1.0F, ModToolType.WRENCH, wireType.radius);
+        super(1.0F, 1.0F, ModToolType.WIRE_CUTTER, wireType.radius);
         this.descriptionId = Utils.BlockDescriptionId(wireType.name);
         this.wireData = wireData;
         this.wireType = wireType;

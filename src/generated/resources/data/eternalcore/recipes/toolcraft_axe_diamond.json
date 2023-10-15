@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "axe",
+  "pattern": [
+    "XX",
+    "X#",
+    " #"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:axe",
+    "nbt": "{material:\"diamond\"}"
+  }
+}

@@ -1,11 +1,11 @@
 package com.road.eternalcore.compat.jei;
 
 import com.road.eternalcore.client.gui.screen.inventory.HandcraftAssemblyScreen;
-import com.road.eternalcore.client.gui.screen.inventory.SmithingTableScreen;
+import com.road.eternalcore.client.gui.screen.inventory.PartCraftTableScreen;
 import com.road.eternalcore.common.item.crafting.ModRecipeType;
 import com.road.eternalcore.common.util.ModResourceLocation;
 import com.road.eternalcore.compat.jei.category.CategoryConstant;
-import com.road.eternalcore.compat.jei.category.SmithingRecipeCategory;
+import com.road.eternalcore.compat.jei.category.PartCraftingRecipeCategory;
 import com.road.eternalcore.compat.jei.category.ToolCraftingRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -35,7 +35,7 @@ public class JEIPlugin implements IModPlugin {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(
                 new ToolCraftingRecipeCategory(guiHelper),
-                new SmithingRecipeCategory(guiHelper)
+                new PartCraftingRecipeCategory(guiHelper)
         );
     }
 
@@ -46,7 +46,7 @@ public class JEIPlugin implements IModPlugin {
                 categoryConstant.getUid()
         );
         register.accept(ModRecipeType.TOOL_CRAFTING, ToolCraftingRecipeCategory.CONSTANT);
-        register.accept(ModRecipeType.SMITHING, SmithingRecipeCategory.CONSTANT);
+        register.accept(ModRecipeType.PART_CRAFTING, PartCraftingRecipeCategory.CONSTANT);
     }
 
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
@@ -55,7 +55,7 @@ public class JEIPlugin implements IModPlugin {
                 categoryConstant.getUid()
         );
         register.accept(ToolCraftingRecipeCategory.CONSTANT);
-        register.accept(SmithingRecipeCategory.CONSTANT);
+        register.accept(PartCraftingRecipeCategory.CONSTANT);
     }
 
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
@@ -64,8 +64,8 @@ public class JEIPlugin implements IModPlugin {
                 ToolCraftingRecipeCategory.CONSTANT.getUid()
         );
         registration.addRecipeClickArea(
-                SmithingTableScreen.class, 77, 49, 22, 15,
-                SmithingRecipeCategory.CONSTANT.getUid()
+                PartCraftTableScreen.class, 77, 49, 22, 15,
+                PartCraftingRecipeCategory.CONSTANT.getUid()
         );
     }
 

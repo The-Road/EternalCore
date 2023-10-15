@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "file",
+  "pattern": [
+    "P  ",
+    " P ",
+    "  #"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/copper"
+    }
+  },
+  "result": {
+    "item": "eternalcore:file",
+    "nbt": "{material:\"copper\"}"
+  }
+}

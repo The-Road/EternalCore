@@ -34,7 +34,7 @@ public abstract class ItemStackMixin {
                     ),
                     self.getMaxDamage()
             ));
-        }else {
+        } else {
             return list.add(arg);
         }
     }

@@ -1,0 +1,34 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "axe",
+  "pattern": [
+    "PX",
+    "P#",
+    " #"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/bronze"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/bronze"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:axe",
+    "nbt": "{material:\"bronze\"}"
+  }
+}

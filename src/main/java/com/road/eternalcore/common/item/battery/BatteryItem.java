@@ -7,10 +7,10 @@ import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.api.energy.eu.IEUStorage;
 import com.road.eternalcore.api.energy.eu.ItemEUProvider;
 import com.road.eternalcore.api.energy.eu.ItemEUStorage;
+import com.road.eternalcore.common.item.ModItem;
 import com.road.eternalcore.common.item.group.ModGroup;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,7 +24,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BatteryItem extends Item {
+public class BatteryItem extends ModItem {
     private final int maxEnergy;
     private final EUTier euTier;
     public static final IItemPropertyGetter GetChargeLevel = (itemStack, clientWorld, livingEntity) -> getChargeLevel(itemStack);

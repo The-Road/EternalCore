@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.datafixers.util.Pair;
-import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.inventory.IInventory;
@@ -16,51 +15,41 @@ import net.minecraft.util.NonNullList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface IToolUsedRecipe {
-    // 提供判断工具锻造等级和耐久消耗相关的接口
+    // 提供判断工具类型和耐久消耗相关的接口
     Pair<CraftToolType, Integer> getToolUse(int index);
 
-    default int toolSmithLevel(IInventory slots){
-        List<Integer> levels = new ArrayList<>(slots.getContainerSize());
-        for(int i = 0; i < slots.getContainerSize(); i++){
-            levels.add(toolSmithLevel(slots.getItem(i)));
-        }
-        return levels.stream().min(Integer::compareTo).get();
-    }
-
-    default int toolSmithLevel(ItemStack itemStack){
-        if (itemStack.getItem() instanceof CustomTierItem){
-            MaterialTierData tierData = CustomTierItem.getMaterialData(itemStack);
-            return tierData.getSmithLevel();
-        }else{
-            return 0;
-        }
-    }
-    default List<Integer> toolMatch(List<Pair<CraftToolType, Integer>> toolUses, IInventory slots) {
+    default List<Integer> getToolDamage(List<Pair<CraftToolType, Integer>> toolUses, IInventory slots) {
         // 如果满足了所有的工具需求，则返回每个格子的工具对应的耐久消耗，否则返回null
         int toolSize = slots.getContainerSize();
-        Integer[] array = new Integer[toolSize];
-        boolean matches = false;
+        int[] array = new int[toolSize];
+        boolean matches = true;
         for (Pair<CraftToolType, Integer> pair : toolUses){
+            boolean match = false;
             for (int i = 0; i < toolSize; i++) {
-                if (array[i] != null || toolMatch(pair, slots.getItem(i))) {
-                    array[i] = pair.getSecond();
-                    matches = true;
+                if (isToolMatch(pair, slots.getItem(i))) {
+                    array[i] += pair.getSecond();
+                    match = true;
                     break;
                 }
             }
+            if (!match){
+                matches = false;
+            }
         }
-        return matches ? Arrays.asList(array) : null;
+        return matches ? Arrays.stream(array).boxed().collect(Collectors.toList()) : null;
     }
-    default boolean toolMatch(Pair<CraftToolType, Integer> toolUse, ItemStack item){
+    default boolean isToolMatch(Pair<CraftToolType, Integer> toolUse, ItemStack item){
         // 对于特定格子是否为对应工具的判断
         return toolUse.getFirst().match(item);
     }
 
     default List<ItemStack> getToolRemainItems(List<Pair<CraftToolType, Integer>> toolUses, IInventory slots){
         // 返回每个格子对应的耐久损耗后的物品（如果不为Damageable则返回ItemStack.EMPTY）
-        List<Integer> toolDamages = toolMatch(toolUses, slots);
+        // 为null则表示该格不消耗物品
+        List<Integer> toolDamages = getToolDamage(toolUses, slots);
         if (toolDamages != null){
             List<ItemStack> remainItems = new ArrayList<>(toolDamages.size());
             for (int i = 0; i < toolDamages.size(); i++) {
@@ -73,7 +62,7 @@ public interface IToolUsedRecipe {
             }
             return remainItems;
         }else{
-            return null;
+            throw new RuntimeException(this + " try to get tool remain items but tools don't match");
         }
     }
     default ItemStack getToolRemainItem(int toolDamage, ItemStack toolItem){

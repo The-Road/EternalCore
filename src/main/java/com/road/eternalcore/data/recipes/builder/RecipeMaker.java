@@ -7,7 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
-public class RecipeMaker<T extends RecipeBuilder> {
+public abstract class RecipeMaker<T extends RecipeBuilder> {
     // RecipeMaker是用来在RecipeProvider中生成配方的
     protected final T builder;
     public RecipeMaker(T builder) {

@@ -76,7 +76,7 @@ public class MachineModel extends BakedModelWrapper<IBakedModel>{
     public IModelData getModelData(@Nonnull IBlockDisplayReader world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull IModelData tileData) {
         BlockState blockState = world.getBlockState(pos);
         if (blockState.hasProperty(ModBlockStateProperties.MATERIAL)){
-            String materialName = blockState.getValue(ModBlockStateProperties.MATERIAL);
+            String materialName = blockState.getValue(ModBlockStateProperties.MATERIAL).value();
             return new MachineModelData(Materials.get(materialName));
         }
         return super.getModelData(world, pos, state, tileData);

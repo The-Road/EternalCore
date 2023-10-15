@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "soft_mallet",
+  "pattern": [
+    "XX ",
+    "XX#",
+    "XX "
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:planks"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "eternalcore:soft_mallet",
+    "nbt": "{material:\"wood\"}"
+  }
+}

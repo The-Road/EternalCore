@@ -1,0 +1,6 @@
+{
+  "parent": "eternalcore:item/handheld_mirror",
+  "textures": {
+    "layer0": "eternalcore:item/screwdriver"
+  }
+}

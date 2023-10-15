@@ -9,7 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.datafixers.util.Pair;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.inventory.ToolCraftingInventory;
-import com.road.eternalcore.common.item.crafting.IModRecipeSerializer;
+import com.road.eternalcore.common.item.crafting.ModRecipeSerializer;
 import com.road.eternalcore.api.tool.CraftToolType;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -21,6 +21,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class ToolShapedRecipe implements IToolCraftingRecipe {
+public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<ToolCraftingInventory> {
     private final ResourceLocation id;
     private final String group;
     private final int width;
@@ -52,12 +53,10 @@ public class ToolShapedRecipe implements IToolCraftingRecipe {
     }
 
     public boolean matches(ToolCraftingInventory craftAndToolSlots, World world) {
-        return toolSlotsMatch(craftAndToolSlots.getToolSlots()) != null && craftSlotsMatch(craftAndToolSlots.getCraftSlots());
+        return getToolDamage(toolItemUses, craftAndToolSlots.getToolSlots()) != null
+                && craftSlotsMatch(craftAndToolSlots.getCraftSlots());
     }
 
-    private List<Integer> toolSlotsMatch(CraftingInventory toolSlots){
-        return toolMatch(toolItemUses, toolSlots);
-    }
     private boolean craftSlotsMatch(CraftingInventory craftSlots) {
         // 判断是否满足合成表（这部分和有序合成的代码相同）
         for(int i = 0; i <= craftSlots.getWidth() - this.width; ++i) {
@@ -112,7 +111,7 @@ public class ToolShapedRecipe implements IToolCraftingRecipe {
     }
 
     public IRecipeSerializer<?> getSerializer() {
-        return IModRecipeSerializer.toolShapedRecipe;
+        return ModRecipeSerializer.toolShapedRecipe;
     }
 
     @Override
@@ -210,6 +209,15 @@ public class ToolShapedRecipe implements IToolCraftingRecipe {
             return dPattern;
         }
     }
+
+    public int getRecipeWidth() {
+        return width;
+    }
+
+    public int getRecipeHeight() {
+        return height;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ToolShapedRecipe> {
 
         public ToolShapedRecipe fromJson(ResourceLocation id, JsonObject json) {

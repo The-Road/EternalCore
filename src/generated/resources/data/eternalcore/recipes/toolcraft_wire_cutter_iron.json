@@ -1,0 +1,35 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "wire_cutter",
+  "pattern": [
+    "P P",
+    " P ",
+    "R R"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/iron"
+    },
+    "R": {
+      "tag": "forge:rods/iron"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    },
+    {
+      "tool": "screwdriver",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:wire_cutter",
+    "nbt": "{material:\"iron\"}"
+  }
+}

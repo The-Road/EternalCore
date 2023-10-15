@@ -25,12 +25,14 @@ public class PipeBlocks {
     private static void registerWires(){
         for (MaterialWireData.WireType wireType : MaterialWireData.WireType.values()){
            MaterialWireData.getData().forEach((material, materialWireData) -> {
-               String wireName = MaterialWireData.getRegisterName(material, wireType);
-               RegistryObject<Block> wire = BLOCKS.registerNormal(
-                       wireName, () -> new WireBlock(materialWireData, wireType)
-               );
-               wireTable.put(material, wireType, wire);
-               wires.put(wireName, wire);
+               if (materialWireData.getWireTypes().contains(wireType)) {
+                   String wireName = MaterialWireData.getRegisterName(material, wireType);
+                   RegistryObject<Block> wire = BLOCKS.registerNormal(
+                           wireName, () -> new WireBlock(materialWireData, wireType)
+                   );
+                   wireTable.put(material, wireType, wire);
+                   wires.put(wireName, wire);
+               }
            });
         }
     }

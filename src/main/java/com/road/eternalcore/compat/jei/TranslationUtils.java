@@ -17,6 +17,6 @@ public class TranslationUtils {
     }
 
     public static TranslationTextComponent smithingLevel(int level){
-        return new TranslationTextComponent("eternalcore.toolTip.jei.smithingLevel", level);
+        return new TranslationTextComponent("gui.eternalcore.text.smithingLevel", level);
     }
 }

@@ -19,8 +19,8 @@ public class ModBlockRegistries {
                             .strength(2.5F)
                             .sound(SoundType.WOOD)
             ));
-    public static final RegistryObject<Block> smithingTable = BLOCKS.registerFunctional(
-            "smithing_table", () -> new SmithingTableBlock(
+    public static final RegistryObject<Block> partCraftTable = BLOCKS.registerFunctional(
+            "part_craft_table", () -> new PartCraftTableBlock(
                     AbstractBlock.Properties.of(Material.METAL)
                             .strength(2.5F)
                             .sound(SoundType.METAL)

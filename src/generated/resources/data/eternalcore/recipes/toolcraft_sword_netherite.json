@@ -1,0 +1,31 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "sword",
+  "pattern": [
+    "P",
+    "P",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/netherite"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:sword",
+    "nbt": "{material:\"netherite\"}"
+  }
+}

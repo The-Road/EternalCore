@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "level": 1,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/copper"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 1
+  },
+  "result": [
+    {
+      "item": "eternalcore:copper_rod"
+    },
+    {
+      "item": "eternalcore:small_copper_dust"
+    }
+  ]
+}

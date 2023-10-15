@@ -60,6 +60,8 @@
     "#forge:plates/nichrome",
     "#forge:plates/kanthal",
     "#forge:plates/magnalium",
-    "#forge:plates/netherite"
+    "#forge:plates/netherite",
+    "#forge:plates/diamond",
+    "#forge:plates/emerald"
   ]
 }

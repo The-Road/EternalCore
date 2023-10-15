@@ -42,7 +42,9 @@ public class MaterialItems {
         addVanillaItem(GEM, DIAMOND, Items.DIAMOND);
         addVanillaItem(GEM, EMERALD, Items.EMERALD);
         addVanillaItem(MINERAL, COAL, Items.COAL);
+        addVanillaItem(MINERAL, FLINT, Items.FLINT);
         addVanillaItem(DUST, REDSTONE, Items.REDSTONE);
+        addVanillaItem(ROD, WOOD, Items.STICK);
     }
     private static void init(){
         // 注册物品

@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "pickaxe",
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:pickaxe",
+    "nbt": "{material:\"diamond\"}"
+  }
+}

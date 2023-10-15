@@ -11,7 +11,7 @@ import com.road.eternalcore.api.energy.eu.ISidedEUStorage;
 import com.road.eternalcore.api.energy.eu.SidedEUStorage;
 import com.road.eternalcore.common.tileentity.data.EnergyMachineGUIData;
 import com.road.eternalcore.common.tileentity.wrapper.EnergyMachineWrapper;
-import com.road.eternalcore.common.world.energy.EnergyNetworkManager;
+import com.road.eternalcore.common.world.pipenetwork.EnergyNetworkManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

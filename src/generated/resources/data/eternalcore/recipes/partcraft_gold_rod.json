@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "level": 1,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/gold"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 1
+  },
+  "result": [
+    {
+      "item": "eternalcore:gold_rod"
+    },
+    {
+      "item": "eternalcore:small_gold_dust"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package com.road.eternalcore.compat.jei.category;
 
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.item.crafting.recipe.IToolCraftingRecipe;
+import com.road.eternalcore.common.item.crafting.recipe.ToolShapedRecipe;
 import com.road.eternalcore.compat.jei.TranslationUtils;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -16,7 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingRecipe> {
+public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingRecipe>{
 
     public static final CategoryConstant CONSTANT = new CategoryConstant("tool_crafting", 129, 54, ModBlocks.handcraftAssemblyTable);
 
@@ -34,7 +35,7 @@ public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingR
         List<Ingredient> inputs = new ArrayList<>();
         for (int i=0; i<3; i++){
             if (recipe.getToolUse(i) != null){
-                inputs.add(Ingredient.of(recipe.getToolUse(i).getFirst().getItem()));
+                inputs.add(Ingredient.of(recipe.getToolUse(i).getFirst().getIconItem()));
             } else {
                 inputs.add(Ingredient.EMPTY);
             }
@@ -65,7 +66,14 @@ public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingR
         for (int i = 0; i < 3; i++){
             guiItemStacks.set(1 + i, tools.get(i));
         }
-        craftingGridHelper.setInputs(guiItemStacks, recipeItems);
+        if (recipe instanceof ToolShapedRecipe){
+            int width = ((ToolShapedRecipe) recipe).getRecipeWidth();
+            int height = ((ToolShapedRecipe) recipe).getRecipeHeight();
+            craftingGridHelper.setInputs(guiItemStacks, recipeItems, width, height);
+        } else {
+            craftingGridHelper.setInputs(guiItemStacks, recipeItems);
+            recipeLayout.setShapeless();
+        }
 
         guiItemStacks.addTooltipCallback((slotIndex, input, ingredient, tooltip)-> {
             if (slotIndex > 0 && slotIndex < 4 && !ingredient.isEmpty()){

@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "eternalcore:block/wire/wire"
-  }
+  "parent": "eternalcore:block/wire_core_3"
 }

@@ -92,6 +92,7 @@ public class Materials {
     // 矿物类材料
     public static final Materials COAL = addMineral("coal");
     public static final Materials QUARTZ = addMineral("quartz");
+    public static final Materials FLINT = addMineral("flint");
 
     // 粉末类材料
     public static final Materials REDSTONE = addPowder("redstone");
@@ -148,12 +149,12 @@ public class Materials {
     }
     protected static Materials addSolid(String name){
         Materials newMetal = new Materials(name, Type.SOLID);
-        newMetal.addShape(INGOT, DUST, PLATE);
+        newMetal.addShape(INGOT, DUST, PLATE, ROD);
         return newMetal;
     }
     protected static Materials addGem(String name){
         Materials newGem = new Materials(name, Type.GEM);
-        newGem.addShape(GEM, DUST);
+        newGem.addShape(GEM, DUST, PLATE, ROD);
         return newGem;
     }
     protected static Materials addMineral(String name){

@@ -1,0 +1,26 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "plate",
+  "level": 6,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/netherite"
+    },
+    {
+      "tag": "forge:ingots/netherite"
+    }
+  ],
+  "toolUse": {
+    "tool": "hammer",
+    "use": 32
+  },
+  "result": [
+    {
+      "item": "eternalcore:netherite_plate"
+    },
+    {
+      "item": "eternalcore:small_netherite_dust",
+      "count": 2
+    }
+  ]
+}

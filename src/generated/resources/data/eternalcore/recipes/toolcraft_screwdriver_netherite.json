@@ -1,0 +1,31 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "screwdriver",
+  "pattern": [
+    "  R",
+    " R ",
+    "#  "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "R": {
+      "tag": "forge:rods/netherite"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:screwdriver",
+    "nbt": "{material:\"netherite\"}"
+  }
+}

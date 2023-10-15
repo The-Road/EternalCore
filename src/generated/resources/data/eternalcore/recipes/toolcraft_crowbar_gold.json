@@ -1,0 +1,28 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "crowbar",
+  "pattern": [
+    "  R",
+    " R ",
+    "R  "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/gold"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:crowbar",
+    "nbt": "{material:\"gold\"}"
+  }
+}

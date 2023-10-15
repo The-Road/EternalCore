@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class ModBlocks {
     // 矿石
     public static final Block handcraftAssemblyTable = ModBlockRegistries.handcraftAssemblyTable.get();
-    public static final Block smithingTable = ModBlockRegistries.smithingTable.get();
+    public static final Block partCraftTable = ModBlockRegistries.partCraftTable.get();
     public static Collection<Block> getNormalBlocks(){
         return BlockRegister.getNormalBlocks().values().stream().map(RegistryObject::get).collect(Collectors.toList());
     }

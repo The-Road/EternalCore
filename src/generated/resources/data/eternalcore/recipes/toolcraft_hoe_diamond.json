@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "hoe",
+  "pattern": [
+    "XX",
+    " #",
+    " #"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "toolUse": [
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:hoe",
+    "nbt": "{material:\"diamond\"}"
+  }
+}
