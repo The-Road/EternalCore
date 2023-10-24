@@ -35,7 +35,7 @@ public class HammerSmashModifier extends LootModifier {
             return stack;
         }else{
             if (stack.getItem() == Items.STONE || stack.getItem() == Items.COBBLESTONE){
-                ItemStack stack1 = new ItemStack(MaterialItems.get(MaterialShape.DUST, Materials.STONE));
+                ItemStack stack1 = new ItemStack(Materials.getItem(MaterialShape.DUST, Materials.STONE));
                 stack1.setCount(stack.getCount());
                 return stack1;
             }

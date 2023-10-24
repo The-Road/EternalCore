@@ -32,7 +32,7 @@ public class EUTier implements IEUTier{
     protected final int maxVoltage;
     private EUTier(String name, int maxVoltage){
         if (tiers.containsKey(name)){
-            throw new IllegalStateException("EUTierLevel "+name+" has already existed!");
+            throw new IllegalArgumentException("EUTierLevel "+name+" has already existed!");
         }
         this.name = name;
         this.maxVoltage = maxVoltage;

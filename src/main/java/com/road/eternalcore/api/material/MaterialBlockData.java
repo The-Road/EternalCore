@@ -1,19 +1,21 @@
 package com.road.eternalcore.api.material;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MaterialBlockData {
     // 管理方块属性，包括硬度和爆炸抗性之类的
-    protected static final Map<Materials, MaterialBlockData> materialBlockData = new LinkedHashMap<>();
+    protected static final Map<Materials, MaterialBlockData> DATA = new LinkedHashMap<>();
     public static final MaterialBlockData NULL = new MaterialBlockData(Materials.NULL)
             .block(5.0F, 6.0F)
             .hull(3.0F, 4.8F);
     private static void init(){
-        setData(Materials.IRON)
+        setData(Materials.BRONZE)
                 .block(5.0F, 6.0F)
                 .hull(3.0F, 4.8F);
-        setData(Materials.BRONZE)
+        setData(Materials.WROUGHT_IRON)
                 .block(5.0F, 6.0F)
                 .hull(3.0F, 4.8F);
     }
@@ -25,21 +27,31 @@ public class MaterialBlockData {
         this.material = material;
     }
     protected static MaterialBlockData setData(Materials material){
-        if (materialBlockData.containsKey(material)){
-            throw new IllegalStateException("MaterialSmeltData "+material+" has already existed!");
+        if (DATA.containsKey(material)){
+            throw new IllegalArgumentException("MaterialSmeltData "+material+" has already existed!");
         }
         MaterialBlockData data = new MaterialBlockData(material);
-        materialBlockData.put(material, data);
+        DATA.put(material, data);
         return data;
     }
     public static Map<Materials, MaterialBlockData> getData(){
-        return materialBlockData;
+        return DATA;
+    }
+    public static Collection<MaterialBlockData> getValidBlockData(){
+        return DATA.values().stream().filter(
+                data -> data.blockData != null
+        ).collect(Collectors.toList());
+    }
+    public static Collection<MaterialBlockData> getValidHullData(){
+        return DATA.values().stream().filter(
+                data -> data.hullData != null
+        ).collect(Collectors.toList());
     }
     public static MaterialBlockData get(String name){
-        return materialBlockData.getOrDefault(Materials.get(name), NULL);
+        return DATA.getOrDefault(Materials.get(name), NULL);
     }
     public static MaterialBlockData get(Materials material){
-        return materialBlockData.getOrDefault(material, NULL);
+        return DATA.getOrDefault(material, NULL);
     }
     public Materials getMaterial() {
         return material;

@@ -19,7 +19,7 @@ public class MachineCover {
     }
     public MachineCover(String name, Item item){
         if (machineCover.containsKey(name)){
-            throw new IllegalStateException("MachineCover "+name+" has already existed!");
+            throw new IllegalArgumentException("MachineCover "+name+" has already existed!");
         }
         this.name = name;
         this.item = item;

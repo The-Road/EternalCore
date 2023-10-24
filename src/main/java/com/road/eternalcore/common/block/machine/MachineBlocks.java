@@ -28,7 +28,8 @@ public class MachineBlocks {
     }
 
     private static void registerMachineCasing(){
-        MaterialBlockData.getData().forEach((material, blockData) -> {
+        MaterialBlockData.getValidHullData().forEach((blockData) -> {
+            Materials material = blockData.getMaterial();
             RegistryObject<Block> casing = BLOCKS.registerNormal(
                     material + "_" + MachineCasingBlock.NAME,
                     () -> new MachineCasingBlock(blockData)
@@ -52,8 +53,8 @@ public class MachineBlocks {
         if (machine_casing.containsKey(material)){
             return machine_casing.get(material).get();
         }
-        // 默认材质为铁
-        return machine_casing.get(Materials.IRON).get();
+        // 默认材质为锻铁
+        return machine_casing.get(Materials.WROUGHT_IRON).get();
     }
 
     static{init();}

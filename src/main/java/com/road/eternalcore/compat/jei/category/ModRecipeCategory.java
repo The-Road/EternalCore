@@ -8,10 +8,12 @@ import net.minecraft.util.text.ITextComponent;
 
 public abstract class ModRecipeCategory<T> implements IRecipeCategory<T> {
     private final CategoryConstant constant;
+    protected final IGuiHelper guiHelper;
 
     protected final IDrawable background;
     protected final IDrawable icon;
     public ModRecipeCategory(IGuiHelper guiHelper, CategoryConstant constant){
+        this.guiHelper = guiHelper;
         this.constant = constant;
         this.background = constant.getBackground(guiHelper);
         this.icon = constant.getIcon(guiHelper);

@@ -13,6 +13,7 @@
       "tag": "forge:rods/netherite"
     }
   },
+  "smithLevel": 6,
   "toolUse": [
     {
       "tool": "hammer",

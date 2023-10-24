@@ -20,7 +20,8 @@ public class MaterialBlockProperty extends Property<StringConstant> {
         // 读取所有的MaterialBlockData对应的String
         List<String> allValues = new ArrayList<>();
         allValues.add(DEFAULT);
-        allValues.addAll(MaterialBlockData.getData().keySet().stream().map(Materials::getName).collect(Collectors.toList()));
+        allValues.addAll(MaterialBlockData.getValidHullData().stream().map(
+                data -> data.getMaterial().getName()).collect(Collectors.toList()));
         return allValues.stream().map(StringConstant::of).collect(Collectors.toList());
     }
 

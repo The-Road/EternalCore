@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class MaterialTierData {
     // 记录材料的工具和锻造等级
-    protected static final Map<Materials, MaterialTierData> materialTierData = new LinkedHashMap<>();
+    protected static final Map<Materials, MaterialTierData> DATA = new LinkedHashMap<>();
     public static final MaterialTierData NULL = new MaterialTierData(Materials.NULL).tier(
             0, 1, 1.0F, 0.0F, 1
     );
@@ -29,9 +29,13 @@ public class MaterialTierData {
         setData(Materials.GOLD).tier(
                 0, 32, 12.0F, 0.0F, 22
         ).smith(1);
+
         setData(Materials.BRONZE).tier(
                 2, 192, 6.0F, 2.0F, 14
-        ).smith(1);
+        ).smith(2);
+        setData(Materials.WROUGHT_IRON).tier(
+                2, 320, 6.0F, 2.0F, 14
+        ).smith(3);
         setData(Materials.NETHERITE).tier(
                 4, 2560, 10.0F, 4.0F, 15
         ).smith(6);
@@ -42,14 +46,14 @@ public class MaterialTierData {
         // MINERAL
         setData(Materials.FLINT).tier(
                 1, 96, 5.0F, 1.0F, 5
-        ).byHand();
+        ).smith(1).byHand();
         // OTHER
         setData(Materials.WOOD).tier(
                 0, 64, 2.0F, 0.0F, 15
         ).soft().byHand();
         setData(Materials.STONE).tier(
                 1, 128, 4.0F, 1.0F, 5
-        ).byHand();
+        ).smith(1).byHand();
     }
 
     protected Materials material;
@@ -61,31 +65,31 @@ public class MaterialTierData {
         this.material = material;
     }
     protected static MaterialTierData setData(Materials material){
-        if (materialTierData.containsKey(material)){
-            throw new IllegalStateException("MaterialTierData "+material+" has already existed!");
+        if (DATA.containsKey(material)){
+            throw new IllegalArgumentException("MaterialTierData "+material+" has already existed!");
         }
         MaterialTierData data = new MaterialTierData(material);
-        materialTierData.put(material, data);
+        DATA.put(material, data);
         return data;
     }
     public static Map<Materials, MaterialTierData> getData(){
-        return materialTierData;
+        return DATA;
     }
     public static Collection<MaterialTierData> getValidTierData(){
-        return materialTierData.values().stream().filter(
+        return DATA.values().stream().filter(
                 data -> data.itemTier != null
         ).collect(Collectors.toList());
     }
     public static Collection<MaterialTierData> getValidSmithingData(){
-        return materialTierData.values().stream().filter(
+        return DATA.values().stream().filter(
                 data -> data.smithLevel > 0 && data.material.getType() == Materials.Type.SOLID
         ).collect(Collectors.toList());
     }
     public static MaterialTierData get(String name){
-        return materialTierData.getOrDefault(Materials.get(name), NULL);
+        return DATA.getOrDefault(Materials.get(name), NULL);
     }
     public static MaterialTierData get(Materials material){
-       return materialTierData.getOrDefault(material, NULL);
+       return DATA.getOrDefault(material, NULL);
     }
     public Materials getMaterial(){
         return material;

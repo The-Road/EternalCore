@@ -17,6 +17,7 @@
       "tag": "forge:plates/gold"
     }
   },
+  "smithLevel": 1,
   "toolUse": [
     {
       "tool": "hammer",

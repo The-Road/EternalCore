@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class MaterialSmeltData {
     // 管理材料的加工和冶炼数据，例如是否需要用高炉冶炼等
-    protected static final Map<Materials, MaterialSmeltData> materialSmeltData = new LinkedHashMap<>();
+    protected static final Map<Materials, MaterialSmeltData> DATA = new LinkedHashMap<>();
     private static void init(){
         setData(Materials.IRON).exp(0.7F);
         setData(Materials.COPPER).exp(0.5F);
@@ -22,22 +22,22 @@ public class MaterialSmeltData {
         this.material = material;
     }
     protected static MaterialSmeltData setData(Materials material){
-        if (materialSmeltData.containsKey(material)){
-            throw new IllegalStateException("MaterialSmeltData "+material+" has already existed!");
+        if (DATA.containsKey(material)){
+            throw new IllegalArgumentException("MaterialSmeltData "+material+" has already existed!");
         }
         MaterialSmeltData data = new MaterialSmeltData(material);
-        materialSmeltData.put(material, data);
+        DATA.put(material, data);
         return data;
     }
 
     public static Map<Materials, MaterialSmeltData> getData(){
-        return materialSmeltData;
+        return DATA;
     }
     public static MaterialSmeltData get(String name){
-        return materialSmeltData.get(Materials.get(name));
+        return DATA.get(Materials.get(name));
     }
     public static MaterialSmeltData get(Materials material){
-        return materialSmeltData.get(material);
+        return DATA.get(material);
     }
     public Materials getMaterial(){
         return material;

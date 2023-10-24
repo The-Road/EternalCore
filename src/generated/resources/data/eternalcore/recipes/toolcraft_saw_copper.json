@@ -13,6 +13,7 @@
       "tag": "forge:plates/copper"
     }
   },
+  "smithLevel": 1,
   "toolUse": [
     {
       "tool": "hammer",

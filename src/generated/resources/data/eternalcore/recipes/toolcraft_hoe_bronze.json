@@ -14,6 +14,7 @@
       "tag": "forge:plates/bronze"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

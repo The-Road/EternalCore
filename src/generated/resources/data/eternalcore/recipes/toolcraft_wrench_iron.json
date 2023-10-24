@@ -11,6 +11,7 @@
       "tag": "forge:ingots/iron"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

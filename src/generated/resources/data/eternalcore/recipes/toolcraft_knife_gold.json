@@ -13,6 +13,7 @@
       "tag": "forge:rods/gold"
     }
   },
+  "smithLevel": 1,
   "toolUse": [
     {
       "tool": "hammer",

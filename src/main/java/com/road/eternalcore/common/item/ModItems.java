@@ -37,4 +37,8 @@ public class ModItems {
             return null;
         }
     }
+
+    public static String getItemName(Item item){
+        return item.getRegistryName().getPath();
+    }
 }

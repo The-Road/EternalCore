@@ -1,0 +1,24 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "machine_casing",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:plates/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:wrought_iron_machine_casing"
+  }
+}

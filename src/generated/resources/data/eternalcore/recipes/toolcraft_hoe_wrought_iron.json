@@ -1,0 +1,32 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "hoe",
+  "pattern": [
+    "PP",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:hoe",
+    "nbt": "{material:\"wrought_iron\"}"
+  }
+}

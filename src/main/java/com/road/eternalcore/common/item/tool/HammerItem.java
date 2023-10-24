@@ -31,8 +31,8 @@ public class HammerItem extends CustomToolItem {
         return material == Material.STONE;
     }
 
-    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
-        super.appendHoverText(itemStack, world, list, iTooltipFlag);
+    public void addOtherHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag tooltipFlag) {
         addSmithLevelText(itemStack, list);
+        super.addOtherHoverText(itemStack, world, list, tooltipFlag);
     }
 }

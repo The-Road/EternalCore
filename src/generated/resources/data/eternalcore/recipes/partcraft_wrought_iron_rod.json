@@ -1,0 +1,22 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "rod",
+  "smithLevel": 3,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/wrought_iron"
+    }
+  ],
+  "toolUse": {
+    "tool": "file",
+    "use": 4
+  },
+  "result": [
+    {
+      "item": "eternalcore:wrought_iron_rod"
+    },
+    {
+      "item": "eternalcore:small_iron_dust"
+    }
+  ]
+}

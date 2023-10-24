@@ -6,7 +6,6 @@ import com.road.eternalcore.common.inventory.container.HandcraftAssemblyContaine
 import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.client.gui.recipebook.IRecipeShownListener;
 import net.minecraft.client.gui.recipebook.RecipeBookGui;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -14,7 +13,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class HandcraftAssemblyScreen extends ContainerScreen<HandcraftAssemblyContainer> implements IRecipeShownListener {
+public class HandcraftAssemblyScreen extends SmithLevelContainerScreen<HandcraftAssemblyContainer> implements IRecipeShownListener {
     private static final ResourceLocation CRAFTING_TABLE_LOCATION = new ModResourceLocation("textures/gui/container/handcraft_assembly_table.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
     private final RecipeBookGui recipeBookComponent = new RecipeBookGui();
@@ -65,6 +64,8 @@ public class HandcraftAssemblyScreen extends ContainerScreen<HandcraftAssemblyCo
         int i = this.leftPos;
         int j = this.topPos;
         this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        renderSmithLevel(matrixStack, this.menu.getSmithLevel(), 119, 17, mouseX, mouseY);
+        this.minecraft.getTextureManager().bind(CRAFTING_TABLE_LOCATION);
     }
 
     protected boolean isHovering(int slotX, int slotY, int slotWidth, int slotHeight, double mouseX, double mouseY) {

@@ -1,7 +1,7 @@
 {
   "type": "eternalcore:part_crafting",
   "group": "rod",
-  "level": 1,
+  "smithLevel": 2,
   "ingredients": [
     {
       "tag": "forge:ingots/bronze"
@@ -9,7 +9,7 @@
   ],
   "toolUse": {
     "tool": "file",
-    "use": 1
+    "use": 2
   },
   "result": [
     {

@@ -1,0 +1,31 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "knife",
+  "pattern": [
+    "P",
+    "R"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/wrought_iron"
+    },
+    "R": {
+      "tag": "forge:rods/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:knife",
+    "nbt": "{material:\"wrought_iron\"}"
+  }
+}

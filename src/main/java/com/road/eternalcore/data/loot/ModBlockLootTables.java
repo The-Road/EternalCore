@@ -98,7 +98,7 @@ public class ModBlockLootTables extends BlockLootTables implements ModLootTableH
         }
 
         if (!this.map.isEmpty()) {
-            throw new IllegalStateException("Created block loot tables for non-blocks: " + this.map.keySet());
+            throw new IllegalArgumentException("Created block loot tables for non-blocks: " + this.map.keySet());
         }
     }
 
@@ -107,7 +107,7 @@ public class ModBlockLootTables extends BlockLootTables implements ModLootTableH
     }
 
     private void addOreTables(){
-        for (Block block : OreBlocks.getAll()){
+        for (Block block : OreBlocks.getAllMod()){
             addSelfDrop(block);
         }
     }

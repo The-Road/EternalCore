@@ -11,6 +11,7 @@
       "tag": "forge:rods/bronze"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

@@ -28,6 +28,10 @@ public class ShapedRecipeMaker<T extends NBTShapedRecipeBuilder> extends RecipeM
         ((ToolShapedRecipeBuilder) builder).toolUses.add(Pair.of(tool.getName(), use));
         return this;
     }
+    public ShapedRecipeMaker<T> smithLevel(int smithLevel){
+        ((ToolShapedRecipeBuilder) builder).smithLevel = smithLevel;
+        return this;
+    }
     public ShapedRecipeMaker<T> define(Character character, ITag<Item> tag){
         return define(character, Ingredient.of(tag));
     }

@@ -11,6 +11,7 @@
       "tag": "forge:rods/copper"
     }
   },
+  "smithLevel": 1,
   "toolUse": [
     {
       "tool": "hammer",

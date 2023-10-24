@@ -5,7 +5,6 @@ import com.road.eternalcore.api.material.MaterialSmeltData;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.api.ore.OreShape;
 import com.road.eternalcore.api.ore.Ores;
-import com.road.eternalcore.common.item.material.MaterialItems;
 import com.road.eternalcore.common.util.ModResourceLocation;
 import com.road.eternalcore.data.tags.ModTags;
 import net.minecraft.data.CookingRecipeBuilder;
@@ -25,26 +24,24 @@ public class OreProcessRecipeProvider extends ModRecipeProvider {
     public static void addRecipes(Consumer<IFinishedRecipe> consumer){
         // 添加在熔炉里冶炼的配方
         for (Ores ore : Ores.getAllOres()){
-            if (ore.getSmeltResult() != null){
-                addSmeltRecipe(consumer, ore, ore.getSmeltResult());
+            if (ore.canSmeltInFurnace()){
+                addSmeltRecipe(consumer, ore, ore.getMainProduct());
             }
         }
     }
     private static void addSmeltRecipe(Consumer<IFinishedRecipe> consumer, Ores ore, Materials material){
         // 添加矿石中间产物直接烧成锭的配方
         for (OreShape shape : OreShape.getAllShapes()){
-            Item smeltProduct = MaterialItems.get(MaterialShape.INGOT, material);
-            if (smeltProduct != null){
-                Tags.IOptionalNamedTag<Item> tag = ModTags.Items.getOreTag(shape, ore);
-                String name = Ores.getRegisterName(shape, ore);
-                Float exp = MaterialSmeltData.get(material).getSmeltExp();
-                CookingRecipeBuilder.smelting(Ingredient.of(tag), smeltProduct, exp, 200)
-                        .unlockedBy("has_" + name, has(tag))
-                        .save(consumer, new ModResourceLocation("smelt_" + name));
-                CookingRecipeBuilder.blasting(Ingredient.of(tag), smeltProduct, exp, 100)
-                        .unlockedBy("has_" + name, has(tag))
-                        .save(consumer, new ModResourceLocation("blasting_smelt_" + name));
-            }
+            Item ingot = Materials.getItem(MaterialShape.INGOT, material);
+            Tags.IOptionalNamedTag<Item> tag = ModTags.Items.getOreTag(shape, ore);
+            String name = Ores.getRegisterName(shape, ore);
+            Float exp = MaterialSmeltData.get(material).getSmeltExp();
+            CookingRecipeBuilder.smelting(Ingredient.of(tag), ingot, exp, 200)
+                    .unlockedBy("has_" + name, has(tag))
+                    .save(consumer, new ModResourceLocation("smelt_" + name));
+            CookingRecipeBuilder.blasting(Ingredient.of(tag), ingot, exp, 100)
+                    .unlockedBy("has_" + name, has(tag))
+                    .save(consumer, new ModResourceLocation("blasting_smelt_" + name));
         }
     }
 }

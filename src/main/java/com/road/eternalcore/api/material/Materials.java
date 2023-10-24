@@ -2,6 +2,7 @@ package com.road.eternalcore.api.material;
 
 import com.road.eternalcore.Utils;
 import com.road.eternalcore.api.RGB;
+import com.road.eternalcore.common.item.material.MaterialItems;
 import com.road.eternalcore.data.tags.ModTags;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
@@ -18,7 +19,7 @@ import static com.road.eternalcore.api.material.MaterialShape.*;
 public class Materials {
     protected static final Map<String, Materials> materials = new LinkedHashMap<>();
     // 无材质，用于设置一些默认值
-    public static final Materials NULL = new Materials("", Type.OTHER){
+    public static final Materials NULL = new Materials("", Type.EMPTY){
         public String getDescriptionId(){
             return "eternalcore.materials.null";
         }
@@ -75,8 +76,7 @@ public class Materials {
     public static final Materials BRASS = addSolid("brass");
     public static final Materials INVAR = addSolid("invar");
     public static final Materials ELECTRUM = addSolid("electrum");
-    public static final Materials WROUGHT_IRON = addSolid("wrought_iron");
-    public static final Materials PIG_IRON = addSolid("pig_iron");
+    public static final Materials WROUGHT_IRON = addSolid("wrought_iron").subMaterial(IRON);
     public static final Materials STEEL = addSolid("steel");
     public static final Materials STAINLESS_STEEL = addSolid("stainless_steel");
     public static final Materials REDSTONE_ALLOY = addSolid("redstone_alloy");
@@ -91,6 +91,7 @@ public class Materials {
 
     // 矿物类材料
     public static final Materials COAL = addMineral("coal");
+    public static final Materials LAPIS = addMineral("lapis");
     public static final Materials QUARTZ = addMineral("quartz");
     public static final Materials FLINT = addMineral("flint");
 
@@ -110,12 +111,13 @@ public class Materials {
     protected RGB rgb = new RGB(255, 255, 255);
     protected boolean isFireResistant = false;
     protected LazyValue<ITag<Item>> customIngredientTag;
+    protected Materials mainMaterial;
     public Materials(String name, Type type){
         if (Objects.equals(name, "null")){
-            throw new IllegalStateException("Cannot register null as material name.");
+            throw new IllegalArgumentException("Cannot register null as material name.");
         }
         if (materials.containsKey(name)){
-            throw new IllegalStateException("Material "+name+" has already existed!");
+            throw new IllegalArgumentException("Material "+name+" has already existed!");
         }
         this.name = name;
         this.type = type;
@@ -128,7 +130,7 @@ public class Materials {
         return String.format(shape.registerName, material.getName());
     }
     // ========
-    // 读取材料
+    // static方法
     // ========
     public static Materials get(String name){
         return materials.getOrDefault(name, NULL);
@@ -139,14 +141,19 @@ public class Materials {
     public static Collection<Materials> getMaterials(Type type){
         return materials.values().stream().filter(material -> material.getType() == type).collect(Collectors.toList());
     }
+    public static Item getItem(MaterialShape shape, Materials material){
+        // Materials.getItem会自动修正子材料不存在的材料类型至父材料
+        if (material.hasShape(shape)){
+            return MaterialItems.get(shape, material);
+        } else if (material.mainMaterial != null && material.mainMaterial.hasShape(shape)){
+            return MaterialItems.get(shape, material.mainMaterial);
+        } else {
+            throw new IllegalStateException("Nonexistent material : " + getRegisterName(shape, material));
+        }
+    }
     // ========
     // 添加新材料
     // ========
-    protected static Materials addCustom(String name, MaterialShape... shapes){
-        Materials newMaterial = new Materials(name, Type.OTHER);
-        newMaterial.addShape(shapes);
-        return newMaterial;
-    }
     protected static Materials addSolid(String name){
         Materials newMetal = new Materials(name, Type.SOLID);
         newMetal.addShape(INGOT, DUST, PLATE, ROD);
@@ -167,9 +174,14 @@ public class Materials {
         newPowder.addShape(DUST);
         return newPowder;
     }
-    protected Materials fireResistant() {
-        this.isFireResistant = true;
-        return this;
+    protected static Materials addCustom(String name, MaterialShape... shapes){
+        Materials newMaterial = new Materials(name, Type.OTHER);
+        newMaterial.addShape(shapes);
+        return newMaterial;
+    }
+    protected static Materials addEmpty(String name){
+        Materials newMaterial = new Materials(name, Type.EMPTY);
+        return newMaterial;
     }
     // 获取属性
     public String getName(){
@@ -180,6 +192,9 @@ public class Materials {
     }
     public Type getType(){
         return type;
+    }
+    public boolean hasShape(MaterialShape shape){
+        return shapes.contains(shape);
     }
     public Set<MaterialShape> getShapes(){
         return shapes;
@@ -194,7 +209,16 @@ public class Materials {
             return new Item.Properties();
         }
     }
-    // 添加材料对应的种类
+    public ITag<Item> getIngredientTag(){
+        if (this.customIngredientTag != null){
+            return this.customIngredientTag.get();
+        }
+        if (this.type.ingredientShape != null){
+            return ModTags.Items.getMaterialTag(this.type.ingredientShape, this);
+        }
+        return null;
+    }
+    // 添加属性
     protected Materials addShape(MaterialShape shape){
         this.shapes.add(shape);
         if (RelatedShapes.containsKey(shape)){
@@ -208,23 +232,30 @@ public class Materials {
         }
         return this;
     }
+    protected Materials removeShape(MaterialShape shape){
+        this.shapes.remove(shape);
+        if (RelatedShapes.containsKey(shape)){
+            this.shapes.removeAll(RelatedShapes.get(shape));
+        }
+        return this;
+    }
     protected Materials setRGB(int r, int g, int b){
         this.rgb = new RGB(r, g, b);
         return this;
     }
-
+    protected Materials fireResistant() {
+        this.isFireResistant = true;
+        return this;
+    }
     protected Materials setIngredientTag(Supplier<ITag<Item>> tag){
         this.customIngredientTag = new LazyValue<>(tag);
         return this;
     }
-    public ITag<Item> getIngredientTag(){
-        if (this.customIngredientTag != null){
-            return this.customIngredientTag.get();
-        }
-        if (this.type.ingredientShape != null){
-            return ModTags.Items.getMaterialTag(this.type.ingredientShape, this);
-        }
-        return null;
+    protected Materials subMaterial(Materials mainMaterial){
+        // 设置为子材料，子材料在打粉/提取流体的时候会转变为主材料
+        this.mainMaterial = mainMaterial;
+        removeShape(DUST);
+        return this;
     }
 
     public String getDescriptionId(){
@@ -239,7 +270,8 @@ public class Materials {
         GEM(MaterialShape.GEM), // 宝石类，本体材料为宝石
         MINERAL(MaterialShape.MINERAL), // 矿物类，例如煤、石英等，和宝石类似但是没有gem，本体材料标签无前缀，矿石可以筛
         POWDER(DUST), // 粉末类，如红石、各种矿石的最终产物等，本体材料属于dust
-        OTHER(null); // 其他特殊材料，如木头、石头等，本体材料单独指定
+        OTHER(null), // 其他特殊材料，如木头、石头等，本体材料单独指定
+        EMPTY(null); // 没有对应物品，如超导体
 
         public final MaterialShape ingredientShape;
         Type(MaterialShape ingredientShape){

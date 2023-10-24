@@ -1,0 +1,28 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "machine_locker",
+  "pattern": [
+    "XXX",
+    "XCX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:plates/wrought_iron"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    }
+  },
+  "smithLevel": 0,
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:locker",
+    "nbt": "{BlockEntityTag:{material:\"wrought_iron\"}}"
+  }
+}

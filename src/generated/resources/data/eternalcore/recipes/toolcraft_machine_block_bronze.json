@@ -9,6 +9,7 @@
       "item": "eternalcore:bronze_machine_casing"
     }
   },
+  "smithLevel": 0,
   "toolUse": [
     {
       "tool": "wrench",

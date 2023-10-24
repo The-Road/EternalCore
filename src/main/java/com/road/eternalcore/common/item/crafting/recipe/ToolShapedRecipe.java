@@ -32,15 +32,17 @@ import java.util.function.Consumer;
 public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<ToolCraftingInventory> {
     private final ResourceLocation id;
     private final String group;
+    private final int smithLevel;
     private final int width;
     private final int height;
     private final NonNullList<Ingredient> recipeItems;
     private final NonNullList<Pair<CraftToolType, Integer>> toolItemUses;
     private final ItemStack result;
 
-    public ToolShapedRecipe(ResourceLocation id, String group, int width, int height, NonNullList<Ingredient> recipeItems, NonNullList<Pair<CraftToolType, Integer>> toolItemUses, ItemStack result) {
+    public ToolShapedRecipe(ResourceLocation id, String group, int smithLevel, int width, int height, NonNullList<Ingredient> recipeItems, NonNullList<Pair<CraftToolType, Integer>> toolItemUses, ItemStack result) {
         this.id = id;
         this.group = group;
+        this.smithLevel = smithLevel;
         this.width = width;
         this.height = height;
         this.recipeItems = recipeItems;
@@ -51,9 +53,13 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<Tool
     public Pair<CraftToolType, Integer> getToolUse(int index){
         return toolItemUses.size() > index ? toolItemUses.get(index) : null;
     }
+    public int getSmithLevel(){
+        return smithLevel;
+    }
 
     public boolean matches(ToolCraftingInventory craftAndToolSlots, World world) {
-        return getToolDamage(toolItemUses, craftAndToolSlots.getToolSlots()) != null
+        return smithLevelMatch(craftAndToolSlots.getSmithLevel())
+                &&getToolDamage(toolItemUses, craftAndToolSlots.getToolSlots()) != null
                 && craftSlotsMatch(craftAndToolSlots.getCraftSlots());
     }
 
@@ -213,7 +219,6 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<Tool
     public int getRecipeWidth() {
         return width;
     }
-
     public int getRecipeHeight() {
         return height;
     }
@@ -222,6 +227,7 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<Tool
 
         public ToolShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = JSONUtils.getAsString(json, "group", "");
+            int smithLevel = JSONUtils.getAsInt(json, "smithLevel");
             Map<String, Ingredient> keyMap = ToolShapedRecipe.keyFromJson(JSONUtils.getAsJsonObject(json, "key"));
             String[] pattern = ToolShapedRecipe.patternFromJson(JSONUtils.getAsJsonArray(json, "pattern"));
             NonNullList<Pair<CraftToolType, Integer>> toolUses = IToolUsedRecipe.toolUseFromJson(JSONUtils.getAsJsonArray(json, "toolUse"));
@@ -229,13 +235,14 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<Tool
             int height = pattern.length;
             NonNullList<Ingredient> recipeItems = ToolShapedRecipe.dissolvePattern(pattern, keyMap, width, height);
             ItemStack result = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
-            return new ToolShapedRecipe(id, group, width, height, recipeItems, toolUses, result);
+            return new ToolShapedRecipe(id, group, smithLevel, width, height, recipeItems, toolUses, result);
         }
         public ToolShapedRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
             // 读取配方数据
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
             String group = buffer.readUtf();
+            int smithLevel = buffer.readVarInt();
             NonNullList<Ingredient> recipeItems = NonNullList.withSize(width * height, Ingredient.EMPTY);
             for(int i = 0; i < recipeItems.size(); i++){
                 recipeItems.set(i, Ingredient.fromNetwork(buffer));
@@ -245,24 +252,25 @@ public class ToolShapedRecipe implements IToolCraftingRecipe, IShapedRecipe<Tool
             NonNullList<Pair<CraftToolType, Integer>> toolUses = NonNullList.create();
             for(int i = 0; i < toolNum; i++){
                 CraftToolType tool = CraftToolType.get(buffer.readUtf());
-                int use = buffer.readVarInt();
+                int use = buffer.readInt();
                 toolUses.add(Pair.of(tool, use));
             }
             // 读取产物数据
             ItemStack result = buffer.readItem();
-            return new ToolShapedRecipe(id, group, width, height, recipeItems, toolUses, result);
+            return new ToolShapedRecipe(id, group, smithLevel, width, height, recipeItems, toolUses, result);
         }
 
         public void toNetwork(PacketBuffer buffer, ToolShapedRecipe recipe) {
             // 写入配方数据
-            buffer.writeInt(recipe.width);
-            buffer.writeInt(recipe.height);
+            buffer.writeVarInt(recipe.width);
+            buffer.writeVarInt(recipe.height);
             buffer.writeUtf(recipe.group);
+            buffer.writeVarInt(recipe.smithLevel);
             for(Ingredient ingredient : recipe.recipeItems){
                 ingredient.toNetwork(buffer);
             }
             // 写入工具数据
-            buffer.writeInt(recipe.toolItemUses.size());
+            buffer.writeVarInt(recipe.toolItemUses.size());
             for(Pair<CraftToolType, Integer> pair : recipe.toolItemUses){
                 buffer.writeUtf(pair.getFirst().getName());
                 buffer.writeInt(pair.getSecond());

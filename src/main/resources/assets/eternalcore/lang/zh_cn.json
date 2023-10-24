@@ -132,6 +132,7 @@
   "eternalcore.materialShape.flawed_gem": "有瑕%s",
   "eternalcore.materialShape.flawless_gem": "无暇%s",
   "eternalcore.materialShape.exquisite_gem": "精致%s",
+  "eternalcore.materialShape.mineral": "%s",
   "eternalcore.materialShape.dust": "%s粉",
   "eternalcore.materialShape.tiny_dust": "小撮%s粉",
   "eternalcore.materialShape.small_dust": "小堆%s粉",
@@ -156,7 +157,7 @@
   "eternalcore.toolTip.tool.mineSpeed": "挖掘速度: %s",
   "eternalcore.toolTip.tool.basicDamage": "基础伤害: %s",
   "eternalcore.toolTip.tool.attackSpeed": "攻击速度: %s",
-  "eternalcore.toolTip.tool.smithingLevel": "锻造等级: %s",
+  "eternalcore.toolTip.tool.smithLevel": "锻造等级: %s",
   "eternalcore.toolTip.tool.durability": "耐久: %s",
   "eternalcore.toolTip.block.material": "材质: %s",
   "eternalcore.toolTip.jei.toolUse": "消耗耐久: %s",
@@ -191,10 +192,12 @@
   "container.eternalcore.machine_block": "机器方块",
   "container.eternalcore.battery_buffer": "电池箱",
 
-  "gui.eternalcore.text.smithingLevel": "锻造等级: %s",
+  "gui.eternalcore.text.smithLevel": "锻造等级: %s",
 
   "gui.eternalcore.jei.category.tool_crafting": "合成(需要工具)",
   "gui.eternalcore.jei.category.part_crafting": "零件加工",
+
+  "eternalcore.itemDescription.debug_tool": "添加物品描述",
 
   "占位符": "这样我就不会忘记加逗号了"
 }

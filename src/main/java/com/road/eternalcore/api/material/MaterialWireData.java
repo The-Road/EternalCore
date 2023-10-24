@@ -13,7 +13,7 @@ import static com.road.eternalcore.api.energy.eu.EUTier.*;
 import static com.road.eternalcore.api.material.MaterialWireData.WireType.*;
 
 public class MaterialWireData {
-    protected static final Map<Materials, MaterialWireData> materialWireData = new LinkedHashMap<>();
+    protected static final Map<Materials, MaterialWireData> DATA = new LinkedHashMap<>();
     protected static final Set<WireType> NORMAL_TYPES = ImmutableSet.of(
             WIRE_1X, WIRE_2X, WIRE_4X, WIRE_8X, WIRE_12X, WIRE_16X,
             CABLE_1X, CABLE_2X, CABLE_4X, CABLE_8X, CABLE_12X
@@ -50,24 +50,24 @@ public class MaterialWireData {
         this.material = material;
     }
     protected static MaterialWireData setData(Materials material){
-        if (materialWireData.containsKey(material)){
-            throw new IllegalStateException("MaterialWireData "+material+" has already existed!");
+        if (DATA.containsKey(material)){
+            throw new IllegalArgumentException("MaterialWireData "+material+" has already existed!");
         }
         MaterialWireData data = new MaterialWireData(material);
-        materialWireData.put(material, data);
+        DATA.put(material, data);
         return data;
     }
     public static Map<Materials, MaterialWireData> getData(){
-        return materialWireData;
+        return DATA;
     }
     public static MaterialWireData get(String name){
-        return materialWireData.getOrDefault(Materials.get(name), NULL);
+        return DATA.getOrDefault(Materials.get(name), NULL);
     }
     public static MaterialWireData get(Materials material){
-        return materialWireData.getOrDefault(material, NULL);
+        return DATA.getOrDefault(material, NULL);
     }
     public static Collection<MaterialWireData> findAll(EUTier euTier, int maxCurrent, int lineLoss){
-        return materialWireData.values().stream().filter(wireData ->
+        return DATA.values().stream().filter(wireData ->
             wireData.getEuTier() == euTier && wireData.getMaxCurrent() == maxCurrent && wireData.getLineLoss() == lineLoss
         ).collect(Collectors.toList());
     }

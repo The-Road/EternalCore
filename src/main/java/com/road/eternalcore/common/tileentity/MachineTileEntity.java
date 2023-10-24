@@ -86,7 +86,7 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     }
 
     // 统一将判断!remove放在开头，子类只需改写getMachineCapability
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public final <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (!this.remove){
             return getMachineCapability(cap, side);
         }

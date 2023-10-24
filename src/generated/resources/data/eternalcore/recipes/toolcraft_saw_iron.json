@@ -13,6 +13,7 @@
       "tag": "forge:plates/iron"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

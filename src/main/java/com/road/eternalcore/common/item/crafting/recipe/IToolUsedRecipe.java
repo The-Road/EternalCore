@@ -20,7 +20,10 @@ import java.util.stream.Collectors;
 public interface IToolUsedRecipe {
     // 提供判断工具类型和耐久消耗相关的接口
     Pair<CraftToolType, Integer> getToolUse(int index);
-
+    int getSmithLevel();
+    default boolean smithLevelMatch(int smithLevel){
+        return smithLevel >= getSmithLevel();
+    }
     default List<Integer> getToolDamage(List<Pair<CraftToolType, Integer>> toolUses, IInventory slots) {
         // 如果满足了所有的工具需求，则返回每个格子的工具对应的耐久消耗，否则返回null
         int toolSize = slots.getContainerSize();
@@ -62,7 +65,7 @@ public interface IToolUsedRecipe {
             }
             return remainItems;
         }else{
-            throw new RuntimeException(this + " try to get tool remain items but tools don't match");
+            throw new IllegalStateException(this + " try to get tool remain items but tools don't match");
         }
     }
     default ItemStack getToolRemainItem(int toolDamage, ItemStack toolItem){

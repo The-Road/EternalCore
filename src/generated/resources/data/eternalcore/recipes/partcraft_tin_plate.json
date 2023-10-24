@@ -1,7 +1,7 @@
 {
   "type": "eternalcore:part_crafting",
   "group": "plate",
-  "level": 1,
+  "smithLevel": 1,
   "ingredients": [
     {
       "tag": "forge:ingots/tin"

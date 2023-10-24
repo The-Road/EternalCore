@@ -1,7 +1,7 @@
 {
   "type": "eternalcore:part_crafting",
   "group": "rod",
-  "level": 6,
+  "smithLevel": 6,
   "ingredients": [
     {
       "tag": "forge:ingots/netherite"

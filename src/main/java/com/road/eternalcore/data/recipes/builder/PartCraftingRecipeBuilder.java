@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class PartCraftingRecipeBuilder extends MultiResultRecipeBuilder{
-    protected int smithingLevel;
+    protected int smithLevel;
     protected Pair<String, Integer> toolUse;
     protected final List<Ingredient> ingredients = Lists.newArrayList();
 
     public PartCraftingRecipeBuilder(IItemProvider item, int count, Consumer<CompoundNBT> nbtConsumer){
         super(item, count, nbtConsumer);
-        this.smithingLevel = 0;
+        this.smithLevel = 0;
     }
     public static PartCraftingRecipeMaker<PartCraftingRecipeBuilder> smith(IItemProvider item){
         return smith(item, 1);
@@ -41,7 +41,7 @@ public class PartCraftingRecipeBuilder extends MultiResultRecipeBuilder{
         consumer.accept(new Result(
                 id,
                 this.results,
-                this.smithingLevel,
+                this.smithLevel,
                 this.toolUse,
                 this.group == null ? "" : this.group,
                 this.ingredients,
@@ -50,12 +50,12 @@ public class PartCraftingRecipeBuilder extends MultiResultRecipeBuilder{
         ));
     }
     protected static class Result extends MultiResultRecipeBuilder.Result{
-        protected int smithingLevel;
+        protected int smithLevel;
         protected final List<Ingredient> ingredients;
         protected final Pair<String, Integer> toolUse;
-        public Result(ResourceLocation id, List<ResultData> results, int smithingLevel, Pair<String, Integer> toolUse, String group, List<Ingredient> ingredients, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, List<ResultData> results, int smithLevel, Pair<String, Integer> toolUse, String group, List<Ingredient> ingredients, Advancement.Builder advancement, ResourceLocation advancementId) {
             super(id, results, group, advancement, advancementId);
-            this.smithingLevel = smithingLevel;
+            this.smithLevel = smithLevel;
             this.ingredients = ingredients;
             this.toolUse = toolUse;
         }
@@ -65,7 +65,7 @@ public class PartCraftingRecipeBuilder extends MultiResultRecipeBuilder{
                 json.addProperty("group", this.group);
             }
 
-            json.addProperty("level", this.smithingLevel);
+            json.addProperty("smithLevel", this.smithLevel);
             JsonArray ingredients = new JsonArray();
             for(Ingredient ingredient : this.ingredients) {
                 ingredients.add(ingredient.toJson());

@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
+    protected int smithLevel;
     protected final NonNullList<Pair<String, Integer>> toolUses = NonNullList.create();
     public ToolShapedRecipeBuilder(IItemProvider item, int count) {
         super(item, count);
@@ -34,6 +35,7 @@ public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
         consumer.accept(new Result(
                 id,
                 this.result,
+                this.smithLevel,
                 this.nbt,
                 this.toolUses,
                 this.count,
@@ -45,13 +47,16 @@ public class ToolShapedRecipeBuilder extends NBTShapedRecipeBuilder {
         ));
     }
     protected static class Result extends NBTShapedRecipeBuilder.Result{
+        protected int smithLevel;
         protected final NonNullList<Pair<String, Integer>> toolUses;
-        public Result(ResourceLocation id, Item result, CompoundNBT nbt, NonNullList<Pair<String, Integer>> toolUses, int count, String group, List<String> pattern, Map<Character, Ingredient> key, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, Item result, int smithLevel, CompoundNBT nbt, NonNullList<Pair<String, Integer>> toolUses, int count, String group, List<String> pattern, Map<Character, Ingredient> key, Advancement.Builder advancement, ResourceLocation advancementId) {
             super(id, result, nbt, count, group, pattern, key, advancement, advancementId);
+            this.smithLevel = smithLevel;
             this.toolUses = toolUses;
         }
         protected void serializeRecipeItems(JsonObject json){
             super.serializeRecipeItems(json);
+            json.addProperty("smithLevel", this.smithLevel);
             JsonArray toolUseJson = new JsonArray();
             for(Pair<String, Integer> toolUse : this.toolUses){
                 JsonObject elementJson = new JsonObject();

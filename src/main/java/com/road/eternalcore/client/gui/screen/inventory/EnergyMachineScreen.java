@@ -32,7 +32,6 @@ public abstract class EnergyMachineScreen<T extends MachineContainer> extends Co
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         renderTooltip(matrixStack, mouseX, mouseY);
-        renderEnergyRateTooltip(matrixStack, mouseX, mouseY);
     }
 
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
@@ -41,17 +40,9 @@ public abstract class EnergyMachineScreen<T extends MachineContainer> extends Co
         int i = this.leftPos;
         int j = this.topPos;
         this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-        renderEnergyBar(matrixStack);
+        renderEnergyBar(matrixStack, mouseX, mouseY);
     }
-
-    protected void renderEnergyRateTooltip(MatrixStack matrixStack, int mouseX, int mouseY){
-        // 移到电量槽上时显示当前机器储电量
-        if (this.minecraft.player.inventory.getCarried().isEmpty() && energyBarRect.contains(mouseX - this.leftPos, mouseY - this.topPos)){
-            renderTooltip(matrixStack, EnergyUtils.energyStorageText(EUTier.tier(this.menu.getTierLevel()), this.menu.getEnergy(), this.menu.getMaxEnergy(), false), mouseX, mouseY);
-        }
-    }
-
-    protected void renderEnergyBar(MatrixStack matrixStack){
+    protected void renderEnergyBar(MatrixStack matrixStack, int mouseX, int mouseY){
         // 根据电量计算电量条长度
         int energy = this.menu.getEnergy();
         int maxEnergy = this.menu.getMaxEnergy();
@@ -61,6 +52,10 @@ public abstract class EnergyMachineScreen<T extends MachineContainer> extends Co
         // 获取左上角坐标
         int x = this.leftPos + energyBarRect.getX();
         int y = this.topPos + energyBarRect.getY();
-        this.blit(matrixStack, x, y, energyBarTextureRect.getX(), energyBarTextureRect.getY(), energyBarLength, energyBarRect.getHeight());
+        blit(matrixStack, x, y, energyBarTextureRect.getX(), energyBarTextureRect.getY(), energyBarLength, energyBarRect.getHeight());
+        // 移到电量槽上时显示当前机器储电量
+        if (this.minecraft.player.inventory.getCarried().isEmpty() && energyBarRect.contains(mouseX - this.leftPos, mouseY - this.topPos)){
+            renderTooltip(matrixStack, EnergyUtils.energyStorageText(EUTier.tier(this.menu.getTierLevel()), this.menu.getEnergy(), this.menu.getMaxEnergy(), false), mouseX, mouseY);
+        }
     }
 }

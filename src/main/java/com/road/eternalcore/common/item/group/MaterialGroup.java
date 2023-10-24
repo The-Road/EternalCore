@@ -14,6 +14,6 @@ public class MaterialGroup extends ItemGroup {
 
     @Override
     public ItemStack makeIcon(){
-        return new ItemStack(MaterialItems.get(MaterialShape.INGOT, Materials.COPPER));
+        return new ItemStack(Materials.getItem(MaterialShape.INGOT, Materials.COPPER));
     }
 }

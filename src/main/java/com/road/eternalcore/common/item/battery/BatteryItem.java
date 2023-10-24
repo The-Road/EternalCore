@@ -56,7 +56,7 @@ public class BatteryItem extends ModItem {
     }
     // 显示电量
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
+    public void addOtherHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
         itemStack.getCapability(CapEnergy.EU).ifPresent(storage -> {
             int energy = storage.getEnergyStored();
             int maxEnergy = storage.getMaxEnergyStored();

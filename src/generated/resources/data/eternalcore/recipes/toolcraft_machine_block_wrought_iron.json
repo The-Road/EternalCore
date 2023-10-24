@@ -1,0 +1,23 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "machine_machine_block",
+  "pattern": [
+    "X"
+  ],
+  "key": {
+    "X": {
+      "item": "eternalcore:wrought_iron_machine_casing"
+    }
+  },
+  "smithLevel": 0,
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:machine_block",
+    "nbt": "{BlockEntityTag:{material:\"wrought_iron\"}}"
+  }
+}

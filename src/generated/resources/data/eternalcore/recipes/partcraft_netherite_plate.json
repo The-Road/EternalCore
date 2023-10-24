@@ -1,7 +1,7 @@
 {
   "type": "eternalcore:part_crafting",
   "group": "plate",
-  "level": 6,
+  "smithLevel": 6,
   "ingredients": [
     {
       "tag": "forge:ingots/netherite"

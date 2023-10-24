@@ -1,9 +1,9 @@
 package com.road.eternalcore.compat.jei.category;
 
+import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.item.crafting.recipe.IToolCraftingRecipe;
 import com.road.eternalcore.common.item.crafting.recipe.ToolShapedRecipe;
-import com.road.eternalcore.compat.jei.TranslationUtils;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
@@ -17,14 +17,16 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingRecipe>{
+public class ToolCraftingRecipeCategory extends SmithLevelRecipeCategory<IToolCraftingRecipe>{
 
     public static final CategoryConstant CONSTANT = new CategoryConstant("tool_crafting", 129, 54, ModBlocks.handcraftAssemblyTable);
 
     private final ICraftingGridHelper craftingGridHelper;
     public ToolCraftingRecipeCategory(IGuiHelper guiHelper){
         super(guiHelper, CONSTANT);
-        craftingGridHelper = guiHelper.createCraftingGridHelper(4);
+        this.craftingGridHelper = guiHelper.createCraftingGridHelper(4);
+        this.smithLevelIconX = 84;
+        this.smithLevelIconY = 1;
     }
 
     public Class<? extends IToolCraftingRecipe> getRecipeClass() {
@@ -80,7 +82,7 @@ public class ToolCraftingRecipeCategory extends ModRecipeCategory<IToolCraftingR
                 ITextComponent title = tooltip.get(0);
                 tooltip.clear();
                 tooltip.add(title);
-                tooltip.add(TranslationUtils.toolUse(recipe.getToolUse(slotIndex - 1).getSecond()));
+                tooltip.add(TranslationUtils.jeiToolUse(recipe.getToolUse(slotIndex - 1).getSecond()));
             }
         });
     }

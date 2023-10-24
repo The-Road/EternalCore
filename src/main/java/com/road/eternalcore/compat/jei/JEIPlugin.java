@@ -68,5 +68,4 @@ public class JEIPlugin implements IModPlugin {
                 PartCraftingRecipeCategory.CONSTANT.getUid()
         );
     }
-
 }

@@ -11,6 +11,7 @@
       "tag": "forge:ingots/copper"
     }
   },
+  "smithLevel": 1,
   "toolUse": [
     {
       "tool": "hammer",

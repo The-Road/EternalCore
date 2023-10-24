@@ -26,24 +26,24 @@ import java.util.List;
 public class PartCraftingRecipe implements IRecipe<PartCraftTableInventory>, IToolUsedRecipe {
     private final ResourceLocation id;
     private final String group;
-    private final int smithingLevel;
+    private final int smithLevel;
     private final NonNullList<Ingredient> recipeItems;
     private final Pair<CraftToolType, Integer> toolItemUse;
     private final NonNullList<ItemStack> results;
     private final boolean isSimple; // 参考ShapelessRecipe，如果合成材料有Damageable则为false
 
-    public PartCraftingRecipe(ResourceLocation id, String group, int smithingLevel, NonNullList<Ingredient> recipeItems, Pair<CraftToolType, Integer> toolItemUse, NonNullList<ItemStack> results){
+    public PartCraftingRecipe(ResourceLocation id, String group, int smithLevel, NonNullList<Ingredient> recipeItems, Pair<CraftToolType, Integer> toolItemUse, NonNullList<ItemStack> results){
         this.id = id;
         this.group = group;
-        this.smithingLevel = smithingLevel;
+        this.smithLevel = smithLevel;
         this.recipeItems = recipeItems;
         this.toolItemUse = toolItemUse;
         this.results = results;
         this.isSimple = recipeItems.stream().allMatch(Ingredient::isSimple);
     }
 
-    public int getSmithingLevel(){
-        return smithingLevel;
+    public int getSmithLevel(){
+        return smithLevel;
     }
     public Pair<CraftToolType, Integer> getToolUse(int index){
         return toolItemUse;
@@ -51,14 +51,10 @@ public class PartCraftingRecipe implements IRecipe<PartCraftTableInventory>, ITo
 
     public boolean matches(PartCraftTableInventory inventory, World world) {
         // 判断当前合成站点的锻造等级是否满足配方
-        if (inventory.getSmithingLevel() < smithingLevel){
-            return false;
-        }
+        if (!smithLevelMatch(inventory.getSmithLevel())) return false;
         // 0号位为工具栏位，判断工具是否满足配方
         ItemStack toolItem = inventory.getItem(0);
-        if (!isToolMatch(toolItemUse, toolItem)) {
-            return false;
-        }
+        if (!isToolMatch(toolItemUse, toolItem)) return false;
         // 剩下的格子参考ShapelessRecipe的规则进行匹配
         RecipeItemHelper recipeItemHelper = new RecipeItemHelper();
         List<ItemStack> inputItems = new ArrayList<>();
@@ -138,11 +134,11 @@ public class PartCraftingRecipe implements IRecipe<PartCraftTableInventory>, ITo
 
         public PartCraftingRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = JSONUtils.getAsString(json, "group", "");
-            int level = JSONUtils.getAsInt(json, "level");
+            int smithLevel = JSONUtils.getAsInt(json, "smithLevel");
             NonNullList<Ingredient> recipeItems = itemsFromJson(JSONUtils.getAsJsonArray(json, "ingredients"));
             Pair<CraftToolType, Integer> toolItemUse = IToolUsedRecipe.toolUseFromJson(JSONUtils.getAsJsonObject(json, "toolUse"));
             NonNullList<ItemStack> results = MultiResultRecipeBuilder.getResultsFromJson(json);
-            return new PartCraftingRecipe(id, group, level, recipeItems, toolItemUse, results);
+            return new PartCraftingRecipe(id, group, smithLevel, recipeItems, toolItemUse, results);
         }
 
         private static NonNullList<Ingredient> itemsFromJson(JsonArray jsonArray) {
@@ -159,27 +155,27 @@ public class PartCraftingRecipe implements IRecipe<PartCraftTableInventory>, ITo
         @Nullable
         public PartCraftingRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
             String group = buffer.readUtf();
-            int level = buffer.readVarInt();
+            int smithLevel = buffer.readVarInt();
             int size = buffer.readVarInt();
             NonNullList<Ingredient> recipeItems = NonNullList.withSize(size, Ingredient.EMPTY);
             for (int i = 0; i < size; i++){
                 recipeItems.set(i, Ingredient.fromNetwork(buffer));
             }
             CraftToolType tool = CraftToolType.get(buffer.readUtf());
-            int use = buffer.readVarInt();
+            int use = buffer.readInt();
             Pair<CraftToolType, Integer> toolUse = Pair.of(tool, use);
             int resultSize = buffer.readVarInt();
             NonNullList<ItemStack> results = NonNullList.withSize(size, ItemStack.EMPTY);
             for (int i = 0; i < resultSize; i++){
                 results.set(i, buffer.readItem());
             }
-            return new PartCraftingRecipe(id, group, level, recipeItems, toolUse, results);
+            return new PartCraftingRecipe(id, group, smithLevel, recipeItems, toolUse, results);
         }
 
         public void toNetwork(PacketBuffer buffer, PartCraftingRecipe recipe) {
             // 写入配方数据
             buffer.writeUtf(recipe.group);
-            buffer.writeVarInt(recipe.smithingLevel);
+            buffer.writeVarInt(recipe.smithLevel);
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems){
                 ingredient.toNetwork(buffer);

@@ -14,6 +14,7 @@
       "tag": "forge:plates/netherite"
     }
   },
+  "smithLevel": 6,
   "toolUse": [
     {
       "tool": "hammer",

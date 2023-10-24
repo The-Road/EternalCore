@@ -3,6 +3,7 @@ package com.road.eternalcore.common.item.tool;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.road.eternalcore.ModConstant;
+import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.item.ModItem;
@@ -19,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -131,7 +131,7 @@ public abstract class CustomTierItem extends ModItem {
         // 获取挖掘等级
         return getTier(itemStack).getLevel();
     }
-    protected int getSmithingLevel(ItemStack itemStack){
+    protected int getSmithLevel(ItemStack itemStack){
         // 获取锻造等级
         return getMaterialData(itemStack).getSmithLevel();
     }
@@ -153,15 +153,11 @@ public abstract class CustomTierItem extends ModItem {
     }
 
     protected void addSmithLevelText(ItemStack itemStack, List<ITextComponent> list){
-        list.add(new TranslationTextComponent(
-                "eternalcore.toolTip.tool.smithingLevel",
-                getSmithingLevel(itemStack)).withStyle(TextFormatting.BLUE));
+        list.add(TranslationUtils.toolSmithLevel(getSmithLevel(itemStack)));
     }
     protected void addDurabilityText(ItemStack itemStack, List<ITextComponent> list, ITooltipFlag tooltipFlag){
         if (!itemStack.isDamaged() || !tooltipFlag.isAdvanced()) {
-            list.add(new TranslationTextComponent(
-                    "eternalcore.toolTip.tool.durability",
-                    getMaxDamage(itemStack)).withStyle(TextFormatting.DARK_GREEN));
+            list.add(TranslationUtils.toolDurability(getMaxDamage(itemStack)));
         }
     }
 

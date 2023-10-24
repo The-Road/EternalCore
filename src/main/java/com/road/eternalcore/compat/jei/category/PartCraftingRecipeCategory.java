@@ -1,16 +1,13 @@
 package com.road.eternalcore.compat.jei.category;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.item.crafting.recipe.PartCraftingRecipe;
-import com.road.eternalcore.compat.jei.TranslationUtils;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.ITextComponent;
@@ -18,12 +15,14 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartCraftingRecipeCategory extends ModRecipeCategory<PartCraftingRecipe> {
+public class PartCraftingRecipeCategory extends SmithLevelRecipeCategory<PartCraftingRecipe> {
     // 每个锻造等级对应不同材质的锤子图标
     public static final CategoryConstant CONSTANT = new CategoryConstant("part_crafting", 108, 38, ModBlocks.partCraftTable);
 
     public PartCraftingRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, CONSTANT);
+        this.smithLevelIconX = 82;
+        this.smithLevelIconY = 1;
     }
 
     public Class<? extends PartCraftingRecipe> getRecipeClass() {
@@ -55,15 +54,8 @@ public class PartCraftingRecipeCategory extends ModRecipeCategory<PartCraftingRe
                 ITextComponent title = tooltip.get(0);
                 tooltip.clear();
                 tooltip.add(title);
-                tooltip.add(TranslationUtils.toolUse(recipe.getToolUse(0).getSecond()));
+                tooltip.add(TranslationUtils.jeiToolUse(recipe.getToolUse(0).getSecond()));
             }
         });
-    }
-
-    public void draw(PartCraftingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-        ITextComponent text = TranslationUtils.smithingLevel(recipe.getSmithingLevel());
-        FontRenderer fontRenderer = Minecraft.getInstance().font;
-        int textWidth = fontRenderer.width(text);
-        fontRenderer.draw(matrixStack, text, 108 - textWidth, 4, 0xFF808080);
     }
 }

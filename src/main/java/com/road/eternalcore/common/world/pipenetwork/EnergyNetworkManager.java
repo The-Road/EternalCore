@@ -42,7 +42,7 @@ public class EnergyNetworkManager extends WorldSavedData {
 
     public static EnergyNetworkManager get(World world){
         if (world.isClientSide()){
-            throw new RuntimeException("Get energy network from client side.");
+            throw new IllegalStateException("Get energy network from client side.");
         }
         ServerWorld serverWorld = (ServerWorld) world;
         DimensionSavedDataManager storage = serverWorld.getDataStorage();

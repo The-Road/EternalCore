@@ -1,0 +1,35 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "pickaxe",
+  "pattern": [
+    "PXP",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/wrought_iron"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "forge:plates/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:pickaxe",
+    "nbt": "{material:\"wrought_iron\"}"
+  }
+}

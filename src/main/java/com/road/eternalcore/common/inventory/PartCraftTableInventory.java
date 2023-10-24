@@ -6,7 +6,7 @@ import com.road.eternalcore.common.item.tool.CustomTierItem;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
-public class PartCraftTableInventory extends Inventory {
+public class PartCraftTableInventory extends Inventory implements ISmithLevelInventory {
     private PartCraftTableContainer container;
 
     public PartCraftTableInventory(PartCraftTableContainer container){
@@ -17,7 +17,7 @@ public class PartCraftTableInventory extends Inventory {
         super.setChanged();
         container.slotsChanged(this);
     }
-    public int getSmithingLevel(){
+    public int getSmithLevel(){
         ItemStack itemStack = getItem(0);
         if (itemStack.getItem() instanceof CustomTierItem){
             MaterialTierData tierData = CustomTierItem.getMaterialData(itemStack);

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "hammer",
+  "pattern": [
+    "XX ",
+    "XX#",
+    "XX "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:gems/diamond"
+    },
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "eternalcore:hammer",
+    "nbt": "{material:\"diamond\"}"
+  }
+}

@@ -20,7 +20,7 @@ public class OreShape {
     protected String registerName;
     public OreShape(String name, String registerName){
         if (shapes.containsKey(name)){
-            throw new IllegalStateException("Ore Product "+name+" has already existed!");
+            throw new IllegalArgumentException("Ore Product "+name+" has already existed!");
         }
         this.name = name;
         this.registerName = registerName;

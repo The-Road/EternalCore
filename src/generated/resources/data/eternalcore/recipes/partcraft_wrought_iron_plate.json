@@ -1,0 +1,26 @@
+{
+  "type": "eternalcore:part_crafting",
+  "group": "plate",
+  "smithLevel": 3,
+  "ingredients": [
+    {
+      "tag": "forge:ingots/wrought_iron"
+    },
+    {
+      "tag": "forge:ingots/wrought_iron"
+    }
+  ],
+  "toolUse": {
+    "tool": "hammer",
+    "use": 4
+  },
+  "result": [
+    {
+      "item": "eternalcore:wrought_iron_plate"
+    },
+    {
+      "item": "eternalcore:small_iron_dust",
+      "count": 2
+    }
+  ]
+}

@@ -4,6 +4,7 @@
     "ContainerMixin",
     "IceBlockMixin",
     "ItemStackMixin",
+    "OreFeatureMixin",
     "RecipeBookContainerMixin"
   ]
 }

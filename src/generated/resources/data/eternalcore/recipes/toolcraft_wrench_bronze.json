@@ -11,6 +11,7 @@
       "tag": "forge:ingots/bronze"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

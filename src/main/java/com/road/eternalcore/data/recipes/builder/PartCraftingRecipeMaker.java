@@ -27,8 +27,8 @@ public class PartCraftingRecipeMaker<T extends PartCraftingRecipeBuilder> extend
         builder.addResult(item, count, nbtConsumer);
         return this;
     }
-    public PartCraftingRecipeMaker<T> level(int smithingLevel){
-        builder.smithingLevel = smithingLevel;
+    public PartCraftingRecipeMaker<T> smithLevel(int smithLevel){
+        builder.smithLevel = smithLevel;
         return this;
     }
     public PartCraftingRecipeMaker<T> toolUse(CraftToolType tool){

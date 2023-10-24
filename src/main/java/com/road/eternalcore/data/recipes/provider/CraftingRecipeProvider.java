@@ -50,6 +50,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
                 Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
                 ToolShapedRecipeBuilder.toolShaped(casingItem)
                         .toolUse(CraftToolType.WRENCH)
+                        .smithLevel(MaterialTierData.get(material).getSmithLevel())
                         .pattern("XXX")
                         .pattern("X X")
                         .pattern("XXX")
@@ -61,7 +62,8 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
         });
     }
     private static void addLockerRecipes(Consumer<IFinishedRecipe> consumer){
-        MaterialBlockData.getData().forEach((material, blockData) -> {
+        MaterialBlockData.getValidHullData().forEach((blockData) -> {
+            Materials material = blockData.getMaterial();
             Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
             ToolShapedRecipeBuilder.toolShaped(MachineBlocks.locker.get())
                     .nbt((tag) -> {
@@ -125,6 +127,7 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
         Materials material = tierData.getMaterial();
         ShapedRecipeMaker<ToolShapedRecipeBuilder> maker = ToolShapedRecipeBuilder.toolShaped(tool)
                 .nbt((tag) -> tag.putString(ModConstant.Material, material.getName()));
+        maker.smithLevel(tierData.getSmithLevel());
         for (CraftToolType toolType : toolTypes){
             maker.toolUse(toolType);
         }
@@ -331,43 +334,18 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
             Materials material = tierData.getMaterial();
             if(tierData.isSoft()){
                 // 添加软锤
-                if (tierData.isByHand()){
-                    generateToolRecipe(consumer, "soft_mallet", ModItems.softMallet, tierData,
-                            "XX ",
-                            "XX#",
-                            "XX "
-                    );
-                }else{
-                    generateToolRecipe(consumer, "soft_mallet", ModItems.softMallet, tierData,
-                            "XX ",
-                            "XX#",
-                            "XX ",
-                            CraftToolType.HAMMER
-                    );
-                }
+                generateToolRecipe(consumer, "soft_mallet", ModItems.softMallet, tierData,
+                        "XX ",
+                        "XX#",
+                        "XX "
+                );
             }else if(material.getType() != Materials.Type.OTHER || list.contains(material)){
                 // 添加锤子配方
-                if (tierData.isByHand()){
-                    generateToolRecipe(consumer, "hammer", ModItems.hammer, tierData,
-                            "XX ",
-                            "XX#",
-                            "XX "
-                    );
-                }else if (material.getType() == Materials.Type.SOLID) {
-                    generateToolRecipe(consumer, "hammer", ModItems.hammer, tierData,
-                            "XX ",
-                            "XX#",
-                            "XX ",
-                            CraftToolType.HAMMER
-                    );
-                }else{
-                    generateToolRecipe(consumer, "hammer", ModItems.hammer, tierData,
-                            "XX ",
-                            "XX#",
-                            "XX ",
-                            CraftToolType.FILE
-                    );
-                }
+                generateToolRecipe(consumer, "hammer", ModItems.hammer, tierData,
+                        "XX ",
+                        "XX#",
+                        "XX "
+                );
             }
         }
     }

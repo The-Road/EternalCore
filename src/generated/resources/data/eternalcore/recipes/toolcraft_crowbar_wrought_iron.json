@@ -1,0 +1,29 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "crowbar",
+  "pattern": [
+    "  R",
+    " R ",
+    "R  "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    },
+    {
+      "tool": "file",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:crowbar",
+    "nbt": "{material:\"wrought_iron\"}"
+  }
+}

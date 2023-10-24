@@ -138,7 +138,7 @@ public class PartCraftTableContainer extends Container {
         return slot.container != this.resultSlot && super.canTakeItemForPickAll(itemStack, slot);
     }
 
-    public int getSmithingLevel(){
-        return this.inputSlots.getSmithingLevel();
+    public int getSmithLevel(){
+        return this.inputSlots.getSmithLevel();
     }
 }

@@ -1,5 +1,6 @@
 package com.road.eternalcore.api.ore;
 
+import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.MaterialSmeltData;
 import com.road.eternalcore.api.material.Materials;
 import net.minecraft.block.AbstractBlock;
@@ -17,13 +18,18 @@ public class Ores {
     // 管理矿石种类的
     protected static final Map<Materials, Ores> ores = new LinkedHashMap<>();
     // 矿石名称即主产物名称，所以混合矿石需要在Materials里添加对应的材料（粉末类）
-    public static final Ores COPPER_ORE = addSimple(COPPER,
-            new OreByProducts(COBALT))
+
+    // 原版矿石无需设置blockProperties，因为不会注册新方块
+    public static final Ores COAL_ORE = addSimple(COAL);
+    public static final Ores IRON_ORE = addSimple(IRON);
+    public static final Ores GOLD_ORE = addSimple(GOLD);
+    public static final Ores DIAMOND_ORE = addSimple(DIAMOND);
+    public static final Ores REDSTONE_ORE = addSimple(REDSTONE);
+    public static final Ores LAPIS_ORE = addSimple(LAPIS);
+    public static final Ores COPPER_ORE = addSimple(COPPER, COBALT)
             .setBlockProperties(() -> defaultBlockProperties());
-    public static final Ores TIN_ORE = addSimple(TIN,
-            new OreByProducts(TIN))
+    public static final Ores TIN_ORE = addSimple(TIN)
             .setBlockProperties(() -> defaultBlockProperties());
-    protected Materials smeltResult = null;
     protected int productNum = 1;
     protected LazyValue<AbstractBlock.Properties> blockProperties;
 
@@ -31,7 +37,7 @@ public class Ores {
     protected final OreByProducts products;
     public Ores(Materials mainProduct, OreByProducts products){
         if (ores.containsKey(mainProduct)){
-            throw new IllegalStateException("Ore "+mainProduct.getName()+" has already existed!");
+            throw new IllegalArgumentException("Ore "+mainProduct.getName()+" has already existed!");
         }
         this.products = products;
         this.mainProduct = mainProduct;
@@ -49,16 +55,18 @@ public class Ores {
     public static Collection<Ores> getAllOres(){
         return ores.values();
     }
-    protected static Ores addSimple(Materials mainProduct, OreByProducts products){
-        Ores ore = new Ores(mainProduct, products);
-        if (mainProduct.getType() == Type.SOLID) {
-            if (MaterialSmeltData.get(mainProduct).getBlastFurnaceData() == null) {
-                ore.smeltResult = mainProduct;
-            }
-        }
+    protected static Ores addSimple(Materials mainProduct){
+        return addSimple(mainProduct, new OreByProducts(mainProduct));
+    }
+    protected static Ores addSimple(Materials mainProduct, Materials... byProducts){
+        return addSimple(mainProduct, new OreByProducts(byProducts));
+    }
+    protected static Ores addSimple(Materials mainProduct, OreByProducts byProducts){
+        Ores ore = new Ores(mainProduct, byProducts);
         return ore;
     }
     protected static AbstractBlock.Properties defaultBlockProperties(){
+        // 原版矿都是(3.0, 3.0)
         return AbstractBlock.Properties.of(Material.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(3.0F, 3.0F)
@@ -81,8 +89,8 @@ public class Ores {
         }
         return Ores.defaultBlockProperties();
     }
-    public Materials getSmeltResult(){
-        return smeltResult;
+    public boolean canSmeltInFurnace(){
+        return mainProduct.hasShape(MaterialShape.INGOT) && MaterialSmeltData.get(mainProduct) != null;
     }
 
     protected static class OreByProducts {
@@ -99,6 +107,11 @@ public class Ores {
             this.firstByProduct = firstByProduct;
             this.secondByProduct = secondByProduct;
             this.thirdByProduct = thirdByProduct;
+        }
+        protected OreByProducts(Materials... byProducts){
+            this.firstByProduct = byProducts[0];
+            this.secondByProduct = byProducts.length > 1 ? byProducts[1] : firstByProduct;
+            this.thirdByProduct = byProducts.length > 2 ? byProducts[2] : secondByProduct;
         }
     }
 }

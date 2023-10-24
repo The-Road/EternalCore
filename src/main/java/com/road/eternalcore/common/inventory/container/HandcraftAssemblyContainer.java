@@ -201,4 +201,8 @@ public class HandcraftAssemblyContainer extends RecipeBookContainer<CraftingInve
     public void handlePlacement(boolean isShiftDown, IRecipe<?> recipe, ServerPlayerEntity player) {
         (new ServerRecipePlacerToolCrafting<>(this)).recipeClicked(player, (IRecipe<CraftingInventory>) recipe, isShiftDown);
     }
+
+    public int getSmithLevel(){
+        return this.craftAndToolSlots.getSmithLevel();
+    }
 }

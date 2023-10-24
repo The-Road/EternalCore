@@ -11,9 +11,11 @@ import com.road.eternalcore.registries.ItemRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.road.eternalcore.api.material.MaterialShape.*;
 import static com.road.eternalcore.api.material.Materials.*;
@@ -25,26 +27,19 @@ public class MaterialItems {
     private static final Table<MaterialShape, Materials, RegistryObject<Item>> MaterialItemTable = HashBasedTable.create();
     private static final Table<MaterialShape, Materials, Item> VanillaMaterialItemTable = HashBasedTable.create();
     private static final Table<OreShape, Ores, RegistryObject<Item>> OreItemTable = HashBasedTable.create();
-    // 通过物品ID(无前缀)获取对应物品的Map，通过MaterialItems.get(item_id)可以获取对应物品
-    private static final Map<String, RegistryObject<Item>> ItemIdMap = new HashMap<>();
-    private static final Map<String, Item> VanillaItemIdMap = new HashMap<>();
-    private static void addVanillaItem(MaterialShape shape, Materials material, Item item){
-        VanillaMaterialItemTable.put(shape, material, item);
-        VanillaItemIdMap.put(ForgeRegistries.ITEMS.getKey(item).getPath(), item);
-    }
     private static void addVanillaItems(){
         // 添加原版物品对应的材料
-        addVanillaItem(INGOT, IRON, Items.IRON_INGOT);
-        addVanillaItem(INGOT, GOLD, Items.GOLD_INGOT);
-        addVanillaItem(INGOT, NETHERITE, Items.NETHERITE_INGOT);
-        addVanillaItem(NUGGET, IRON, Items.IRON_NUGGET);
-        addVanillaItem(NUGGET, GOLD, Items.GOLD_NUGGET);
-        addVanillaItem(GEM, DIAMOND, Items.DIAMOND);
-        addVanillaItem(GEM, EMERALD, Items.EMERALD);
-        addVanillaItem(MINERAL, COAL, Items.COAL);
-        addVanillaItem(MINERAL, FLINT, Items.FLINT);
-        addVanillaItem(DUST, REDSTONE, Items.REDSTONE);
-        addVanillaItem(ROD, WOOD, Items.STICK);
+        VanillaMaterialItemTable.put(INGOT, IRON, Items.IRON_INGOT);
+        VanillaMaterialItemTable.put(INGOT, GOLD, Items.GOLD_INGOT);
+        VanillaMaterialItemTable.put(INGOT, NETHERITE, Items.NETHERITE_INGOT);
+        VanillaMaterialItemTable.put(NUGGET, IRON, Items.IRON_NUGGET);
+        VanillaMaterialItemTable.put(NUGGET, GOLD, Items.GOLD_NUGGET);
+        VanillaMaterialItemTable.put(GEM, DIAMOND, Items.DIAMOND);
+        VanillaMaterialItemTable.put(GEM, EMERALD, Items.EMERALD);
+        VanillaMaterialItemTable.put(MINERAL, COAL, Items.COAL);
+        VanillaMaterialItemTable.put(MINERAL, FLINT, Items.FLINT);
+        VanillaMaterialItemTable.put(DUST, REDSTONE, Items.REDSTONE);
+        VanillaMaterialItemTable.put(ROD, WOOD, Items.STICK);
     }
     private static void init(){
         // 注册物品
@@ -72,7 +67,6 @@ public class MaterialItems {
                             () -> new BasicMaterialItem(material, shape, material.getProperties())
                     );
                     MaterialItemTable.put(shape, material, item);
-                    ItemIdMap.put(registerID, item);
                 }
             }
         });
@@ -83,10 +77,9 @@ public class MaterialItems {
                 String registerID = Ores.getRegisterName(shape, ore);
                 RegistryObject<Item> item = ITEMS.register(
                         registerID,
-                        () -> new OreProduct(ore, shape)
+                        () -> new OreProductItem(ore, shape)
                 );
                 OreItemTable.put(shape, ore, item);
-                ItemIdMap.put(registerID, item);
             }
         }
     }
@@ -105,28 +98,14 @@ public class MaterialItems {
         if (OreItemTable.contains(shape, ore)){
             return OreItemTable.get(shape, ore).get();
         }else{
-            return null;
+            throw new IllegalStateException("Nonexistent ore item :" + Ores.getRegisterName(shape, ore));
         }
     }
-    public static Item get(String itemId){
-        if (VanillaItemIdMap.containsKey(itemId)){
-            return VanillaItemIdMap.get(itemId);
-        }else{
-            return getMod(itemId);
-        }
-    }
-    public static Item getMod(MaterialShape shape, Materials material){
+    private static Item getMod(MaterialShape shape, Materials material){
         if (MaterialItemTable.contains(shape, material)) {
             return MaterialItemTable.get(shape, material).get();
         }else{
-            return null;
-        }
-    }
-    public static Item getMod(String itemId){
-        if (ItemIdMap.containsKey(itemId)){
-            return ItemIdMap.get(itemId).get();
-        }else{
-            return null;
+            throw new IllegalStateException("Nonexistent material : " + Materials.getRegisterName(shape, material));
         }
     }
 

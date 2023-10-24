@@ -11,6 +11,7 @@
       "tag": "forge:rods/iron"
     }
   },
+  "smithLevel": 2,
   "toolUse": [
     {
       "tool": "hammer",

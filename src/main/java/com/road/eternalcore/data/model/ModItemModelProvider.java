@@ -11,6 +11,7 @@ import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.item.ModItems;
 import com.road.eternalcore.common.item.block.BlockItems;
+import com.road.eternalcore.common.item.material.BasicMaterialItem;
 import com.road.eternalcore.common.item.material.MaterialItems;
 import com.road.eternalcore.common.util.ModResourceLocation;
 import net.minecraft.data.DataGenerator;
@@ -67,8 +68,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void addMaterialModels(){
         for (Materials material : Materials.getAllMaterials()){
             for (MaterialShape shape : material.getShapes()){
-                Item item = MaterialItems.getMod(shape, material);
-                if (item != null) {
+                Item item = MaterialItems.get(shape, material);
+                if (item instanceof BasicMaterialItem) {
                     ResourceLocation texture = modLoc(ITEM_FOLDER + "/" + shape.getName() + "/" + material.getName());
                     if (existingFileHelper.exists(texture, ModelProvider.TEXTURE)){
                         addFlatModel(item, texture);

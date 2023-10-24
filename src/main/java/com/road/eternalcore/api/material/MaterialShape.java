@@ -28,8 +28,7 @@ public class MaterialShape {
     public static MaterialShape LENS = new MaterialShape("lens", 144); //透镜
     public static MaterialShape ROTOR = new MaterialShape("rotor", 576); //转子
     public static MaterialShape RING = new MaterialShape("ring", 36); //环
-    public static MaterialShape GEAR = new MaterialShape("gear", 576); //齿轮
-    public static MaterialShape SMALL_GEAR = new MaterialShape("small_gear", "small_%s_gear", 144); //小型齿轮
+    public static MaterialShape GEAR = new MaterialShape("gear", 216); //齿轮
 
     public static Map<MaterialShape, Set<MaterialShape>> RelatedShapes = createRelatedShapes();
     private static Map<MaterialShape, Set<MaterialShape>> createRelatedShapes(){
@@ -55,7 +54,7 @@ public class MaterialShape {
     }
     public MaterialShape(String name, String registerName, int liquidVolume){
         if (shapes.containsKey(name)){
-            throw new IllegalStateException("Material Shape "+name+" has already existed!");
+            throw new IllegalArgumentException("Material Shape "+name+" has already existed!");
         }
         this.name = name;
         this.registerName = registerName;

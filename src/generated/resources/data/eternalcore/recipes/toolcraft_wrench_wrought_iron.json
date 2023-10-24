@@ -1,0 +1,25 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "wrench",
+  "pattern": [
+    "X X",
+    "XXX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/wrought_iron"
+    }
+  },
+  "smithLevel": 3,
+  "toolUse": [
+    {
+      "tool": "hammer",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:wrench",
+    "nbt": "{material:\"wrought_iron\"}"
+  }
+}
