@@ -4,6 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.road.eternalcore.api.block.properties.PipeConnection;
 import com.road.eternalcore.common.block.BlockMaterial;
+import com.road.eternalcore.common.block.ModBlock;
 import com.road.eternalcore.common.world.pipenetwork.EnergyNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 import static com.road.eternalcore.api.block.ModBlockStateProperties.*;
 
-public abstract class AbstractPipeBlock extends Block {
+public abstract class AbstractPipeBlock extends ModBlock {
     // 管道类方块，包括管道和电线
     // 每个方向对应的property
     public static final Map<Direction, EnumProperty<PipeConnection>> DIRECTION_CONNECTION = makeDirectionPipeConnection();

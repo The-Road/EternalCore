@@ -30,11 +30,11 @@ public class EnergyCurrent {
         return true;
     }
 
-    public boolean workAndCheck(EUTier tier){
+    public boolean workAndCheck(EUTier tier, int workCurrent){
         // 检查电线是否过载(超过电线的最大承受电压或电流）
         boolean result = false;
         for (BlockPos pos : path){
-            result = network.checkWireLoad(pos, tier) || result;
+            result = network.checkWireLoad(pos, tier, workCurrent) || result;
         }
         return result;
     }

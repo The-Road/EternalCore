@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,working=false": {
+      "model": "eternalcore:block/alloy_furnace"
+    },
+    "facing=south,working=false": {
+      "model": "eternalcore:block/alloy_furnace",
+      "y": 180
+    },
+    "facing=west,working=false": {
+      "model": "eternalcore:block/alloy_furnace",
+      "y": 270
+    },
+    "facing=east,working=false": {
+      "model": "eternalcore:block/alloy_furnace",
+      "y": 90
+    },
+    "facing=north,working=true": {
+      "model": "eternalcore:block/alloy_furnace_active"
+    },
+    "facing=south,working=true": {
+      "model": "eternalcore:block/alloy_furnace_active",
+      "y": 180
+    },
+    "facing=west,working=true": {
+      "model": "eternalcore:block/alloy_furnace_active",
+      "y": 270
+    },
+    "facing=east,working=true": {
+      "model": "eternalcore:block/alloy_furnace_active",
+      "y": 90
+    }
+  }
+}

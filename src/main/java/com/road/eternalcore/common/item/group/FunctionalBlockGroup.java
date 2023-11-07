@@ -1,7 +1,7 @@
 package com.road.eternalcore.common.item.group;
 
 import com.road.eternalcore.Utils;
-import com.road.eternalcore.common.item.block.BlockItems;
+import com.road.eternalcore.common.block.ModBlocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -12,6 +12,6 @@ public class FunctionalBlockGroup extends ItemGroup {
 
     @Override
     public ItemStack makeIcon(){
-        return new ItemStack(BlockItems.get("handcraft_assembly_table"));
+        return new ItemStack(ModBlocks.handcraftAssemblyTable);
     }
 }

@@ -101,13 +101,23 @@ public class ModBlockStateProvider extends BlockStateProvider{
     }
     private void addMachines(){
         addMachineCasing();
-        addHorizontalOpenMachine(MachineBlocks.locker.get());
+        addBrickedCasing();
+        addHorizontalWorkingMachine(MachineBlocks.alloyFurnace.get());
+        addHorizontalWorkingMachine(MachineBlocks.locker.get());
         addDirectionalMachine(MachineBlocks.machineBlock.get());
         addDirectionalMachine(MachineBlocks.batteryBuffer.get());
     }
     private void addMachineCasing(){
         MachineBlocks.machine_casing.forEach((material, blockRegistryObject) -> {
             Block casing = blockRegistryObject.get();
+            if (hasModel(casing)){
+                simpleBlock(casing, getModel(casing));
+            }
+        });
+    }
+    private void addBrickedCasing(){
+        MachineBlocks.bricked_casing.forEach((material, blockRegistry) -> {
+            Block casing = blockRegistry.get();
             if (hasModel(casing)){
                 simpleBlock(casing, getModel(casing));
             }
@@ -123,10 +133,10 @@ public class ModBlockStateProvider extends BlockStateProvider{
             );
         }
     }
-    protected void addHorizontalOpenMachine(Block block){
+    protected void addHorizontalWorkingMachine(Block block){
         if (hasModel(block)) {
             getVariantBuilder(block).forAllStatesExcept(state -> ConfiguredModel.builder()
-                            .modelFile(state.getValue(BlockStateProperties.OPEN) ? getModel(block, "open") : getModel(block))
+                            .modelFile(state.getValue(ModBlockStateProperties.WORKING) ? getModel(block, "active") : getModel(block))
                             .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                             .build(),
                     ModBlockStateProperties.MATERIAL

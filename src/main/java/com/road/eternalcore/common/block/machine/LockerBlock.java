@@ -17,14 +17,14 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class LockerBlock extends MachineBlock{
+public class LockerBlock extends CasingMachineBlock {
 
     public LockerBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(ModBlockStateProperties.MATERIAL, StringConstant.of(MaterialBlockProperty.DEFAULT))
                 .setValue(facingType(), Direction.NORTH)
-                .setValue(BlockStateProperties.OPEN, false)
+                .setValue(ModBlockStateProperties.WORKING, false)
         );
     }
     protected DirectionProperty facingType(){
@@ -45,6 +45,6 @@ public class LockerBlock extends MachineBlock{
     }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(BlockStateProperties.OPEN);
+        builder.add(ModBlockStateProperties.WORKING);
     }
 }

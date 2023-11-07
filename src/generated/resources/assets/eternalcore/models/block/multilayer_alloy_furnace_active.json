@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "side": "eternalcore:block/machine/side/empty",
+    "front": "eternalcore:block/machine/face/alloy_furnace_active",
+    "top": "eternalcore:block/machine/side/empty"
+  }
+}

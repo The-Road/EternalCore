@@ -1,16 +1,21 @@
 package com.road.eternalcore.compat.jei.category;
 
+import com.google.common.collect.Lists;
 import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.common.block.ModBlocks;
+import com.road.eternalcore.common.fluid.ModFluids;
 import com.road.eternalcore.common.item.crafting.recipe.PartCraftingRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +62,9 @@ public class PartCraftingRecipeCategory extends SmithLevelRecipeCategory<PartCra
                 tooltip.add(TranslationUtils.jeiToolUse(recipe.getToolUse(0).getSecond()));
             }
         });
+        IGuiFluidStackGroup guiFluidStack = recipeLayout.getFluidStacks();
+        CategoryUtils.initGuiFluidStack(guiFluidStack, 0, false, 36, 18);
+        // guiFluidStack.init(0, false, 36, 18, 16, 16, 1, false, null);
+        guiFluidStack.set(0, Lists.newArrayList(new FluidStack(Fluids.WATER, 12300), new FluidStack(Fluids.LAVA, 100), new FluidStack(ModFluids.STEAM, 1000)));
     }
 }

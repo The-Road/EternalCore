@@ -7,6 +7,33 @@
     },
     {
       "when": {
+        "east": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_3",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_3"
+      }
+    },
+    {
+      "when": {
+        "north": "on"
+      },
+      "apply": {
+        "model": "eternalcore:block/wire_side_3",
+        "x": 90
+      }
+    },
+    {
+      "when": {
         "south": "on"
       },
       "apply": {
@@ -26,39 +53,12 @@
     },
     {
       "when": {
-        "east": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_3",
-        "x": 90,
-        "y": 90
-      }
-    },
-    {
-      "when": {
         "west": "on"
       },
       "apply": {
         "model": "eternalcore:block/wire_side_3",
         "x": 90,
         "y": 270
-      }
-    },
-    {
-      "when": {
-        "up": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_3"
-      }
-    },
-    {
-      "when": {
-        "north": "on"
-      },
-      "apply": {
-        "model": "eternalcore:block/wire_side_3",
-        "x": 90
       }
     }
   ]

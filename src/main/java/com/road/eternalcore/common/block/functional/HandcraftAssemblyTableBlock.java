@@ -1,8 +1,8 @@
-package com.road.eternalcore.common.block;
+package com.road.eternalcore.common.block.functional;
 
+import com.road.eternalcore.common.block.ModBlock;
 import com.road.eternalcore.common.inventory.container.HandcraftAssemblyContainer;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -17,7 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class HandcraftAssemblyTableBlock extends Block {
+public class HandcraftAssemblyTableBlock extends ModBlock {
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.handcraft_assembly_table");
     public HandcraftAssemblyTableBlock(AbstractBlock.Properties properties){
         super(properties);

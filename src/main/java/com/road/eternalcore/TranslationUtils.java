@@ -2,21 +2,17 @@ package com.road.eternalcore;
 
 import com.road.eternalcore.common.item.ModItems;
 import com.road.eternalcore.common.item.tool.CustomTierItem;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.LanguageMap;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 
 public class TranslationUtils {
-    private static final DecimalFormat DECIMAL_FORMAT = Util.make(new DecimalFormat("#.##"), (format) -> {
-        format.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT));
-    });
+    private static final DecimalFormat DECIMAL_FORMAT = ModConstant.DECIMAL_FORMAT_2;
     public static ITextComponent toolTierLevel(int tierLevel){
         return new TranslationTextComponent(
                 "eternalcore.toolTip.tool.tierLevel",
@@ -59,6 +55,9 @@ public class TranslationUtils {
 
     public static boolean hasTranslationName(Item item){
         return hasTranslationText(item.getDescriptionId());
+    }
+    public static boolean hasTranslationName(Block block){
+        return hasTranslationText(block.getDescriptionId());
     }
     public static ITextComponent getItemDescription(Item item){
         String itemDescriptionStr = "eternalcore.itemDescription." + ModItems.getItemName(item);

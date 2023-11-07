@@ -1,33 +1,33 @@
 {
   "variants": {
-    "facing=north,open=false": {
+    "facing=north,working=false": {
       "model": "eternalcore:block/locker"
     },
-    "facing=south,open=false": {
+    "facing=south,working=false": {
       "model": "eternalcore:block/locker",
       "y": 180
     },
-    "facing=west,open=false": {
+    "facing=west,working=false": {
       "model": "eternalcore:block/locker",
       "y": 270
     },
-    "facing=east,open=false": {
+    "facing=east,working=false": {
       "model": "eternalcore:block/locker",
       "y": 90
     },
-    "facing=north,open=true": {
-      "model": "eternalcore:block/locker_open"
+    "facing=north,working=true": {
+      "model": "eternalcore:block/locker_active"
     },
-    "facing=south,open=true": {
-      "model": "eternalcore:block/locker_open",
+    "facing=south,working=true": {
+      "model": "eternalcore:block/locker_active",
       "y": 180
     },
-    "facing=west,open=true": {
-      "model": "eternalcore:block/locker_open",
+    "facing=west,working=true": {
+      "model": "eternalcore:block/locker_active",
       "y": 270
     },
-    "facing=east,open=true": {
-      "model": "eternalcore:block/locker_open",
+    "facing=east,working=true": {
+      "model": "eternalcore:block/locker_active",
       "y": 90
     }
   }

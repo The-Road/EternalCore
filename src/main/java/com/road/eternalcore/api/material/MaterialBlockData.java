@@ -10,19 +10,23 @@ public class MaterialBlockData {
     protected static final Map<Materials, MaterialBlockData> DATA = new LinkedHashMap<>();
     public static final MaterialBlockData NULL = new MaterialBlockData(Materials.NULL)
             .block(5.0F, 6.0F)
-            .hull(3.0F, 4.8F);
+            .casing(3.0F, 4.8F);
     private static void init(){
         setData(Materials.BRONZE)
                 .block(5.0F, 6.0F)
-                .hull(3.0F, 4.8F);
+                .casing(3.5F, 5.0F);
         setData(Materials.WROUGHT_IRON)
                 .block(5.0F, 6.0F)
-                .hull(3.0F, 4.8F);
+                .casing(3.5F, 5.0F);
+        setData(Materials.STONE).stone()
+                .brickedCasing(3.5F, 3.5F);
     }
 
     protected Materials material;
-    protected BlockData blockData; // 实心块数据
-    protected BlockData hullData; // 机器外壳数据
+    protected boolean isStone; // 石头方块注册的时候采用Material.STONE，采集工具为镐子而非扳手
+    protected BlockHardnessData blockData; // 实心块数据
+    protected BlockHardnessData casingData; // 机器外壳数据
+    protected BlockHardnessData brickedCasingData; // 砖砌外壳数据
     private MaterialBlockData(Materials material){
         this.material = material;
     }
@@ -42,9 +46,14 @@ public class MaterialBlockData {
                 data -> data.blockData != null
         ).collect(Collectors.toList());
     }
-    public static Collection<MaterialBlockData> getValidHullData(){
+    public static Collection<MaterialBlockData> getValidCasingData(){
         return DATA.values().stream().filter(
-                data -> data.hullData != null
+                data -> data.casingData != null
+        ).collect(Collectors.toList());
+    }
+    public static Collection<MaterialBlockData> getValidBrickedCasingData(){
+        return DATA.values().stream().filter(
+                data -> data.brickedCasingData != null
         ).collect(Collectors.toList());
     }
     public static MaterialBlockData get(String name){
@@ -56,26 +65,41 @@ public class MaterialBlockData {
     public Materials getMaterial() {
         return material;
     }
-    public BlockData getBlockData() {
+    public boolean isStone(){
+        return isStone;
+    }
+    public BlockHardnessData getBlockData() {
         return blockData;
     }
-    public BlockData getHullData() {
-        return hullData;
+    public BlockHardnessData getCasingData() {
+        return casingData;
+    }
+    public BlockHardnessData getBrickedCasingData(){
+        return brickedCasingData;
+    }
+
+    protected MaterialBlockData stone(){
+        this.isStone = true;
+        return this;
     }
 
     protected MaterialBlockData block(float destroyTime, float explosionResistance){
-        this.blockData = new BlockData(destroyTime, explosionResistance);
+        this.blockData = new BlockHardnessData(destroyTime, explosionResistance);
         return this;
     }
-    protected MaterialBlockData hull(float destroyTime, float explosionResistance){
-        this.hullData = new BlockData(destroyTime, explosionResistance);
+    protected MaterialBlockData casing(float destroyTime, float explosionResistance){
+        this.casingData = new BlockHardnessData(destroyTime, explosionResistance);
+        return this;
+    }
+    protected MaterialBlockData brickedCasing(float destroyTime, float explosionResistance){
+        this.brickedCasingData = new BlockHardnessData(destroyTime, explosionResistance);
         return this;
     }
 
-    public static class BlockData{
+    public static class BlockHardnessData {
         private final float destroyTime;
         private final float explosionResistance;
-        protected BlockData(float destroyTime, float explosionResistance){
+        protected BlockHardnessData(float destroyTime, float explosionResistance){
             this.destroyTime = destroyTime;
             this.explosionResistance = explosionResistance;
         }

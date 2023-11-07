@@ -3,7 +3,7 @@ package com.road.eternalcore.common.item.tool;
 import com.road.eternalcore.Utils;
 import com.road.eternalcore.api.energy.network.IEnergyNetworkWire;
 import com.road.eternalcore.api.material.MaterialBlockData;
-import com.road.eternalcore.common.block.machine.MachineBlock;
+import com.road.eternalcore.common.block.machine.CasingMachineBlock;
 import com.road.eternalcore.common.item.ModItem;
 import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.common.tileentity.EnergyMachineTileEntity;
@@ -57,12 +57,12 @@ public class DebugToolItem extends ModItem {
         DebugToolMsgHelper msgHelper = new DebugToolMsgHelper(player, "block");
         msgHelper.msg("title");
         msgHelper.msg("name", block.getName());
-        if (block instanceof MachineBlock) {
-            MaterialBlockData blockData = ((MachineBlock) block).getMaterialBlockData(blockstate, world, blockpos);
+        if (block instanceof CasingMachineBlock) {
+            MaterialBlockData blockData = ((CasingMachineBlock) block).getMaterialBlockData(blockstate, world, blockpos);
             // 获取机器的材料、硬度和爆炸抗性
             msgHelper.msg("material", blockData.getMaterial().getText());
-            msgHelper.msg("destroyTime", blockData.getHullData().getDestroyTime());
-            msgHelper.msg("explosionResistance", blockData.getHullData().getExplosionResistance());
+            msgHelper.msg("destroyTime", blockData.getCasingData().getDestroyTime());
+            msgHelper.msg("explosionResistance", blockData.getCasingData().getExplosionResistance());
         } else {
             // 普通方块返回硬度和爆炸抗性
             msgHelper.msg("destroyTime", blockstate.getDestroySpeed(world, blockpos));

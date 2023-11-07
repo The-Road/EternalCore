@@ -19,14 +19,14 @@ import net.minecraft.world.IWorld;
 public class WireBlock extends AbstractPipeBlock implements IEnergyNetworkWire {
     // 电线半径：1x=2, 2x=3, 4x=4, 8x=6, 12x=7, 16x=8
 
-    private final String descriptionId;
+    private final String wireName;
     protected final MaterialWireData wireData;
     protected final MaterialWireData.WireType wireType;
     private final int maxCurrent;
     private final int lineLoss;
     public WireBlock(MaterialWireData wireData, MaterialWireData.WireType wireType) {
         super(1.0F, 1.0F, ModToolType.WIRE_CUTTER, wireType.radius);
-        this.descriptionId = Utils.BlockDescriptionId(wireType.name);
+        this.wireName = Utils.BlockDescriptionId(wireType.name);
         this.wireData = wireData;
         this.wireType = wireType;
         this.maxCurrent = wireData.getMaxCurrent() * wireType.currentRate;
@@ -62,10 +62,7 @@ public class WireBlock extends AbstractPipeBlock implements IEnergyNetworkWire {
         return false;
     }
 
-    public IFormattableTextComponent getName(){
-        return new TranslationTextComponent(this.getDescriptionId(), wireData.getMaterial().getText());
-    }
-    public String getDescriptionId() {
-        return descriptionId;
+    public IFormattableTextComponent customBlockName(){
+        return new TranslationTextComponent(wireName, wireData.getMaterial().getText());
     }
 }

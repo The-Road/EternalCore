@@ -1,0 +1,25 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "alloy_furnace",
+  "pattern": [
+    "FXF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "X": {
+      "item": "eternalcore:bricked_stone_casing"
+    }
+  },
+  "smithLevel": 0,
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:alloy_furnace"
+  }
+}

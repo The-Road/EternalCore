@@ -10,14 +10,10 @@ public class MachineCasingBlock extends MachineStructureBlock{
     // 统一DescriptionId，因为不同机器外壳的注册ID不一样
     private static final String DESCRIPTION_ID = Utils.BlockDescriptionId(NAME);
     public MachineCasingBlock(MaterialBlockData blockData) {
-        super(blockData);
+        super(blockData, blockData.getCasingData());
     }
 
-    public IFormattableTextComponent getName(){
-        return new TranslationTextComponent(this.getDescriptionId(), blockData.getMaterial().getText());
-    }
-
-    public String getDescriptionId() {
-        return DESCRIPTION_ID;
+    public IFormattableTextComponent customBlockName(){
+        return new TranslationTextComponent(DESCRIPTION_ID, blockData.getMaterial().getText());
     }
 }

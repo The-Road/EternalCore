@@ -5,13 +5,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.road.eternalcore.api.energy.EnergyUtils;
 import com.road.eternalcore.api.energy.eu.EUTier;
 import com.road.eternalcore.common.inventory.container.machine.MachineContainer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class EnergyMachineScreen<T extends MachineContainer> extends ContainerScreen<T> {
+public abstract class EnergyMachineScreen<T extends MachineContainer> extends FluidContainerScreen<T> {
     // 电量条在GUI中的位置
     protected Rectangle2d energyBarRect = new Rectangle2d(78, 91, 20, 4);
     // 电量条在材质贴图中的位置（只用到了左上角坐标，W和H用的是energyBarRect的）

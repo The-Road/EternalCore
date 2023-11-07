@@ -1,10 +1,12 @@
 package com.road.eternalcore.api.block;
 
 import com.road.eternalcore.api.block.properties.PipeConnection;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 
 public class ModBlockStateProperties {
     public static final MaterialBlockProperty MATERIAL = MaterialBlockProperty.create();
+    public static final BooleanProperty WORKING = BooleanProperty.create("working");
     public static final EnumProperty<PipeConnection> UP_PIPE = EnumProperty.create("up", PipeConnection.class);
     public static final EnumProperty<PipeConnection> DOWN_PIPE = EnumProperty.create("down", PipeConnection.class);
     public static final EnumProperty<PipeConnection> NORTH_PIPE = EnumProperty.create("north", PipeConnection.class);

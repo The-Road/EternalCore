@@ -6,7 +6,9 @@ import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.api.material.MaterialTierData;
 import com.road.eternalcore.api.material.Materials;
+import com.road.eternalcore.common.block.ICustomHardnessBlock;
 import com.road.eternalcore.common.item.ModItem;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -120,7 +122,10 @@ public abstract class CustomTierItem extends ModItem {
         // 获取挖掘方块时损失的耐久度
         // 默认规则：损失方块硬度*0.64的耐久（向上取整到0.05）
         int damage = 0;
-        float destroySpeed = blockState.getDestroySpeed(world, blockPos);
+        Block block = blockState.getBlock();
+        float destroySpeed = block instanceof ICustomHardnessBlock ?
+                ((ICustomHardnessBlock) block).customDestroySpeed(blockState, world, blockPos) :
+                blockState.getDestroySpeed(world, blockPos);
         if (destroySpeed != 0.0F){
             damage = addItemDamage(itemStack, (int) Math.ceil(destroySpeed * 0.64 * DEFAULT_DURABILITY_SUBDIVIDE));
         }
@@ -147,7 +152,7 @@ public abstract class CustomTierItem extends ModItem {
         // 获取挖掘速度
         return getTier(itemStack).getSpeed();
     }
-    public ITextComponent getName(ItemStack itemStack) {
+    public ITextComponent customItemName(ItemStack itemStack) {
         MaterialTierData data = getMaterialData(itemStack);
         return new TranslationTextComponent(this.getDescriptionId(itemStack), data.getMaterial().getText());
     }

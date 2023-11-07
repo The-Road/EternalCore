@@ -39,7 +39,7 @@ minecraft {
     mappings channel: 'official', version: '1.16.5'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -91,7 +91,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly "mezz.jei:jei-1.16.5:7.7.1.152:api"
-    // runtimeOnly "mezz.jei:jei-1.16.5:7.7.1.152"
+    runtimeOnly "mezz.jei:jei-1.16.5:7.7.1.152"
 }
 mixin{
     //add sourceSets.main, 'mixin.eternalcore.refmap.json'

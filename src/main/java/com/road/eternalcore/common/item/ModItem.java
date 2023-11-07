@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.item;
 
+import com.road.eternalcore.TranslationUtils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,5 +22,16 @@ public class ModItem extends Item implements IModItem {
     public final void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag tooltipFlag) {
         addItemDescription(itemStack, world, list, tooltipFlag);
         addOtherHoverText(itemStack, world, list, tooltipFlag);
+    }
+    public final ITextComponent getName(ItemStack itemStack) {
+        if (TranslationUtils.hasTranslationName(itemStack.getItem())){
+            return super.getName(itemStack);
+        } else {
+            return customItemName(itemStack);
+        }
+    }
+
+    public ITextComponent customItemName(ItemStack itemStack){
+        return super.getName(itemStack);
     }
 }

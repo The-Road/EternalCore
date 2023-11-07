@@ -1,9 +1,5 @@
 package com.road.eternalcore.common.block.machine;
 
-import com.road.eternalcore.api.block.ModBlockStateProperties;
-import com.road.eternalcore.api.material.MaterialBlockData;
-import com.road.eternalcore.api.material.Materials;
-import com.road.eternalcore.common.item.block.MachineBlockItem;
 import com.road.eternalcore.common.item.tool.ModToolType;
 import com.road.eternalcore.common.stats.ModStats;
 import com.road.eternalcore.common.tileentity.MachineTileEntity;
@@ -29,7 +25,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -38,11 +33,8 @@ import java.util.List;
 
 public abstract class MachineBlock extends AbstractMachineBlock{
     // 机器类方块，全部提供TileEntity和Inventory接口
-    // 这一类方块的TileEntity全部实现IMaterialTileEntity接口，拥有材质属性
-    // 材质属性会影响机器外壳的渲染和方块的硬度和爆炸抗性
-
-    public MachineBlock() {
-        super(1.0F, 1.0F);
+    public MachineBlock(Properties properties){
+        super(properties);
     }
 
     public ActionResultType use(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace){
@@ -71,8 +63,8 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         }
     }
 
-    @Override
     public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootContext$builder) {
+        // 机器必须用扳手拆才能掉落完整机器，否则掉落零件
         ItemStack tool = lootContext$builder.getOptionalParameter(LootParameters.TOOL);
         if (tool != null && tool.getToolTypes().stream().anyMatch((type -> type == ModToolType.WRENCH))){
             return super.getDrops(blockState, lootContext$builder);
@@ -83,24 +75,14 @@ public abstract class MachineBlock extends AbstractMachineBlock{
             return list;
         }
     }
-
-    // 获取机器的零件掉落
-    public List<ItemStack> getPartsDrops(MachineTileEntity tileEntity){
-        List<ItemStack> list = new ArrayList<>();
-        Materials material = tileEntity.getMaterial();
-        // 获取机器外壳
-        list.add(new ItemStack(MachineBlocks.getMachineCasing(material)));
-        // TODO: 获取机器零件
-
-        return list;
-    }
+    protected abstract List<ItemStack> getPartsDrops(MachineTileEntity tileEntity);
 
     public boolean hasTileEntity(BlockState state){
         return true;
     }
     public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
-    //给机器命名
     public void setPlacedBy(World world, BlockPos pos, BlockState blockState, LivingEntity player, ItemStack itemStack) {
+        //给机器命名
         if (itemStack.hasCustomHoverName()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntityMatch(tileEntity)) {
@@ -110,12 +92,10 @@ public abstract class MachineBlock extends AbstractMachineBlock{
 
     }
 
-    // 四面朝向的机器正面不可接入覆盖板和电线（视为拥有覆盖板），六面朝向的机器正面是输出口
+    // 四面朝向的机器正面是显示屏，六面朝向的机器正面是输出口
     protected abstract DirectionProperty facingType();
     public BlockState getStateForPlacement(BlockItemUseContext useContext) {
         BlockState blockState = this.defaultBlockState();
-        Materials material = MachineBlockItem.getMaterialBlockData(useContext.getItemInHand()).getMaterial();
-        blockState = ModBlockStateProperties.MATERIAL.setBlockStateProperty(blockState, material);
         if (facingType() == BlockStateProperties.FACING){
             blockState = blockState.setValue(facingType(), useContext.getNearestLookingDirection().getOpposite());
         } else if (facingType() == BlockStateProperties.HORIZONTAL_FACING){
@@ -124,7 +104,6 @@ public abstract class MachineBlock extends AbstractMachineBlock{
         return blockState;
     }
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(ModBlockStateProperties.MATERIAL);
         builder.add(facingType());
     }
     public BlockState rotate(BlockState blockState, Rotation rotation) {
@@ -132,25 +111,5 @@ public abstract class MachineBlock extends AbstractMachineBlock{
     }
     public BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.rotate(mirror.getRotation(blockState.getValue(facingType())));
-    }
-
-    // 获取材料属性
-    public MaterialBlockData getMaterialBlockData(BlockState blockState, IBlockReader world, BlockPos pos){
-        if (blockState.getBlock() instanceof MachineBlock){
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof MachineTileEntity){
-                return ((MachineTileEntity) tileEntity).getMaterialBlockData();
-            }
-        }
-        return MaterialBlockData.NULL;
-    }
-    // 通过材料属性获取硬度和爆炸抗性
-    public float getDestroyProgress(BlockState blockState, PlayerEntity player, IBlockReader world, BlockPos pos) {
-        MaterialBlockData blockData = getMaterialBlockData(blockState, world, pos);
-        return super.getDestroyProgress(blockState, player, world, pos) / blockData.getHullData().getDestroyTime();
-    }
-    public float getExplosionResistance(BlockState blockState, IBlockReader world, BlockPos pos, Explosion explosion){
-        MaterialBlockData blockData = getMaterialBlockData(blockState, world, pos);
-        return blockData.getHullData().getExplosionResistance();
     }
 }

@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockReader;
 
-public class MachineBlockBlock extends MachineBlock{
+public class MachineBlockBlock extends CasingMachineBlock {
     public MachineBlockBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()

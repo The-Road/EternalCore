@@ -1,12 +1,10 @@
 package com.road.eternalcore.common.item.block;
 
-import com.road.eternalcore.common.block.ModBlocks;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.pipe.PipeBlocks;
 import com.road.eternalcore.common.item.group.ModGroup;
 import com.road.eternalcore.registries.BlockRegister;
 import com.road.eternalcore.registries.ItemRegister;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -48,16 +46,6 @@ public class BlockItems {
 
     public static Collection<Item> getAll(){
         return blockItems.values().stream().map(RegistryObject::get).collect(Collectors.toList());
-    }
-    public static Item get(String blockName){
-        if (blockItems.containsKey(blockName)){
-            return blockItems.get(blockName).get();
-        }else{
-            return null;
-        }
-    }
-    public static Item get(Block block){
-        return get(ModBlocks.getBlockName(block));
     }
 
     static{init();}

@@ -1,6 +1,5 @@
 package com.road.eternalcore.common.item.material;
 
-import com.road.eternalcore.TranslationUtils;
 import com.road.eternalcore.api.material.MaterialShape;
 import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.common.item.ModItem;
@@ -26,11 +25,7 @@ public class BasicMaterialItem extends ModItem {
         return ModTags.Items.getMaterialTag(shape, material);
     }
 
-    public ITextComponent getName(ItemStack itemStack) {
-        if (TranslationUtils.hasTranslationName(itemStack.getItem())){
-            return super.getName(itemStack);
-        } else {
-            return new TranslationTextComponent(shape.getDescriptionId(), material.getText());
-        }
+    public ITextComponent customItemName(ItemStack itemStack) {
+        return new TranslationTextComponent(shape.getDescriptionId(), material.getText());
     }
 }

@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockReader;
 
-public class BatteryBufferBlock extends MachineBlock{
+public class BatteryBufferBlock extends CasingMachineBlock {
     public BatteryBufferBlock() {
         super();
         this.registerDefaultState(this.stateDefinition.any()

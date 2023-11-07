@@ -35,7 +35,7 @@ public class OreProcessRecipeProvider extends ModRecipeProvider {
             Item ingot = Materials.getItem(MaterialShape.INGOT, material);
             Tags.IOptionalNamedTag<Item> tag = ModTags.Items.getOreTag(shape, ore);
             String name = Ores.getRegisterName(shape, ore);
-            Float exp = MaterialSmeltData.get(material).getSmeltExp();
+            float exp = MaterialSmeltData.get(material).getSmeltExp();
             CookingRecipeBuilder.smelting(Ingredient.of(tag), ingot, exp, 200)
                     .unlockedBy("has_" + name, has(tag))
                     .save(consumer, new ModResourceLocation("smelt_" + name));

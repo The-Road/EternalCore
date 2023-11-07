@@ -9,12 +9,11 @@ import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.api.tool.CraftToolType;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.item.ModItems;
-import com.road.eternalcore.common.item.block.BlockItems;
 import com.road.eternalcore.data.recipes.builder.NBTShapedRecipeBuilder;
 import com.road.eternalcore.data.recipes.builder.ShapedRecipeMaker;
 import com.road.eternalcore.data.recipes.builder.ToolShapedRecipeBuilder;
 import com.road.eternalcore.data.tags.ModTags;
-import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
@@ -39,30 +38,71 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
     }
     private static void addMachineRecipes(Consumer<IFinishedRecipe> consumer){
         addMachineCasingRecipes(consumer); // 机器外壳的合成配方
+        addBrickedCasingRecipes(consumer);
         addLockerRecipes(consumer);
         addMachineBlockRecipes(consumer);
+        // 单独的合成配方
+
+        // 合金炉
+        ToolShapedRecipeBuilder.toolShaped(MachineBlocks.alloyFurnace.get())
+                .toolUse(CraftToolType.WRENCH)
+                .pattern("FXF")
+                .define('F', Blocks.FURNACE)
+                .define('X', MachineBlocks.getBrickedCasing(Materials.STONE))
+                .group("alloy_furnace")
+                .unlockedBy("has_material", has(MachineBlocks.getBrickedCasing(Materials.STONE)))
+                .save(consumer, "toolcraft_alloy_furnace");
     }
     private static void addMachineCasingRecipes(Consumer<IFinishedRecipe> consumer){
         MachineBlocks.machine_casing.forEach((material, blockRegistry) -> {
-            Block casing = blockRegistry.get();
-            Item casingItem = BlockItems.get(casing);
-            if (casingItem != null) {
-                Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
-                ToolShapedRecipeBuilder.toolShaped(casingItem)
+            Item casing = blockRegistry.get().asItem();
+            Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
+            ToolShapedRecipeBuilder.toolShaped(casing)
+                    .toolUse(CraftToolType.WRENCH)
+                    .smithLevel(MaterialTierData.get(material).getSmithLevel())
+                    .pattern("XXX")
+                    .pattern("X X")
+                    .pattern("XXX")
+                    .define('X', plateTag)
+                    .group("machine_casing")
+                    .unlockedBy("has_material", has(plateTag))
+                    .save(consumer, "toolcraft_" + casing);
+        });
+    }
+    private static void addBrickedCasingRecipes(Consumer<IFinishedRecipe> consumer){
+        MachineBlocks.bricked_casing.forEach((material, blockRegistry) -> {
+            Item casing = blockRegistry.get().asItem();
+            MaterialBlockData blockData = MaterialBlockData.get(material);
+            if (blockData.isStone()){
+                ToolShapedRecipeBuilder.toolShaped(casing)
                         .toolUse(CraftToolType.WRENCH)
-                        .smithLevel(MaterialTierData.get(material).getSmithLevel())
                         .pattern("XXX")
                         .pattern("X X")
+                        .pattern("YYY")
+                        .define('X', material.getIngredientTag())
+                        .define('Y', Blocks.SMOOTH_STONE)
+                        .group("bricked_casing")
+                        .unlockedBy("has_material", has(material.getIngredientTag()))
+                        .save(consumer, "toolcraft_" + casing);
+            } else {
+                MaterialTierData tierData = MaterialTierData.get(material);
+                Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
+                ToolShapedRecipeBuilder.toolShaped(casing)
+                        .toolUse(CraftToolType.WRENCH)
+                        .smithLevel(tierData.getSmithLevel())
                         .pattern("XXX")
+                        .pattern("X X")
+                        .pattern("YYY")
                         .define('X', plateTag)
-                        .group("machine_casing")
-                        .unlockedBy("has_material", has(plateTag))
-                        .save(consumer, "toolcraft_" + casingItem);
+                        .define('Y', Blocks.BRICKS)
+                        .group("bricked_casing")
+                        .unlockedBy("has_material", has(material.getIngredientTag()))
+                        .save(consumer, "toolcraft_" + casing);
             }
         });
     }
     private static void addLockerRecipes(Consumer<IFinishedRecipe> consumer){
-        MaterialBlockData.getValidHullData().forEach((blockData) -> {
+        MaterialBlockData.getValidCasingData().forEach((blockData) -> {
             Materials material = blockData.getMaterial();
             Tags.IOptionalNamedTag<Item> plateTag = ModTags.Items.getMaterialTag(MaterialShape.PLATE, material);
             ToolShapedRecipeBuilder.toolShaped(MachineBlocks.locker.get())
@@ -84,22 +124,19 @@ public class CraftingRecipeProvider extends ModRecipeProvider {
     }
     private static void addMachineBlockRecipes(Consumer<IFinishedRecipe> consumer){
         MachineBlocks.machine_casing.forEach((material, blockRegistry) -> {
-            Block casing = blockRegistry.get();
-            Item casingItem = BlockItems.get(casing);
-            if (casingItem != null) {
-                ToolShapedRecipeBuilder.toolShaped(MachineBlocks.machineBlock.get())
-                        .nbt((tag) -> {
-                            CompoundNBT blockTag = new CompoundNBT();
-                            blockTag.putString(ModConstant.Material, material.getName());
-                            tag.put("BlockEntityTag", blockTag);
-                        })
-                        .toolUse(CraftToolType.WRENCH)
-                        .pattern("X")
-                        .define('X', casingItem)
-                        .group("machine_machine_block")
-                        .unlockedBy("has_machine_casing", has(casingItem))
-                        .save(consumer, "toolcraft_machine_block_" + material);
-            }
+            Item casing = blockRegistry.get().asItem();
+            ToolShapedRecipeBuilder.toolShaped(MachineBlocks.machineBlock.get())
+                    .nbt((tag) -> {
+                        CompoundNBT blockTag = new CompoundNBT();
+                        blockTag.putString(ModConstant.Material, material.getName());
+                        tag.put("BlockEntityTag", blockTag);
+                    })
+                    .toolUse(CraftToolType.WRENCH)
+                    .pattern("X")
+                    .define('X', casing)
+                    .group("machine_machine_block")
+                    .unlockedBy("has_machine_casing", has(casing))
+                    .save(consumer, "toolcraft_machine_block_" + material);
         });
     }
     private static void addToolRecipes(Consumer<IFinishedRecipe> consumer){

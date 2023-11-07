@@ -1,0 +1,27 @@
+{
+  "type": "eternalcore:tool_crafting_shaped",
+  "group": "bricked_casing",
+  "pattern": [
+    "XXX",
+    "X X",
+    "YYY"
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "Y": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "smithLevel": 0,
+  "toolUse": [
+    {
+      "tool": "wrench",
+      "use": 20
+    }
+  ],
+  "result": {
+    "item": "eternalcore:bricked_stone_casing"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "eternalcore:block/machine/casing/bricked_stone_side",
+    "bottom": "eternalcore:block/machine/casing/bricked_stone_bottom",
+    "top": "eternalcore:block/machine/casing/bricked_stone_top"
+  }
+}

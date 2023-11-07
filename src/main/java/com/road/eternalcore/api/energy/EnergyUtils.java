@@ -6,7 +6,10 @@ import com.road.eternalcore.api.energy.eu.IEUStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.*;
 
+import java.text.NumberFormat;
+
 public class EnergyUtils {
+    private static NumberFormat nf = NumberFormat.getIntegerInstance();
     // 显示电量
     public static IFormattableTextComponent energyStorageText(int energy, int maxEnergy){
         return energyStorageText(energy, maxEnergy, true);
@@ -15,9 +18,9 @@ public class EnergyUtils {
         double energyRate = maxEnergy == 0 ? 0 : Math.min(1.0 * energy / maxEnergy, 1.0);
         String msg;
         if (showMaxEnergy) {
-            msg = String.format("%d / %d EU (%d%%)", energy, maxEnergy, (int) (energyRate * 100));
+            msg = String.format("%s / %s EU (%d%%)", nf.format(energy), nf.format(maxEnergy), (int) (energyRate * 100));
         } else {
-            msg = String.format("%d EU", energy);
+            msg = String.format("%s EU", nf.format(energy));
         }
         return new StringTextComponent(msg)
                 .withStyle(Style.EMPTY.withColor(EnergyUtils.energyRateColor(energyRate)));

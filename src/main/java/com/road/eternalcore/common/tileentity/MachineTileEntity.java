@@ -4,7 +4,6 @@ import com.road.eternalcore.ModConstant;
 import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.api.material.MaterialBlockData;
 import com.road.eternalcore.api.material.Materials;
-import com.road.eternalcore.common.tileentity.data.MachineTileEntityCoverData;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class MachineTileEntity extends LockableLootTileEntity {
-    protected MachineTileEntityCoverData covers = new MachineTileEntityCoverData(this);
     protected MaterialBlockData blockData = MaterialBlockData.NULL;
     protected NonNullList<ItemStack> items;
     public MachineTileEntity(TileEntityType<?> tileEntityType) {
@@ -34,8 +32,9 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     }
     public CompoundNBT save(CompoundNBT nbt) {
         super.save(nbt);
-        nbt.put(ModConstant.Machine_cover, covers.save());
-        nbt.putString(ModConstant.Material, getMaterial().getName());
+        if (blockData != MaterialBlockData.NULL) {
+            nbt.putString(ModConstant.Material, getMaterial().getName());
+        }
         if (!trySaveLootTable(nbt)) {
             ItemStackHelper.saveAllItems(nbt, this.items);
         }
@@ -43,7 +42,6 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     }
     public void load(BlockState blockState, CompoundNBT nbt){
         super.load(blockState, nbt);
-        loadCoversNBT(nbt);
         loadMaterialNBT(nbt);
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!tryLoadLootTable(nbt)) {
@@ -55,11 +53,6 @@ public abstract class MachineTileEntity extends LockableLootTileEntity {
     }
     protected void setItems(NonNullList<ItemStack> items) {
         this.items = items;
-    }
-    protected void loadCoversNBT(CompoundNBT nbt){
-        if (nbt.contains(ModConstant.Machine_cover)){
-            covers.load(nbt.getList(ModConstant.Machine_cover, 8));
-        }
     }
     protected void loadMaterialNBT(CompoundNBT nbt){
         if (nbt.contains(ModConstant.Material, 8)){

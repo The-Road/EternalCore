@@ -271,7 +271,7 @@ public class Materials {
         MINERAL(MaterialShape.MINERAL), // 矿物类，例如煤、石英等，和宝石类似但是没有gem，本体材料标签无前缀，矿石可以筛
         POWDER(DUST), // 粉末类，如红石、各种矿石的最终产物等，本体材料属于dust
         OTHER(null), // 其他特殊材料，如木头、石头等，本体材料单独指定
-        EMPTY(null); // 没有对应物品，如超导体
+        EMPTY(null); // 没有对应物品，用于特殊机器或者电线材质之类的
 
         public final MaterialShape ingredientShape;
         Type(MaterialShape ingredientShape){

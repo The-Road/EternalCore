@@ -1,6 +1,12 @@
 {
   "replace": false,
   "values": [
+    "#forge:centrifuged_ores/coal",
+    "#forge:centrifuged_ores/iron",
+    "#forge:centrifuged_ores/gold",
+    "#forge:centrifuged_ores/diamond",
+    "#forge:centrifuged_ores/redstone",
+    "#forge:centrifuged_ores/lapis",
     "#forge:centrifuged_ores/copper",
     "#forge:centrifuged_ores/tin"
   ]

@@ -78,5 +78,19 @@ public class ModRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_material", has(pair.getSecond().getIngredientTag()))
                     .save(consumer);
         });
+        // 移除原版的熔炼矿石配方（因为和OreProcessRecipeProvider添加的配方重复了）
+        List<String> remove_from_ = Lists.newArrayList(
+                "iron_ingot", "gold_ingot", "quartz", "netherite_scrap");
+        remove_from_.forEach(str -> {
+            remove.accept(str);
+            remove.accept(str + "_from_blasting");
+        });
+        List<String> remove_from_smelt = Lists.newArrayList(
+                "coal", "lapis", "redstone", "diamond", "emerald");
+        remove_from_smelt.forEach(str -> {
+            remove.accept(str + "_from_smelting");
+            remove.accept(str + "_from_blasting");
+        });
+        remove.accept("netherite_ingot");
     }
 }

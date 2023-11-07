@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "eternalcore:blasting_smelt_crushed_iron_ore"
+    ]
+  },
+  "criteria": {
+    "has_crushed_iron_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:crushed_ores/iron"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "eternalcore:blasting_smelt_crushed_iron_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crushed_iron_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

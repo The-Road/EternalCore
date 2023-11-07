@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "side": "eternalcore:block/machine/side/empty",
-    "front": "eternalcore:block/machine/face/locker_open",
+    "front": "eternalcore:block/machine/face/alloy_furnace",
     "top": "eternalcore:block/machine/side/empty"
   }
 }

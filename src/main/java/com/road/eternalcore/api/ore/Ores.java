@@ -24,12 +24,13 @@ public class Ores {
     public static final Ores IRON_ORE = addSimple(IRON);
     public static final Ores GOLD_ORE = addSimple(GOLD);
     public static final Ores DIAMOND_ORE = addSimple(DIAMOND);
-    public static final Ores REDSTONE_ORE = addSimple(REDSTONE);
-    public static final Ores LAPIS_ORE = addSimple(LAPIS);
+    public static final Ores REDSTONE_ORE = addSimple(REDSTONE).productivity(5);
+    public static final Ores LAPIS_ORE = addSimple(LAPIS).productivity(6);
     public static final Ores COPPER_ORE = addSimple(COPPER, COBALT)
             .setBlockProperties(() -> defaultBlockProperties());
     public static final Ores TIN_ORE = addSimple(TIN)
             .setBlockProperties(() -> defaultBlockProperties());
+
     protected int productNum = 1;
     protected LazyValue<AbstractBlock.Properties> blockProperties;
 
@@ -79,9 +80,18 @@ public class Ores {
     public String getName(){
         return mainProduct.getName();
     }
+    // 设置属性
+    protected Ores productivity(int productNum){
+        this.productNum = productNum;
+        return this;
+    }
     protected Ores setBlockProperties(Supplier<AbstractBlock.Properties> properties){
         this.blockProperties = new LazyValue<>(properties);
         return this;
+    }
+    // 获取属性
+    public int getProductNum(){
+        return productNum;
     }
     public AbstractBlock.Properties getBlockProperties(){
         if (blockProperties != null) {
@@ -90,7 +100,9 @@ public class Ores {
         return Ores.defaultBlockProperties();
     }
     public boolean canSmeltInFurnace(){
-        return mainProduct.hasShape(MaterialShape.INGOT) && MaterialSmeltData.get(mainProduct) != null;
+        MaterialSmeltData smeltData = MaterialSmeltData.get(mainProduct);
+        return mainProduct.hasShape(MaterialShape.INGOT) &&
+                smeltData != null && smeltData.canSmeltInFurnace();
     }
 
     protected static class OreByProducts {

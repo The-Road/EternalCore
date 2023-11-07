@@ -10,10 +10,7 @@ import com.road.eternalcore.compat.jei.category.ToolCraftingRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeManager;
@@ -67,5 +64,8 @@ public class JEIPlugin implements IModPlugin {
                 PartCraftTableScreen.class, 77, 49, 22, 15,
                 PartCraftingRecipeCategory.CONSTANT.getUid()
         );
+    }
+    public void registerIngredients(IModIngredientRegistration registration) {
+
     }
 }

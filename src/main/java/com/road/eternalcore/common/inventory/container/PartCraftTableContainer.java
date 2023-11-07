@@ -14,7 +14,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
@@ -23,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class PartCraftTableContainer extends Container {
+public class PartCraftTableContainer extends FluidContainer {
     protected final CraftResultInventory resultSlot = new CraftResultInventory();
     protected final Inventory byProductSlot = new Inventory(1);
     protected final PartCraftTableInventory inputSlots = new PartCraftTableInventory(this);

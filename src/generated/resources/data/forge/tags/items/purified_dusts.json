@@ -1,6 +1,12 @@
 {
   "replace": false,
   "values": [
+    "#forge:purified_dusts/coal",
+    "#forge:purified_dusts/iron",
+    "#forge:purified_dusts/gold",
+    "#forge:purified_dusts/diamond",
+    "#forge:purified_dusts/redstone",
+    "#forge:purified_dusts/lapis",
     "#forge:purified_dusts/copper",
     "#forge:purified_dusts/tin"
   ]

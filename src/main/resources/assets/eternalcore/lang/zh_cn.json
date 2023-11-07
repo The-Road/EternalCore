@@ -1,14 +1,8 @@
 {
   "itemGroup.eternalcore.block_group": "永恒核心 方块",
   "block.eternalcore.ore": "%s矿石",
-
-  "itemGroup.eternalcore.functional_block_group": "永恒核心 功能性方块",
-  "block.eternalcore.handcraft_assembly_table": "手工装配台",
-  "block.eternalcore.part_craft_table": "零件加工台",
   "block.eternalcore.machine_casing": "%s机器外壳",
-  "block.eternalcore.locker": "储物柜",
-  "block.eternalcore.machine_block": "机器方块",
-  "block.eternalcore.battery_buffer": "电池箱",
+  "block.eternalcore.bricked_casing": "砖砌%s外壳",
   "block.eternalcore.1x_wire": "1x%s导线",
   "block.eternalcore.2x_wire": "2x%s导线",
   "block.eternalcore.4x_wire": "4x%s导线",
@@ -20,6 +14,16 @@
   "block.eternalcore.4x_cable": "4x%s线缆",
   "block.eternalcore.8x_cable": "8x%s线缆",
   "block.eternalcore.12x_cable": "12x%s线缆",
+
+  "itemGroup.eternalcore.functional_block_group": "永恒核心 功能性方块",
+  "block.eternalcore.handcraft_assembly_table": "手工装配台",
+  "block.eternalcore.part_craft_table": "零件加工台",
+  "block.eternalcore.bricked_stone_casing": "石砖外壳",
+  "block.eternalcore.locker": "储物柜",
+  "block.eternalcore.machine_block": "机器方块",
+  "block.eternalcore.battery_buffer": "电池箱",
+
+  "fluid.eternalcore.steam": "蒸汽",
 
   "itemGroup.eternalcore.material_group":"永恒核心 材料",
 
@@ -160,6 +164,10 @@
   "eternalcore.toolTip.tool.smithLevel": "锻造等级: %s",
   "eternalcore.toolTip.tool.durability": "耐久: %s",
   "eternalcore.toolTip.block.material": "材质: %s",
+  "eternalcore.toolTip.fluid.amount": "%smb",
+  "eternalcore.toolTip.fluid.temperature": "温度: %sK",
+  "eternalcore.toolTip.fluid.liquid": "液体",
+  "eternalcore.toolTip.fluid.gas": "气体",
   "eternalcore.toolTip.jei.toolUse": "消耗耐久: %s",
 
   "eternalcore.debugTool.block.title": "-----<方块信息>-----",

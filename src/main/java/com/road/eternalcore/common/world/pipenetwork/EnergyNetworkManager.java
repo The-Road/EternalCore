@@ -84,16 +84,19 @@ public class EnergyNetworkManager extends WorldSavedData {
     public void transferEnergy(IEnergyProviderTileEntity provider, IEnergyReceiverTileEntity receiver, EnergyCurrent current){
         int countP = providerCount.getOrDefault(provider, 0);
         int countR = receiverCount.getOrDefault(receiver, 0);
-        while (countP < provider.maxProvideCurrent() && countR < receiver.maxReceiveCurrent() &&
-                provider.canProvideEnergyToNetwork() && receiver.canReceiveEnergyFromNetwork()){
+        int workCurrent = Math.min(provider.maxProvideCurrent() - countP, receiver.maxReceiveCurrent() - countR);
+        if (workCurrent > 0 && provider.canProvideEnergyToNetwork() && receiver.canReceiveEnergyFromNetwork()){
             int lineLoss;
+            // 通过导线输电
             if (current != null){
-                if (current.workAndCheck(provider.getTier())){
+                // 检查电压过载
+                if (current.workAndCheck(provider.getTier(), workCurrent)){
                     checkMachineExplode(receiver, provider.getTier());
                     return;
                 }
                 lineLoss = current.getLineLoss();
             } else {
+                // 直接输电
                 lineLoss = 0;
             }
             if (checkMachineExplode(receiver, provider.getTier())){
@@ -101,10 +104,10 @@ public class EnergyNetworkManager extends WorldSavedData {
             }
             int energy = provider.getTier().getMaxVoltage();
             // 从电网接收到的能量可以超过机器的储能上限
-            provider.extractEnergy(energy, false);
-            receiver.receiveEnergy(energy - lineLoss, false, true);
-            providerCount.put(provider, ++countP);
-            receiverCount.put(receiver, ++countR);
+            provider.extractEnergy(energy * workCurrent, false);
+            receiver.receiveEnergy((energy - lineLoss) * workCurrent, false, true);
+            providerCount.put(provider, countP + workCurrent);
+            receiverCount.put(receiver, countR + workCurrent);
         }
     }
     // 检查机器是否因为电压过高而爆炸

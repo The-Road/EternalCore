@@ -1,20 +1,22 @@
-package com.road.eternalcore.common.block;
+package com.road.eternalcore.common.block.functional;
 
+import com.road.eternalcore.common.block.ModBlock;
 import com.road.eternalcore.common.inventory.container.PartCraftTableContainer;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class PartCraftTableBlock extends Block {
+public class PartCraftTableBlock extends ModBlock {
     private static final ITextComponent TITLE = new TranslationTextComponent("container.eternalcore.part_craft_table");
     public PartCraftTableBlock(AbstractBlock.Properties properties){
         super(properties);

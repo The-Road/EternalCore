@@ -4,11 +4,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
-import com.road.eternalcore.api.block.ModBlockStateProperties;
-import com.road.eternalcore.api.material.Materials;
 import com.road.eternalcore.client.renderer.model.data.MachineModelData;
-import com.road.eternalcore.common.block.machine.MachineBlocks;
+import com.road.eternalcore.common.block.ICasingRenderBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.*;
@@ -75,21 +75,20 @@ public class MachineModel extends BakedModelWrapper<IBakedModel>{
 
     public IModelData getModelData(@Nonnull IBlockDisplayReader world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull IModelData tileData) {
         BlockState blockState = world.getBlockState(pos);
-        if (blockState.hasProperty(ModBlockStateProperties.MATERIAL)){
-            String materialName = blockState.getValue(ModBlockStateProperties.MATERIAL).value();
-            return new MachineModelData(Materials.get(materialName));
+        Block block = blockState.getBlock();
+        if (block instanceof ICasingRenderBlock){
+            return new MachineModelData(((ICasingRenderBlock) block).getRenderCasing(blockState));
         }
         return super.getModelData(world, pos, state, tileData);
     }
 
     // 获取机器方块的外壳模型
     protected BlockState getCasingBlockState(IModelData data){
-        Materials material = Materials.NULL;
-        // 获取对应机器方块的材质
-        if (data.hasProperty(MachineModelData.MaterialProperty)){
-            material = data.getData(MachineModelData.MaterialProperty);
+        // 获取对应机壳方块的材质
+        if (data.hasProperty(MachineModelData.CasingProperty)){
+            return data.getData(MachineModelData.CasingProperty);
         }
-        return MachineBlocks.getMachineCasing(material).defaultBlockState();
+        return Blocks.STONE.defaultBlockState();
     }
 
     // ————注册和构造的部分————

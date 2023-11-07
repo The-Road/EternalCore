@@ -22,7 +22,7 @@ public class WireBlockItem extends ModBlockItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
+    public void appendOtherHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag iTooltipFlag) {
         Block block = ((BlockItem) itemStack.getItem()).getBlock();
         if (block instanceof WireBlock) {
             WireBlock wire = (WireBlock) block;

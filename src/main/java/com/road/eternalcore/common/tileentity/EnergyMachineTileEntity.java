@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public abstract class EnergyMachineTileEntity extends MachineTileEntity implements ISidedEUStorage, ITickableTileEntity{
+public abstract class EnergyMachineTileEntity extends CoverMachineTileEntity implements ISidedEUStorage, ITickableTileEntity{
     // 通常的工作机器类，拥有输入槽，输出槽，电池槽，流体槽（还没写）
     protected int energy = 0;
     protected int maxEnergy = 1280;

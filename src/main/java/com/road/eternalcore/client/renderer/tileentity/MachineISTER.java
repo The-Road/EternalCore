@@ -1,9 +1,13 @@
 package com.road.eternalcore.client.renderer.tileentity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.client.renderer.model.data.MachineModelData;
+import com.road.eternalcore.common.block.ICasingRenderBlock;
 import com.road.eternalcore.common.item.block.MachineBlockItem;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -22,9 +26,15 @@ public class MachineISTER extends ItemStackTileEntityRenderer {
         matrixStack.pushPose();
         Item item = itemStack.getItem();
         BlockRendererDispatcher blockRenderer = Minecraft.getInstance().getBlockRenderer();
-        BlockState blockState = ((BlockItem) item).getBlock().defaultBlockState();
-        IModelData modelData = new MachineModelData(
-                MachineBlockItem.getMaterialBlockData(itemStack).getMaterial());
+        Block block = ((BlockItem) item).getBlock();
+        BlockState blockState = block.defaultBlockState();
+        if (blockState.hasProperty(ModBlockStateProperties.MATERIAL)){
+            blockState = ModBlockStateProperties.MATERIAL.setBlockStateProperty(
+                    blockState, MachineBlockItem.getMaterialBlockData(itemStack).getMaterial());
+        }
+        IModelData modelData = (block instanceof ICasingRenderBlock) ?
+                new MachineModelData(((ICasingRenderBlock) block).getRenderCasing(blockState)) :
+                new MachineModelData(Blocks.STONE);
         blockRenderer.renderBlock(blockState, matrixStack, buffer, combinedLight, combinedOverlay, modelData);
         matrixStack.popPose();
     }

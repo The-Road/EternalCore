@@ -1,5 +1,7 @@
 package com.road.eternalcore.common.block;
 
+import com.road.eternalcore.common.block.functional.HandcraftAssemblyTableBlock;
+import com.road.eternalcore.common.block.functional.PartCraftTableBlock;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import com.road.eternalcore.common.block.ore.OreBlocks;
 import com.road.eternalcore.common.block.pipe.PipeBlocks;

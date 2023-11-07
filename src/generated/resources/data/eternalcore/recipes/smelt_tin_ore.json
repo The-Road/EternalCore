@@ -4,6 +4,6 @@
     "tag": "forge:ores/tin"
   },
   "result": "eternalcore:tin_ingot",
-  "experience": 0.5,
+  "experience": 0.0,
   "cookingtime": 200
 }

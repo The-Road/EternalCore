@@ -1,8 +1,8 @@
 package com.road.eternalcore.common.inventory.container.machine;
 
+import com.road.eternalcore.common.inventory.container.FluidContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ import net.minecraft.util.IIntArray;
 
 import javax.annotation.Nullable;
 
-public abstract class MachineContainer extends Container {
+public abstract class MachineContainer extends FluidContainer {
     protected int inputSize;
     protected int resultSize;
     protected int batterySize;

@@ -61,7 +61,7 @@ public class EnergyNetwork extends PipeNetwork<IEnergyNetworkWire, IEnergyProvid
         wireLoad.clear();
     }
 
-    public boolean checkWireLoad(BlockPos pos, EUTier tier){
+    public boolean checkWireLoad(BlockPos pos, EUTier tier, int workCurrent){
         // 检查电压过载
         IEnergyNetworkWire wire = getNode(pos);
         if (tier.tierHigherThan(wire)){
@@ -69,7 +69,7 @@ public class EnergyNetwork extends PipeNetwork<IEnergyNetworkWire, IEnergyProvid
             return true;
         }
         // 检查电流过载
-        int wireCurrent = wireLoad.getOrDefault(pos, 0) + 1;
+        int wireCurrent = wireLoad.getOrDefault(pos, 0) + workCurrent;
         if (wireCurrent > wire.getMaxCurrent()){
             wire.burn(world, pos);
             return true;

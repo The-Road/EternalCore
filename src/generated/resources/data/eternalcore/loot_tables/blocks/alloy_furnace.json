@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "material",
+                  "target": "BlockEntityTag.material",
+                  "op": "replace"
+                },
+                {
+                  "source": "euTier",
+                  "target": "BlockEntityTag.euTier",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "eternalcore:alloy_furnace"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "eternalcore:match_tool",
+          "predicate": {
+            "tool": [
+              "eternalcore_wrench"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

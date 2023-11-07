@@ -1,5 +1,6 @@
 package com.road.eternalcore.common.tileentity;
 
+import com.road.eternalcore.api.block.ModBlockStateProperties;
 import com.road.eternalcore.common.block.machine.MachineBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,7 +44,7 @@ public class LockerTileEntity extends MachineTileEntity{
             }
             this.openCount++;
             BlockState blockState = getBlockState();
-            if (!blockState.getValue(BlockStateProperties.OPEN)){
+            if (!blockState.getValue(ModBlockStateProperties.WORKING)){
                 playSound(blockState, SoundEvents.BARREL_OPEN);
                 updateOpenState(blockState, true);
             }
@@ -71,7 +72,7 @@ public class LockerTileEntity extends MachineTileEntity{
                 setRemoved();
                 return;
             }
-            if (blockstate.getValue(BlockStateProperties.OPEN)) {
+            if (blockstate.getValue(ModBlockStateProperties.WORKING)) {
                 playSound(blockstate, SoundEvents.BARREL_CLOSE);
                 updateOpenState(blockstate, false);
             }
@@ -92,7 +93,7 @@ public class LockerTileEntity extends MachineTileEntity{
         this.level.playSound(null, d0, d1, d2, soundEvent, SoundCategory.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
     }
     private void updateOpenState(BlockState blockState, boolean open) {
-        this.level.setBlock(getBlockPos(), blockState.setValue(BlockStateProperties.OPEN, open), 3);
+        this.level.setBlock(getBlockPos(), blockState.setValue(ModBlockStateProperties.WORKING, open), 3);
     }
     // ChestTileEntity还有一个getOpenCount，是服务器每隔一段时间刷新箱子状态用的
     // 这里的代码是模仿Barrel写的，用scheduleRecheck在Block里刷新开关状态
